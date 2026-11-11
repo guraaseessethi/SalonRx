@@ -1,0 +1,889 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Salon Rx</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&family=Poppins:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@1,400;1,500&display=swap">
+<style>
+/* Layout: Salon Rx's own world. Black-and-white editorial like their team portraits, one cobalt from the logo,
+   a thin gold line for the starburst chandeliers. Square corners, hairline rules, a printed price list with dot leaders. */
+:root{
+  --paper:#ffffff;
+  --bone:#f5f4f1;
+  --ink:#111114;
+  --gray:#6c6c72;
+  --rule:rgba(17,17,20,.14);
+  --cobalt:#1f5fa6;
+  --cobalt-deep:#0f3a73;
+  --cobalt-soft:rgba(31,95,166,.08);
+  --gold:#b08d4c;
+  --ok:#2e7d55;--warn:#a8701c;--bad:#b3373f;
+  --head:"Josefin Sans","Avenir Next",system-ui,sans-serif;
+  --body:"Poppins",system-ui,-apple-system,sans-serif;
+  --script:"Cormorant Garamond",Georgia,serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0d0e12;--bone:#15161b;--ink:#f2f1ee;--gray:#a3a3ab;--rule:rgba(255,255,255,.14);--cobalt:#6d9fe0;--cobalt-deep:#2a5fa8;--cobalt-soft:rgba(109,159,224,.12);--gold:#cfae6e;--ok:#5cc28f;--warn:#e0a54c;--bad:#ef7a82;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0d0e12;--bone:#15161b;--ink:#f2f1ee;--gray:#a3a3ab;--rule:rgba(255,255,255,.14);--cobalt:#6d9fe0;--cobalt-deep:#2a5fa8;--cobalt-soft:rgba(109,159,224,.12);--gold:#cfae6e;--ok:#5cc28f;--warn:#e0a54c;--bad:#ef7a82;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-weight:300;font-size:15.5px;line-height:1.65}
+:focus-visible{outline:2px solid var(--cobalt);outline-offset:2px}
+h1,h2,h3,h4{margin:0;font-weight:400;text-wrap:balance}
+button,input,select,textarea{font:inherit;color:inherit}
+b,strong{font-weight:600}
+.wrap{max-width:1160px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.lab{font-family:var(--head);font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--gray)}
+.script{font-family:var(--script);font-style:italic}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:var(--head);font-size:13px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;padding:15px 26px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);text-decoration:none;cursor:pointer;border-radius:0}
+.btn.line{background:transparent;color:var(--ink)}
+.btn.blue{background:var(--cobalt);border-color:var(--cobalt);color:#fff}
+.btn.sm{font-size:11px;padding:9px 14px;letter-spacing:.16em}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.demo{font-family:var(--head);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--cobalt);border:1px solid currentColor;padding:3px 8px}
+
+.mark{display:inline-block;width:1em;height:1em;vertical-align:-.12em}
+.wordmark{font-family:var(--head);font-weight:400;letter-spacing:.06em;display:inline-flex;align-items:baseline;gap:.02em;color:var(--ink);text-decoration:none;line-height:1}
+.wordmark .rx{color:var(--cobalt);font-family:var(--script);font-style:italic;font-size:1.15em;margin-left:.05em}
+.wordmark small{display:block;font-family:var(--body);font-size:9.5px;letter-spacing:.06em;color:var(--gray);text-transform:lowercase;margin-top:3px}
+
+/* ============ PUBLIC ============ */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--paper);border-bottom:1px solid var(--rule)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:21;background:var(--paper)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:16px}
+.top .wordmark{font-size:26px}
+.nav{display:flex;gap:26px}
+.nav a{font-family:var(--head);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);text-decoration:none;padding-bottom:3px;border-bottom:1px solid transparent}
+.nav a:hover{border-color:var(--cobalt);color:var(--cobalt)}
+.top-r{display:flex;gap:10px;align-items:center}
+.top-r .staff{font-family:var(--head);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);text-decoration:none}
+@media (max-width:980px){.nav{display:none}}
+@media (max-width:480px){.top-r .staff{display:none}.top .wordmark{font-size:22px}}
+
+.hero{border-bottom:1px solid var(--rule)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:48px;align-items:center;padding-block:64px 72px}
+.hero h1{font-family:var(--script);font-style:italic;font-size:clamp(54px,8.6vw,118px);line-height:.88;letter-spacing:-.01em}
+.hero h1 span{display:block;font-family:var(--head);font-style:normal;font-weight:300;font-size:.34em;letter-spacing:.32em;text-transform:uppercase;margin-bottom:22px;color:var(--gray)}
+.hero h1 em{color:var(--cobalt)}
+.hero p{max-width:44ch;font-size:17px;color:var(--gray);margin:26px 0 0}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.hero-art{position:relative;aspect-ratio:1;max-width:100%;width:min(440px,100%);justify-self:center}
+.hero-art svg{position:absolute;inset:0;width:100%;height:100%}
+.hero-art .tag{position:absolute;left:-6%;bottom:6%;background:var(--paper);border:1px solid var(--rule);padding:14px 18px;max-width:230px}
+.hero-art .tag b{font-family:var(--head);font-weight:600;font-size:28px;display:block;line-height:1}
+.hero-art .tag span{font-size:12.5px;color:var(--gray)}
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--rule)}
+.facts div{padding:22px 0 22px 22px;border-left:1px solid var(--rule)}
+.facts div:first-child{border-left:0;padding-left:0}
+.facts b{font-family:var(--head);font-weight:400;font-size:30px;display:block;line-height:1.1}
+.facts span{font-size:13px;color:var(--gray)}
+@media (max-width:900px){
+  .hero .wrap{grid-template-columns:minmax(0,1fr);padding-block:40px 48px}
+  .hero-art{width:min(320px,86%)}
+  .hero-art .tag{left:0}
+  .facts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .facts div:nth-child(3){border-left:0;padding-left:0}
+  .facts div{border-top:1px solid var(--rule)}
+}
+
+section.s{padding-block:88px}
+.s-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:end;margin-bottom:44px}
+.s-head h2{font-family:var(--head);font-weight:300;font-size:clamp(34px,4.8vw,58px);line-height:1;letter-spacing:.02em;text-transform:uppercase;margin-top:14px}
+.s-head h2 i{font-family:var(--script);text-transform:none;letter-spacing:0;color:var(--cobalt);font-weight:400}
+.s-head p{color:var(--gray);margin:0;max-width:48ch}
+.bone{background:var(--bone)}
+#home,section.s,#visit{scroll-margin-top:80px}
+@media (max-width:900px){.s-head{grid-template-columns:minmax(0,1fr);gap:14px}section.s{padding-block:60px}}
+
+.hp{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:56px;align-items:start}
+.hp blockquote{margin:0;font-family:var(--script);font-style:italic;font-size:clamp(30px,3.6vw,44px);line-height:1.15}
+.hp blockquote small{display:block;margin-top:18px;font-family:var(--head);font-style:normal;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gray)}
+.rx-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
+.rx-list li{display:grid;grid-template-columns:44px minmax(0,1fr);gap:16px;padding:20px 0;border-bottom:1px solid var(--rule)}
+.rx-list .n{font-family:var(--script);font-style:italic;font-size:30px;color:var(--cobalt);line-height:1}
+.rx-list h3{font-family:var(--head);font-size:15px;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+.rx-list p{margin:4px 0 0;color:var(--gray);font-size:14.5px}
+@media (max-width:900px){.hp{grid-template-columns:minmax(0,1fr);gap:28px}}
+
+.pl-bar{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border-block:1px solid var(--ink);padding-block:12px;margin-bottom:36px}
+.tabs{display:flex;flex-wrap:wrap;gap:4px 22px}
+.tabs button{border:0;background:none;padding:6px 0;font-family:var(--head);font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);cursor:pointer;border-bottom:1px solid transparent}
+.tabs button[aria-pressed="true"]{color:var(--ink);border-color:var(--ink)}
+.lvl{display:inline-flex;border:1px solid var(--rule)}
+.lvl button{border:0;background:transparent;padding:8px 14px;font-family:var(--head);font-size:11px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;color:var(--gray)}
+.lvl button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.pl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 64px}
+.pl-group{margin-bottom:34px}
+.pl-row{display:flex;align-items:baseline;gap:10px;padding:9px 0;font-size:15px}
+.pl-row .nm{flex-shrink:1;min-width:0}
+.pl-row .dots{flex:1;border-bottom:1px dotted var(--gray);opacity:.6;transform:translateY(-4px);min-width:20px}
+.pl-row .pr{font-family:var(--head);font-size:16px;letter-spacing:.04em;white-space:nowrap;font-variant-numeric:tabular-nums}
+.pl-row .pr s{color:var(--gray);font-size:13px;margin-right:6px}
+.pl-row button{border:0;background:none;padding:0 0 0 8px;color:var(--cobalt);font-family:var(--head);font-size:11px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;opacity:0;transition:opacity .15s}
+.pl-row:hover button,.pl-row button:focus-visible{opacity:1}
+@media (hover:none){.pl-row button{opacity:1}}
+.pl-note{font-size:13px;color:var(--gray);border-left:2px solid var(--cobalt);padding-left:14px;margin-top:8px;max-width:70ch}
+@media (max-width:900px){.pl{grid-template-columns:minmax(0,1fr)}.pl-group{margin-bottom:0}}
+
+.wed{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border:1px solid var(--ink)}
+.wed > div{padding:44px}
+.wed .dark{background:var(--ink);color:var(--paper)}
+.wed .dark .lab{color:var(--paper);opacity:.7}
+.wed .dark h3{font-family:var(--script);font-style:italic;font-size:clamp(40px,5vw,64px);line-height:1;margin-top:14px}
+.wed .dark p{opacity:.8;max-width:38ch}
+.wed-p div{display:flex;justify-content:space-between;align-items:baseline;padding:18px 0;border-bottom:1px solid var(--rule);gap:10px}
+.wed-p div:first-child{padding-top:0}
+.wed-p span{font-family:var(--head);font-size:14px;letter-spacing:.18em;text-transform:uppercase}
+.wed-p b{font-family:var(--head);font-weight:300;font-size:34px}
+@media (max-width:900px){.wed{grid-template-columns:minmax(0,1fr)}.wed > div{padding:28px}}
+
+.team{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:40px 24px}
+.tm{text-align:center}
+.port{width:100%;max-width:170px;aspect-ratio:1;border-radius:50%;margin:0 auto 16px;display:grid;place-items:center;background:var(--paper);border:1px solid var(--rule);font-family:var(--script);font-style:italic;font-size:46px;color:var(--ink);transition:border-color .2s,color .2s}
+.tm:hover .port{border-color:var(--cobalt);color:var(--cobalt)}
+.tm h4{font-family:var(--head);font-size:16px;letter-spacing:.08em}
+.tm .r{font-family:var(--head);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--cobalt);margin-top:4px}
+.tm p{font-size:13px;color:var(--gray);margin:8px 0 0}
+@media (max-width:980px){.team{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:560px){.team{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 14px}}
+
+.revs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--rule)}
+.rev{padding:30px 28px 0 0}
+.rev + .rev{padding-left:28px;border-left:1px solid var(--rule)}
+.rev q{font-family:var(--script);font-style:italic;font-size:26px;line-height:1.25;display:block}
+.rev span{display:block;margin-top:14px;font-family:var(--head);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gray)}
+@media (max-width:900px){.revs{grid-template-columns:minmax(0,1fr)}.rev + .rev{border-left:0;padding-left:0;border-top:1px solid var(--rule);margin-top:24px}}
+
+.shop-bar{margin-bottom:28px}
+.shop{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--rule);border-left:1px solid var(--rule)}
+.prod{border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:22px;display:flex;flex-direction:column;gap:6px;background:var(--paper);min-width:0}
+.btl{height:120px;display:flex;align-items:flex-end;justify-content:center;margin-bottom:10px}
+.btl i{display:block;width:44px;border-radius:5px 5px 3px 3px;position:relative;border:1px solid var(--rule)}
+.btl i::before{content:"";position:absolute;left:28%;right:28%;top:-14px;height:14px;border-radius:2px 2px 0 0;background:var(--ink)}
+.prod .br{font-family:var(--head);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--gray)}
+.prod h4{font-size:14.5px;font-weight:400;line-height:1.35}
+.prod .ft{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:10px;gap:8px}
+.prod .pr{font-family:var(--head);font-size:17px}
+.stk{font-family:var(--head);font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+.stk.ok{color:var(--ok)}.stk.low{color:var(--warn)}.stk.out{color:var(--bad)}
+@media (max-width:980px){.shop{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:420px){.prod{padding:14px}.prod .btn.sm{letter-spacing:.08em;padding:9px 6px}}
+
+.book{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:56px;align-items:start}
+.info h4{font-family:var(--head);font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;margin:0 0 10px}
+.info > div{padding:22px 0;border-top:1px solid var(--rule)}
+.info p{margin:0;color:var(--gray);font-size:14.5px}
+.hrs{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.hrs td{padding:5px 0;font-size:14.5px}
+.hrs td:last-child{text-align:right;font-family:var(--head);letter-spacing:.06em}
+.hrs tr.today td{color:var(--cobalt);font-weight:500}
+.booker{border:1px solid var(--ink);background:var(--paper);padding:32px;min-width:0}
+.prog{display:flex;gap:4px;margin-bottom:24px}
+.prog i{flex:1;height:2px;background:var(--rule)}
+.prog i.on{background:var(--cobalt)}
+.booker h3{font-family:var(--head);font-weight:300;font-size:28px;letter-spacing:.06em;text-transform:uppercase}
+.booker .hint{color:var(--gray);font-size:14px;margin:6px 0 18px}
+.opts{display:grid;max-height:380px;overflow:auto;border-top:1px solid var(--rule)}
+.opt{display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:left;border:0;border-bottom:1px solid var(--rule);background:transparent;padding:14px 6px;cursor:pointer}
+.opt small{display:block;color:var(--gray);font-size:12.5px}
+.opt .p{font-family:var(--head);font-size:15px;white-space:nowrap}
+.opt[aria-pressed="true"]{background:var(--cobalt-soft);box-shadow:inset 3px 0 0 var(--cobalt)}
+.opt .who{display:flex;gap:12px;align-items:center}
+.mini-port{width:38px;height:38px;border-radius:50%;border:1px solid var(--rule);display:grid;place-items:center;font-family:var(--script);font-style:italic;font-size:17px;background:var(--bone);flex-shrink:0}
+.days{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px}
+.day{flex:0 0 62px;border:1px solid var(--rule);background:transparent;padding:10px 4px;text-align:center;cursor:pointer}
+.day small{display:block;font-family:var(--head);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray)}
+.day b{font-family:var(--head);font-weight:400;font-size:22px}
+.day[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+.day[aria-pressed="true"] small{color:var(--paper);opacity:.7}
+.day:disabled{opacity:.3;cursor:not-allowed}
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px;margin-top:16px}
+.slot{border:1px solid var(--rule);background:transparent;padding:10px 4px;font-family:var(--head);font-size:13px;letter-spacing:.06em;cursor:pointer}
+.slot[aria-pressed="true"]{background:var(--cobalt);border-color:var(--cobalt);color:#fff}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fld{display:grid;gap:6px}
+.fld label{font-family:var(--head);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray)}
+.fld input,.fld select,.fld textarea{border:0;border-bottom:1px solid var(--ink);background:transparent;padding:9px 0;font-size:15px;border-radius:0;min-width:0;width:100%}
+.fld textarea{min-height:64px;resize:vertical}
+.fld.full{grid-column:1/-1}
+.bnav{display:flex;justify-content:space-between;gap:10px;margin-top:26px}
+.sum{border-top:1px solid var(--rule);margin-top:18px;padding-top:14px;display:grid;gap:3px;font-size:14px}
+.sum b{font-family:var(--head);font-size:15px;letter-spacing:.06em}
+.pol{font-size:12.5px;color:var(--gray);margin:10px 0 0}
+.done{text-align:center;padding:10px 0}
+.done .mark{font-size:64px;margin-bottom:14px}
+@media (max-width:900px){.book{grid-template-columns:minmax(0,1fr);gap:20px}.booker{padding:22px}}
+@media (max-width:520px){.fg{grid-template-columns:minmax(0,1fr)}}
+
+.foot{background:var(--ink);color:var(--paper);padding-block:56px 28px}
+.foot .wrap{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:28px}
+.foot .wordmark{color:var(--paper);font-size:30px}
+.foot h4{font-family:var(--head);font-size:11px;letter-spacing:.22em;text-transform:uppercase;opacity:.6;margin-bottom:10px;font-weight:400}
+.foot p{margin:4px 0;font-size:14px;opacity:.85}
+.foot a{color:var(--paper)}
+.foot .fine{grid-column:1/-1;border-top:1px solid rgba(127,127,127,.3);padding-top:18px;margin-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:12px;opacity:.6}
+@media (max-width:900px){.foot .wrap{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+
+/* ============ ADMIN ============ */
+.adm{display:grid;grid-template-columns:240px minmax(0,1fr);min-height:100vh;background:var(--bone)}
+.side{background:#0b0b0d;color:#f2f1ee;padding:24px 14px;display:flex;flex-direction:column;gap:2px;position:sticky;top:0;height:100vh;overflow:auto;padding-left:max(14px,env(safe-area-inset-left,0px))}
+.side .wordmark{color:#f2f1ee;font-size:24px;padding:0 10px 26px}
+.side .wordmark .rx{color:#7aa9e6}
+.side a.nv{display:flex;align-items:center;gap:12px;color:#f2f1ee;opacity:.6;text-decoration:none;padding:10px;font-family:var(--head);font-size:12.5px;letter-spacing:.16em;text-transform:uppercase}
+.side a.nv svg{width:17px;height:17px;flex-shrink:0}
+.side a.nv:hover{opacity:1}
+.side a.nv[aria-current="page"]{opacity:1;box-shadow:inset 2px 0 0 #7aa9e6;background:rgba(255,255,255,.05)}
+.side .badge{margin-left:auto;font-family:var(--body);font-size:11px;letter-spacing:0;background:#7aa9e6;color:#0b0b0d;padding:0 7px;border-radius:9px}
+.side .grow{flex:1}
+.side .who-me{border-top:1px solid rgba(255,255,255,.12);padding:16px 10px 0;font-size:13px;opacity:.8}
+.side .who-me small{display:block;font-family:var(--head);font-size:10px;letter-spacing:.2em;text-transform:uppercase;opacity:.6}
+.main{min-width:0;padding-block:30px 70px;padding-left:max(28px,env(safe-area-inset-left,0px));padding-right:max(28px,env(safe-area-inset-right,0px))}
+.ah{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid var(--rule)}
+.ah h1{font-family:var(--head);font-weight:300;font-size:34px;letter-spacing:.06em;text-transform:uppercase;line-height:1}
+.ah .sub{color:var(--gray);font-size:14px;margin-top:8px}
+.ah .acts{display:flex;gap:8px;flex-wrap:wrap}
+.mnav{display:none}
+@media (max-width:900px){
+  .adm{grid-template-columns:minmax(0,1fr)}
+  .side{display:none}
+  .mnav{display:flex;gap:4px;overflow-x:auto;background:#0b0b0d;position:sticky;top:env(safe-area-inset-top,0px);z-index:10;padding:10px max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px))}
+  .mnav a{flex-shrink:0;color:#f2f1ee;opacity:.6;text-decoration:none;font-family:var(--head);font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:8px 10px}
+  .mnav a[aria-current="page"]{opacity:1;box-shadow:inset 0 -2px 0 #7aa9e6}
+  .main{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+}
+.panel{background:var(--paper);border:1px solid var(--rule);padding:22px;min-width:0}
+.panel .ph{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.panel h3{font-family:var(--head);font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:600}
+.g{display:grid;gap:18px}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.g2{grid-template-columns:minmax(0,1.45fr) minmax(0,1fr)}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:1050px){.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.g2,.g3{grid-template-columns:minmax(0,1fr)}}
+.kpi .k{font-family:var(--head);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gray)}
+.kpi .v{font-family:var(--head);font-weight:300;font-size:38px;line-height:1.1;margin-top:8px;font-variant-numeric:tabular-nums}
+.kpi .d{font-size:12.5px;margin-top:4px;color:var(--gray)}
+.kpi .d.up{color:var(--ok)}
+.st{display:inline-flex;align-items:center;gap:6px;font-family:var(--head);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+.st::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.s-ok{color:var(--ok)}.s-warn{color:var(--warn)}.s-bad{color:var(--bad)}.s-rx{color:var(--cobalt)}.s-mute{color:var(--gray)}
+.tw{overflow-x:auto}
+table.t{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+.t th{text-align:left;font-family:var(--head);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);font-weight:400;padding:8px;border-bottom:1px solid var(--ink);white-space:nowrap}
+.t td{padding:11px 8px;border-bottom:1px solid var(--rule);vertical-align:middle}
+.t tr:last-child td{border-bottom:0}
+.t .num{text-align:right;font-family:var(--head);letter-spacing:.04em}
+.t tr.click{cursor:pointer}
+.t tr.click:hover td{background:var(--cobalt-soft)}
+.t tr.sel td{background:var(--cobalt-soft)}
+.ls .it{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--rule);font-size:14px}
+.ls .it:last-child{border-bottom:0}
+.av{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-family:var(--script);font-style:italic;font-size:15px;border:1px solid var(--rule);background:var(--bone);flex-shrink:0}
+.who{display:flex;align-items:center;gap:10px;min-width:0}
+.who small{display:block;color:var(--gray);font-size:12px}
+.inp{border:1px solid var(--rule);background:var(--paper);padding:9px 12px;font-size:14px;min-width:0;border-radius:0}
+.seg{display:inline-flex;flex-wrap:wrap;border:1px solid var(--rule);background:var(--paper)}
+.seg button{border:0;background:transparent;padding:8px 12px;font-family:var(--head);font-size:11px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;color:var(--gray)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(16px);background:var(--ink);color:var(--paper);padding:12px 20px;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:60;max-width:calc(100% - 32px)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.cw{overflow-x:auto;border:1px solid var(--rule);background:var(--paper)}
+.cal{display:grid;min-width:980px}
+.ch{position:sticky;top:0;background:var(--paper);z-index:2;padding:12px 10px;border-bottom:1px solid var(--ink);border-left:1px solid var(--rule);font-family:var(--head);font-size:12px;letter-spacing:.14em;text-transform:uppercase;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.ch:first-child{border-left:0}
+.ch small{font-family:var(--body);letter-spacing:0;text-transform:none;color:var(--gray);font-size:11px}
+.tl{height:56px;font-family:var(--head);font-size:11px;letter-spacing:.06em;color:var(--gray);padding:4px 8px;border-bottom:1px solid var(--rule);text-align:right}
+.sc{position:relative;border-left:1px solid var(--rule);background:repeating-linear-gradient(180deg,transparent 0 55px,var(--rule) 55px 56px)}
+.sc.off{background:repeating-linear-gradient(135deg,var(--bone) 0 6px,transparent 6px 12px)}
+.ap{position:absolute;left:3px;right:3px;padding:5px 8px;font-size:12px;line-height:1.3;overflow:hidden;text-align:left;cursor:pointer;border:0;border-left:3px solid var(--ink);background:var(--bone);color:var(--ink)}
+.ap b{display:block;font-weight:500;font-size:12.5px}
+.ap .tm2{font-family:var(--head);font-size:10.5px;letter-spacing:.06em;color:var(--gray)}
+.ap.colour{border-left-color:var(--cobalt);background:var(--cobalt-soft)}
+.ap.ext{border-left-color:var(--gold)}
+.ap.new{outline:1px dashed var(--cobalt);outline-offset:-1px}
+.nowl{position:absolute;left:0;right:0;height:1px;background:var(--bad);z-index:1}
+.legend{display:flex;flex-wrap:wrap;gap:16px;font-size:12.5px;color:var(--gray);margin-top:12px}
+.legend i{display:inline-block;width:12px;height:12px;margin-right:6px;vertical-align:-1px}
+
+.cg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:18px}
+@media (max-width:1050px){.cg{grid-template-columns:minmax(0,1fr)}}
+.ccard{background:var(--paper);border:1px solid var(--ink);padding:26px}
+.ccard .hd{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;border-bottom:1px solid var(--ink);padding-bottom:16px;margin-bottom:16px}
+.ccard .hd h2{font-family:var(--head);font-weight:300;font-size:28px;letter-spacing:.04em}
+.ccard .hd .rxbig{font-family:var(--script);font-style:italic;font-size:46px;line-height:.8;color:var(--cobalt)}
+.ccard dl{display:grid;grid-template-columns:110px minmax(0,1fr);gap:12px 14px;margin:0;font-size:14px}
+.ccard dt{font-family:var(--head);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);padding-top:3px}
+.ccard dd{margin:0;min-width:0}
+.fx{font-family:"Courier New",monospace;font-size:13px;background:var(--bone);padding:10px 12px;white-space:pre-wrap;border-left:2px solid var(--cobalt)}
+.alert{color:var(--bad);border:1px solid currentColor;padding:8px 12px;font-size:13px;margin-top:14px}
+.hist .v{display:grid;grid-template-columns:90px minmax(0,1fr) auto;gap:12px;font-size:14px;padding:11px 0;border-bottom:1px solid var(--rule)}
+.hist .v:last-child{border-bottom:0}
+.hist .v span:first-child{font-family:var(--head);font-size:12px;letter-spacing:.06em;color:var(--gray)}
+@media (max-width:520px){.ccard dl{grid-template-columns:minmax(0,1fr)}.ccard{padding:18px}}
+
+.lvlbar{height:3px;background:var(--rule);min-width:70px;margin-top:6px}
+.lvlbar i{display:block;height:100%}
+.po{border:1px solid var(--rule);padding:14px;font-size:14px}
+.po + .po{margin-top:10px}
+.po small{display:block;font-family:var(--head);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);margin-bottom:6px}
+
+.pos{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:1050px){.pos{grid-template-columns:minmax(0,1fr)}}
+.pick{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));border-top:1px solid var(--rule);border-left:1px solid var(--rule);max-height:440px;overflow:auto}
+.pick button{text-align:left;border:0;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);background:var(--paper);padding:12px;cursor:pointer;font-size:13px}
+.pick button b{display:block;font-weight:500;font-size:13.5px}
+.pick button span{font-family:var(--head);color:var(--gray);font-size:12px;letter-spacing:.04em}
+.pick button:hover{background:var(--cobalt-soft)}
+.tkt{position:sticky;top:16px;background:var(--paper);border:1px solid var(--ink);padding:22px}
+.tkt .ln{display:flex;justify-content:space-between;gap:10px;font-size:14px;padding:8px 0;border-bottom:1px dotted var(--rule)}
+.tkt .ln button{border:0;background:none;color:var(--bad);cursor:pointer;padding:0 0 0 8px}
+.tkt .tot{display:flex;justify-content:space-between;font-size:14px;padding:4px 0}
+.tkt .grand{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--ink);margin-top:10px;padding-top:12px;font-family:var(--head);font-size:13px;letter-spacing:.2em;text-transform:uppercase}
+.tkt .grand b{font-weight:300;font-size:36px;letter-spacing:.02em}
+.tips{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--rule);margin:14px 0}
+.tips button{border:0;border-right:1px solid var(--rule);background:transparent;padding:9px 0;font-family:var(--head);font-size:12px;letter-spacing:.08em;cursor:pointer}
+.tips button:last-child{border-right:0}
+.tips button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+
+.chart svg{width:100%;height:auto;display:block}
+.hb{display:grid;grid-template-columns:120px minmax(0,1fr) 54px;gap:12px;align-items:center;font-size:13.5px;padding:6px 0}
+.hb .tr{height:6px;background:var(--bone)}
+.hb .tr i{display:block;height:100%;background:var(--ink)}
+.hb .tr i.b{background:var(--cobalt)}
+.hb .n{text-align:right;font-family:var(--head)}
+
+.mbg{position:fixed;inset:0;background:rgba(8,8,10,.55);display:grid;place-items:center;z-index:50;padding:16px}
+.modal{background:var(--paper);width:min(540px,100%);max-height:90vh;overflow:auto;border:1px solid var(--ink);padding:28px}
+.modal h3{font-family:var(--head);font-weight:300;font-size:26px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px}
+.sw{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--rule);font-size:14px}
+.sw input{width:20px;height:20px;accent-color:var(--cobalt);flex-shrink:0}
+.tmpl{border-left:2px solid var(--cobalt);padding:8px 0 8px 14px;font-size:14px}
+.tmpl + .tmpl{margin-top:12px}
+.tmpl small{display:block;font-family:var(--head);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);margin-bottom:3px}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="rxg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3a7cc4"/><stop offset="1" stop-color="#0f3a73"/></linearGradient>
+    <symbol id="rxmark" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="49" fill="url(#rxg)"/>
+      <path d="M50 1.5 C30 14 24 40 36 60 C46 76 66 90 82 95 A49 49 0 0 0 98.5 46 C96 22 76 4 50 1.5 Z" fill="#fff"/>
+      <path d="M50 1.5 C66 10 76 24 78 40 C70 30 60 24 48 22 C46 14 47 7 50 1.5 Z" fill="url(#rxg)"/>
+      <path d="M48 22 C62 26 72 38 74 54" stroke="url(#rxg)" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+      <path d="M61 77 q4.5 -3.5 9 0 q-4.5 4.5 -9 0 Z" fill="#1f5fa6"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div id="site">
+  <header class="top">
+    <div class="wrap">
+      <a class="wordmark" href="#home" aria-label="Salon Rx home"><span>SAL<svg class="mark" aria-hidden="true"><use href="#rxmark"/></svg>N<span class="rx">-Rx</span><small>your prescription to beauty</small></span></a>
+      <nav class="nav" aria-label="Sections"><a href="#menu">Services</a><a href="#weddings">Weddings</a><a href="#team">Team</a><a href="#shop">Shop</a><a href="#visit">Visit</a></nav>
+      <div class="top-r"><a class="staff" href="#admin-dashboard">Staff</a><a class="btn sm" href="#book">Book</a></div>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero" id="home">
+      <div class="wrap">
+        <div>
+          <h1><span>Salon Rx · Barrie</span>your prescription<br>to <em>beauty</em></h1>
+          <p>Colour, cuts, extensions and wedding hair at 213 Bayfield Street. Come in for the hair, stay for the tea, the cookies and the hand massage.</p>
+          <div class="ctas"><a class="btn blue" href="#book">Book an appointment</a><a class="btn line" href="#menu">Price list</a></div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <svg viewBox="0 0 400 400"><g stroke="var(--gold)" stroke-width="1" fill="none" id="burst"></g><circle cx="200" cy="200" r="128" fill="url(#rxg)"/><path d="M214 76 C170 104 160 170 186 222 C204 258 240 290 282 300" stroke="#fff" stroke-width="2" fill="none" opacity=".85"/><path d="M226 80 C190 112 184 168 206 212 C222 244 254 270 292 282" stroke="#fff" stroke-width="1" fill="none" opacity=".5"/></svg>
+          <div class="tag"><b>4.9 ★</b><span>from 138 Google reviews</span></div>
+        </div>
+      </div>
+      <div class="wrap"><div class="facts">
+        <div><b>10</b><span>stylists &amp; staff</span></div>
+        <div><b>2</b><span>extension methods: Hot Fusion &amp; Tape-In</span></div>
+        <div><b>Kérastase</b><span>in the chair &amp; to take home</span></div>
+        <div><b>Wed–Sat</b><span>early Saturdays from 8 am</span></div>
+      </div></div>
+    </div>
+
+    <section class="s">
+      <div class="wrap hp">
+        <blockquote>Your stylist listens first. Every appointment comes with a hairapist.<small>The Salon Rx philosophy</small></blockquote>
+        <ul class="rx-list">
+          <li><span class="n">i.</span><div><h3>Tea, coffee &amp; cookies</h3><p>Something warm while your colour processes. Tell us your order once and we'll remember it.</p></div></li>
+          <li><span class="n">ii.</span><div><h3>Hand &amp; scalp massage</h3><p>Part of every wash. Not an add-on, not an upsell.</p></div></li>
+          <li><span class="n">iii.</span><div><h3>Barrie water, handled</h3><p>Hard water dulls colour and brasses blondes. Kérastase decalcifying treatments lift the buildup.</p></div></li>
+          <li><span class="n">iv.</span><div><h3>Relationships, not rush jobs</h3><p>Your formula and history stay on file, so every visit picks up where the last one ended.</p></div></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="s bone" id="menu">
+      <div class="wrap">
+        <div class="s-head"><div><div class="lab">The price list</div><h2>Services <i>&amp;</i> pricing</h2></div><p>Longer or thicker hair and specialty techniques may cost more. Intermediate stylists are 25% off cuts and colour, so switch the list to see their prices.</p></div>
+        <div class="pl-bar">
+          <div class="tabs" id="plTabs" role="group" aria-label="Category"></div>
+          <div class="lvl" role="group" aria-label="Stylist level"><button type="button" id="lvl-senior" data-lvl="senior" aria-pressed="true">Senior</button><button type="button" id="lvl-inter" data-lvl="inter" aria-pressed="false">Intermediate</button></div>
+        </div>
+        <div class="pl" id="pl"></div>
+        <p class="pl-note">Cancellations need 24 hours' notice. Inside 24 hours, a $50 non-refundable charge applies to rebook.</p>
+      </div>
+    </section>
+
+    <section class="s" id="weddings">
+      <div class="wrap">
+        <div class="wed">
+          <div class="dark"><div class="lab">Weddings</div><h3>The morning of.</h3><p>Hair for the bride and the whole party, in the salon or on location. Book a trial and we'll plan the look and the timeline together.</p><p style="margin-top:22px"><a class="btn blue" href="#book" data-book="w-trial">Book a trial</a></p></div>
+          <div class="wed-p"><div><span>Bride</span><b>$135</b></div><div><span>Wedding party, each</span><b>$105</b></div><div><span>Trial</span><b>$130</b></div><div style="border-bottom:0"><span style="color:var(--gray)">Travel to venue</span><span style="letter-spacing:.04em;text-transform:none;color:var(--gray)">quoted by distance</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="s bone" id="team">
+      <div class="wrap">
+        <div class="s-head"><div><div class="lab">The team</div><h2>Meet your <i>hairapists</i></h2></div><p>Led by founder Allison Arksey. Book someone specific, or tell us what you want and we'll match you.</p></div>
+        <div class="team" id="team-grid"></div>
+      </div>
+    </section>
+
+    <section class="s">
+      <div class="wrap">
+        <div class="s-head"><div><div class="lab">4.9 stars · 138 reviews</div><h2>In their <i>words</i></h2></div></div>
+        <div class="revs">
+          <div class="rev"><q>Friendly staff, great service, reasonable price.</q><span>Google review</span></div>
+          <div class="rev"><q>They work well together for a relaxing experience.</q><span>Google review</span></div>
+          <div class="rev"><q>Cookies, tea, coffee and a fantastic hand massage.</q><span>Google review</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="s bone" id="shop">
+      <div class="wrap">
+        <div class="s-head"><div><div class="lab">Shop</div><h2>Take it <i>home</i></h2></div><p>The same products we use in the chair. Reserve online for curbside pickup or grab it at your next visit.</p></div>
+        <div class="shop-bar"><div class="tabs" id="shopTabs" role="group" aria-label="Brand"></div></div>
+        <div class="shop" id="shop-grid"></div>
+      </div>
+    </section>
+
+    <section class="s" id="book">
+      <div class="wrap book">
+        <div class="info" id="visit">
+          <div class="lab" style="margin-bottom:14px">Book &amp; visit</div>
+          <h2 style="font-family:var(--head);font-weight:300;font-size:clamp(34px,4.6vw,54px);text-transform:uppercase;letter-spacing:.02em;line-height:1;margin-bottom:28px">Book in a <span class="script" style="text-transform:none;color:var(--cobalt)">minute</span></h2>
+          <div><h4>Hours</h4><table class="hrs"><tbody id="pubHours"></tbody></table></div>
+          <div><h4>Find us</h4><p style="color:var(--ink)">213 Bayfield Street<br>Barrie, ON L4M 3B4</p><p>(705) 739-4044 · salonrx@icloud.com</p></div>
+          <div><h4>Cancellations</h4><p>24 hours' notice, please. Late cancellations carry a $50 non-refundable rebooking charge. We don't rebook after 3 last-minute cancellations.</p></div>
+        </div>
+        <div class="booker" id="booker" aria-live="polite"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <div><a class="wordmark" href="#home"><span>SAL<svg class="mark" aria-hidden="true"><use href="#rxmark"/></svg>N<span class="rx">-Rx</span></span></a><p style="margin-top:14px">More than just hair. Creating confidence, connection and a little self-care.</p></div>
+      <div><h4>Visit</h4><p>213 Bayfield St</p><p>Barrie, ON L4M 3B4</p><p>(705) 739-4044</p></div>
+      <div><h4>Follow</h4><p><a href="https://www.instagram.com/salon_rx" target="_blank" rel="noopener">Instagram</a></p><p><a href="https://www.facebook.com/SalonRxBarrie" target="_blank" rel="noopener">Facebook</a></p><p><a href="https://vm.tiktok.com/ZMRrYNy7C/" target="_blank" rel="noopener">TikTok</a></p></div>
+      <div><h4>Join the team</h4><p>Think you'd be a good fit? We'd love to meet you.</p><p><a href="#book">Get in touch</a></p></div>
+      <div class="fine"><span>© 2026 Salon Rx</span><span>Concept by Kooht Studio · <a href="#admin-dashboard">Staff login</a></span></div>
+    </div>
+  </footer>
+</div>
+
+<div id="admin" hidden>
+  <div class="adm">
+    <aside class="side" id="side" aria-label="Admin navigation"></aside>
+    <div style="min-width:0">
+      <nav class="mnav" id="mnav" aria-label="Admin sections"></nav>
+      <div class="main" id="am"></div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<div id="mroot"></div>
+
+<script>
+(function(){
+(function(){var g=document.getElementById('burst'),s='';for(var i=0;i<36;i++){var a=i/36*Math.PI*2,r1=150,r2=i%3===0?198:i%3===1?182:170;var x1=200+Math.cos(a)*r1,y1=200+Math.sin(a)*r1,x2=200+Math.cos(a)*r2,y2=200+Math.sin(a)*r2;s+='<line x1="'+x1.toFixed(1)+'" y1="'+y1.toFixed(1)+'" x2="'+x2.toFixed(1)+'" y2="'+y2.toFixed(1)+'"/>'+(i%3===0?'<circle cx="'+x2.toFixed(1)+'" cy="'+y2.toFixed(1)+'" r="2.4" fill="var(--gold)"/>':'')}g.innerHTML=s})();
+
+var HST=0.13;
+var STAFF=[
+  {id:'allison',name:'Allison Arksey',lvl:'owner',role:'Founder & owner',bio:'Colour and creative cutting, with a long-standing clientele.',days:[3,4,5,6],book:true},
+  {id:'tanya',name:'Tanya Noland',lvl:'senior',role:'Senior stylist',bio:'Creative colour, blondes, and men\'s and women\'s styling.',days:[3,4,6],book:true},
+  {id:'frank',name:'Frank Zanotti',lvl:'senior',role:'Senior stylist',bio:'Listens first and teaches you to style it at home.',days:[3,4,5],book:true},
+  {id:'nickie',name:'Nickie Pynn',lvl:'senior',role:'Senior stylist',bio:'Hot Fusion and Tape-In extensions, wearable everyday looks.',days:[4,5,6],book:true},
+  {id:'josh',name:'Josh Henderson',lvl:'senior',role:'Senior stylist',bio:'Lived-in blonde specialist who loves long hair and blowouts.',days:[3,4,5,6],book:true},
+  {id:'kim',name:'Kim Garcia',lvl:'inter',role:'Intermediate stylist',bio:'Balayage, textured cuts and men\'s cuts.',days:[3,4,6],book:true},
+  {id:'alana',name:'Alana Ruscio',lvl:'junior',role:'Junior stylist',bio:'Your go-to for hair care and product knowledge.',days:[4,5,6],book:true},
+  {id:'tryla',name:'Tryla',lvl:'junior',role:'Junior stylist',bio:'Recent graduate bringing fresh energy to every appointment.',days:[3,5,6],book:true},
+  {id:'hillary',name:'Hillary Calder',lvl:'desk',role:'Front desk',bio:'The friendly face at the door and the voice on the phone.',days:[3,4,5,6],book:false},
+  {id:'kristie',name:'Kristie Stoodley',lvl:'social',role:'Social media',bio:'Years in fashion and publishing, now behind our feed.',days:[],book:false}
+];
+var BOOKABLE=STAFF.filter(function(s){return s.book});
+var CATS=['Blow dry','Cut','Colour','Treatments','Weddings'];
+var SERVICES=[
+  ['bd-reg','Blow dry','Blow dry & finish · regular',50,45,0],['bd-long','Blow dry','Blow dry & finish · long hair',60,60,0],['bd-formal','Blow dry','Formal style',85,60,0],['bd-updo','Blow dry','Updo',105,75,0],
+  ['cut-sr','Cut','Cut & style',75,60,1],['cut-long','Cut','Cut & style · long hair',90,75,1],['cut-m','Cut','Men\'s cut',45,30,1],['cut-g','Cut','Girls (under 10)',50,45,1],['cut-b','Cut','Boys (under 10)',35,30,1],
+  ['c-cheat','Colour','Cheater (10 foils)',90,75,1],['c-half','Colour','Half head foils (toner extra)',115,120,1,'+'],['c-full','Colour','Full head foils (toner extra)',150,150,1,'+'],['c-basefull','Colour','Base + full head',205,180,1,'+'],['c-base10','Colour','Base + 10 foils',145,120,1,'+'],['c-basehalf','Colour','Base + half head',170,150,1,'+'],['c-pre','Colour','Pre-lighten',90,90,1],['c-roots','Colour','Roots',75,90,1],['c-all','Colour','All over',100,120,1,'+'],['c-elumen','Colour','Elumen',165,150,1,'+'],['c-bal','Colour','Full balayage',225,180,1,'+'],['c-balr','Colour','Full balayage + roots',280,210,1],['c-ref','Colour','Balayage refresh',175,150,1],['c-refr','Colour','Balayage refresh + roots',230,180,1],['c-toner','Colour','Toner',30,30,1],['c-melt','Colour','Hair melt / root tap',60,45,1],
+  ['t-deluxe','Treatments','Deluxe treatment',30,20,0,'+'],['t-fusio','Treatments','Kérastase Fusio',25,15,0],['t-perm','Treatments','Texture perm',140,150,0],['t-ext','Treatments','Extension consultation',0,30,0],
+  ['w-bride','Weddings','Bride',135,90,0],['w-party','Weddings','Wedding party, each',105,60,0],['w-trial','Weddings','Wedding trial',130,90,0]
+].map(function(s){return {id:s[0],cat:s[1],name:s[2],price:s[3],dur:s[4],tier:!!s[5],plus:s[6]||''}});
+function P(b,n,pr,stock,par,c){return {sku:(b.slice(0,3)+'-'+n.replace(/[^A-Za-z]/g,'').slice(0,8)).toUpperCase(),brand:b,name:n,type:'Retail',cost:+(pr*0.5).toFixed(2),price:pr,stock:stock,par:par,sup:b==='Salon Rx'?'In-house':b,color:c}}
+var PRODUCTS=[
+  P('Kérastase','Bain Décalcifiant Réparateur Shampoo',60,8,4,'#f1efe9'),P('Kérastase','Concentré Décalcifiant Ultra-Réparateur',89,6,3,'#f1efe9'),P('Kérastase','Masque Filler Réparateur',100,4,3,'#e9e4f2'),P('Kérastase','Serum Filler Fondamental',89,5,3,'#e9e4f2'),
+  P('Kérastase','Nectar Thermique Heat Protector',65,7,4,'#2b2b2b'),P('Kérastase','8H Magic Night Serum',89,5,3,'#5a4d8c'),P('Kérastase','Elixir Ultime Original Hair Oil',74,6,4,'#d8b46a'),P('Kérastase','Chroma Absolu Bain Chroma Respect',60,9,4,'#7b2633'),
+  P('Kérastase','Chroma Absolu Masque Vert',68,1,3,'#3f6b4f'),P('Kérastase','Bain Extentioniste Shampoo',60,6,3,'#e7e2d8'),P('Kérastase','Extentioniste Scalp & Hair Serum',78,5,2,'#e7e2d8'),P('Kérastase','Fresh Affair Dry Shampoo',56,0,3,'#cfd7de'),
+  P('Kérastase','Bain Ultra-Violet Shampoo',60,6,4,'#6b55a6'),P('Kérastase','Curl Manifesto Gelée Curl Contour',65,4,2,'#c79a5a'),
+  P('Moroccanoil','Treatment Original 100 ml',55,9,6,'#2b8a8a'),P('Moroccanoil','Treatment Original Light 100 ml',55,7,4,'#3aa0a0'),P('Moroccanoil','Hydrating Styling Cream 300 ml',40,5,3,'#2b8a8a'),P('Moroccanoil','Luminous Hairspray · Strong',30,2,4,'#2b8a8a'),P('Moroccanoil','Dry Shampoo · Light Tones 205 ml',36,6,3,'#c27b4e'),P('Moroccanoil','Ceramic 45 mm Round Brush',36,4,2,'#1b1b1b'),
+  P('Color Wow','Dream Coat Anti-Frizz 200 ml',32,11,6,'#d9a3c0'),P('Color Wow','Dream Coat for Curly Hair',29,6,3,'#c78bb0'),P('Color Wow','Dream Cocktail Carb-Infused',34,5,3,'#e2b8cf'),
+  P('Schwarzkopf OSiS+','Session Extreme Hold Hairspray 500 ml',21,8,4,'#1b1b1b'),P('Schwarzkopf OSiS+','Sparkler Shine Spray',19,2,3,'#1b1b1b'),
+  P('KMS','Head Remedy Deep Cleanse Shampoo 300 ml',30,5,3,'#6c7d88'),
+  P('Salon Rx','Toner Kit',25,6,4,'#1f5fa6'),P('Salon Rx','Root Kit',60,5,4,'#1f5fa6')
+];
+var BACKBAR=[
+  {sku:'GW-TC7N',brand:'Goldwell',name:'Topchic 7N, 60 ml',type:'Back bar',cost:12,price:0,stock:14,par:8,sup:'Goldwell'},
+  {sku:'GW-TC6RB',brand:'Goldwell',name:'Topchic 6RB, 60 ml',type:'Back bar',cost:12,price:0,stock:5,par:6,sup:'Goldwell'},
+  {sku:'GW-ELU',brand:'Goldwell',name:'Elumen GB@6, 200 ml',type:'Back bar',cost:38,price:0,stock:4,par:2,sup:'Goldwell'},
+  {sku:'GW-OXY',brand:'Goldwell',name:'Oxycur Platin lightener 500 g',type:'Back bar',cost:46,price:0,stock:5,par:3,sup:'Goldwell'},
+  {sku:'GW-DEV6',brand:'Goldwell',name:'Topchic developer 6%, 1 L',type:'Back bar',cost:16,price:0,stock:5,par:4,sup:'Goldwell'},
+  {sku:'SUP-FOIL',brand:'Supplies',name:'Foil roll 5"',type:'Back bar',cost:24,price:0,stock:2,par:3,sup:'Salon supply'},
+  {sku:'EXT-HF',brand:'Extensions',name:'Hot Fusion bonds, 22" (pack)',type:'Extensions',cost:150,price:0,stock:4,par:2,sup:'Extension supplier'},
+  {sku:'EXT-TI',brand:'Extensions',name:'Tape-In wefts, 20" (pack)',type:'Extensions',cost:95,price:0,stock:1,par:3,sup:'Extension supplier'}
+];
+var CLIENTS=[
+  {id:'c1',name:'Megan Doyle',phone:'705-555-0142',email:'megan.d@example.com',stylist:'allison',since:'2017',visits:44,spend:6120,last:-27,pref:'Oat latte, chocolate chip cookie',allergy:'',patch:-40,formula:'Base: Topchic 7N + 7G 1:1 · 6% · 35 min\nFoils: Oxycur Platin + 6%, babylights\nToner: 9V + 9N 1:1 · 20 min',notes:'Soft at the hairline. Hard water at home, add decalcifying treatment.'},
+  {id:'c2',name:'Priya Raman',phone:'705-555-0177',email:'priya.r@example.com',stylist:'nickie',since:'2022',visits:16,spend:4210,last:-49,pref:'Green tea, no sugar',allergy:'PPD sensitivity, use Elumen',patch:-120,formula:'Tape-In 20", 6 packs\nElumen over lifted ends · 20 min',notes:'Extension move-up due. Prefers Wednesday evenings.'},
+  {id:'c3',name:'Dana Whitfield',phone:'705-555-0119',email:'dana.w@example.com',stylist:'tanya',since:'2016',visits:58,spend:7120,last:-12,pref:'Black coffee',allergy:'',patch:-30,formula:'Pre-lighten mid to ends\nVivid blue: direct dye, cobalt + clear 1:1',notes:'The blue! Refresh every 5 weeks. Sulphate-free at home.'},
+  {id:'c4',name:'Jordan Ellis',phone:'705-555-0164',email:'jordan.e@example.com',stylist:'kim',since:'2024',visits:6,spend:270,last:-21,pref:'Water',allergy:'',patch:null,formula:'—',notes:'Short taper, #2 sides, scissor on top.'},
+  {id:'c5',name:'Sophie Lambert',phone:'705-555-0108',email:'sophie.l@example.com',stylist:'tanya',since:'2026',visits:1,spend:130,last:-60,pref:'Chai',allergy:'',patch:null,formula:'Trial: low textured bun, face-framing pieces',notes:'Wedding 12 June 2027 · party of 5 · on location.'},
+  {id:'c6',name:'Rachel Kim',phone:'705-555-0131',email:'rachel.k@example.com',stylist:'frank',since:'2020',visits:24,spend:3280,last:-35,pref:'Peppermint tea',allergy:'Latex',patch:-200,formula:'All over: Topchic 5N + 6RB 2:1 · 6% · 35 min',notes:'Grey coverage at temples. Patch test expired.'},
+  {id:'c7',name:'Hannah Morris',phone:'705-555-0185',email:'hannah.m@example.com',stylist:'josh',since:'2021',visits:19,spend:3655,last:-8,pref:'Latte, oat milk',allergy:'',patch:-90,formula:'Balayage: Oxycur Platin + 6%, open-air\nToner: 8V + 9N 1:1',notes:'Winter: richer tone, keep the dimension.'},
+  {id:'c8',name:'Olivia Tremblay',phone:'705-555-0150',email:'olivia.t@example.com',stylist:'josh',since:'2023',visits:9,spend:1990,last:-63,pref:'Coffee, 2 creams',allergy:'',patch:-150,formula:'Hot Fusion 22", 100 g',notes:'Overdue for maintenance.'}
+];
+
+var HOURS={0:null,1:null,2:null,3:[10,20],4:[10,20],5:[10,16],6:[8,14]};
+var DAYN=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+function dayKey(d){return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()}
+function parseKey(k){var p=k.split('-');return new Date(+p[0],+p[1]-1,+p[2])}
+function openDay(){var d=new Date();d.setHours(0,0,0,0);for(var i=0;i<8;i++){var h=HOURS[d.getDay()];if(h&&!(i===0&&new Date().getHours()>=h[1]))return d;d.setDate(d.getDate()+1)}return new Date()}
+function staff(id){return STAFF.filter(function(s){return s.id===id})[0]}
+var KEY='salonrx-demo-v3',S;
+function fresh(){
+  var od=openDay(),k=dayKey(od),wd=od.getDay(),oh=HOURS[wd];
+  var seed=[['allison','c1','c-basehalf',10,0,'confirmed'],['allison','c3','c-toner',13,30,'confirmed'],['tanya','c3','c-pre',10,0,'arrived'],['tanya','c5','w-trial',13,0,'confirmed'],['frank','c6','c-all',11,0,'pending'],['frank','c4','cut-m',14,0,'confirmed'],['nickie','c2','t-ext',10,30,'confirmed'],['josh','c7','c-ref',10,0,'confirmed'],['josh','c8','c-bal',13,30,'confirmed'],['kim','c4','cut-sr',11,30,'confirmed'],['alana','c1','bd-reg',12,0,'confirmed'],['tryla','c6','bd-long',10,30,'confirmed']];
+  var appts=seed.filter(function(a){return staff(a[0]).days.indexOf(wd)>-1&&a[3]>=oh[0]&&a[3]<oh[1]-1}).map(function(a,i){return {id:'a'+i,staff:a[0],client:a[1],svc:a[2],date:k,h:a[3],m:a[4],status:a[5]}});
+  return {seed:k,appts:appts,clients:JSON.parse(JSON.stringify(CLIENTS)),products:JSON.parse(JSON.stringify(PRODUCTS.concat(BACKBAR))),services:JSON.parse(JSON.stringify(SERVICES)),sales:[{t:'Card',total:271.20,svc:205,ret:35,tip:0}],reserved:[],settings:{online:true,deposit:false,reminders:true,rebook:true,reviews:true,patch:true}};
+}
+function load(){try{var r=localStorage.getItem(KEY);if(r){S=JSON.parse(r);if(S.seed===dayKey(openDay()))return}}catch(e){}S=fresh()}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+load();
+
+function $(s,r){return (r||document).querySelector(s)}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function money(n){return '$'+Number(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',')}
+function m0(n){var v=Math.round(n*100)/100;return '$'+(v%1?v.toFixed(2):v.toLocaleString())}
+function fmtT(h,m){var ap=h>=12?'pm':'am',hh=h%12||12;return hh+(m?':'+String(m).padStart(2,'0'):'')+' '+ap}
+function svc(id){return S.services.filter(function(s){return s.id===id})[0]}
+function client(id){return S.clients.filter(function(c){return c.id===id})[0]}
+function ini(n){return n.split(' ').map(function(x){return x[0]}).join('').slice(0,2)}
+function priceFor(s,sid){var st=sid&&staff(sid);if(s.tier&&st&&st.lvl==='inter')return s.price*0.75;return s.price}
+function toast(t){var el=$('#toast');el.textContent=t;el.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(function(){el.classList.remove('show')},2600)}
+function ago(n){if(n==null)return '—';var d=new Date();d.setDate(d.getDate()+n);return d.toLocaleDateString([], {month:'short',day:'numeric'})}
+function catClass(s){return s.cat==='Colour'?'colour':s.id==='t-ext'?'ext':''}
+
+var plCat='Colour',plLvl='senior';
+function drawPL(){
+  $('#plTabs').innerHTML=CATS.map(function(c){return '<button type="button" id="pl-'+c.replace(/\W/g,'').toLowerCase()+'" aria-pressed="'+(c===plCat)+'">'+c+'</button>'}).join('');
+  var list=S.services.filter(function(s){return s.cat===plCat}),half=Math.ceil(list.length/2);
+  function row(s){var p=s.price,disc=plLvl==='inter'&&s.tier;return '<div class="pl-row"><span class="nm">'+esc(s.name)+'</span><span class="dots"></span><span class="pr">'+(p?(disc?'<s>'+m0(p)+'</s>'+m0(p*.75):m0(p))+s.plus:'Free')+'</span><button type="button" data-book="'+s.id+'">Book</button></div>'}
+  $('#pl').innerHTML='<div class="pl-group">'+list.slice(0,half).map(row).join('')+'</div><div class="pl-group">'+list.slice(half).map(row).join('')+'</div>';
+  document.querySelectorAll('.lvl button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.lvl===plLvl)});
+}
+$('#plTabs').addEventListener('click',function(e){var b=e.target.closest('button');if(b){plCat=b.textContent;drawPL()}});
+document.querySelector('.lvl').addEventListener('click',function(e){var b=e.target.closest('button');if(b){plLvl=b.dataset.lvl;drawPL()}});
+drawPL();
+$('#team-grid').innerHTML=STAFF.map(function(s){return '<div class="tm"><div class="port">'+ini(s.name)+'</div><h4>'+esc(s.name)+'</h4><div class="r">'+esc(s.role)+'</div><p>'+esc(s.bio)+'</p></div>'}).join('');
+var shopBrand='All';
+function drawShop(){
+  var brands=['All','Kérastase','Moroccanoil','Color Wow','Schwarzkopf OSiS+','KMS','Salon Rx'];
+  $('#shopTabs').innerHTML=brands.map(function(b){return '<button type="button" aria-pressed="'+(b===shopBrand)+'">'+(b==='Schwarzkopf OSiS+'?'OSiS+':b)+'</button>'}).join('');
+  var list=S.products.filter(function(p){return p.type==='Retail'&&(shopBrand==='All'||p.brand===shopBrand)}).slice(0,shopBrand==='All'?12:30);
+  $('#shop-grid').innerHTML=list.map(function(p){var h=60+(p.price%5)*8+(p.price>80?18:0);
+    var st=p.stock<=0?'<span class="stk out">Sold out</span>':p.stock<=2?'<span class="stk low">'+p.stock+' left</span>':'<span class="stk ok">In stock</span>';
+    var res=S.reserved.indexOf(p.sku)>-1;
+    return '<div class="prod"><div class="btl"><i style="height:'+h+'px;background:'+p.color+'"></i></div><div class="br">'+esc(p.brand)+'</div><h4>'+esc(p.name)+'</h4><div class="ft"><span class="pr">'+m0(p.price)+'</span>'+st+'</div><button type="button" class="btn sm '+(res?'blue':'line')+'" data-reserve="'+p.sku+'" '+(p.stock<=0?'disabled':'')+'>'+(res?'Reserved':'Reserve · curbside')+'</button></div>'}).join('');
+}
+$('#shopTabs').addEventListener('click',function(e){var b=e.target.closest('button');if(b){var t=b.textContent;shopBrand=t==='OSiS+'?'Schwarzkopf OSiS+':t;drawShop()}});
+drawShop();
+(function(){var d=new Date().getDay();$('#pubHours').innerHTML=[3,4,5,6,0,1,2].map(function(i){var h=HOURS[i];return '<tr'+(i===d?' class="today"':'')+'><td>'+DAYN[i]+'</td><td>'+(h?fmtT(h[0],0)+' – '+fmtT(h[1],0):'Closed')+'</td></tr>'}).join('')})();
+
+document.addEventListener('click',function(e){
+  var r=e.target.closest('[data-reserve]');
+  if(r){var k=r.dataset.reserve,i=S.reserved.indexOf(k);if(i>-1)S.reserved.splice(i,1);else{S.reserved.push(k);toast('Reserved. We\'ll have it ready for curbside pickup.')}save();drawShop()}
+  var b=e.target.closest('[data-book]');
+  if(b){bk={step:1,svc:b.dataset.book,staff:'any',date:null,time:null};drawBooker();if(b.tagName==='BUTTON')location.hash='book'}
+});
+
+var bk={step:0,svc:null,staff:'any',date:null,time:null};
+function canDo(sid,s){var st=staff(sid);if(s.cat==='Colour'&&st.lvl==='junior')return false;return true}
+function free(dateObj,sid,s){
+  var h=HOURS[dateObj.getDay()];if(!h)return [];var key=dayKey(dateObj),out=[],now=new Date(),dur=s.dur;
+  var pool=sid==='any'?BOOKABLE.filter(function(x){return canDo(x.id,s)}).map(function(x){return x.id}):[sid];
+  for(var t=h[0]*60;t+dur<=h[1]*60;t+=30){
+    if(key===dayKey(now)&&t<=now.getHours()*60+now.getMinutes()+30)continue;
+    if(pool.some(function(id){var st=staff(id);if(st.days.indexOf(dateObj.getDay())<0)return false;return !S.appts.some(function(a){if(a.staff!==id||a.date!==key)return false;var s0=a.h*60+a.m,e0=s0+svc(a.svc).dur;return t<e0&&t+dur>s0})}))out.push(t);
+  }
+  return out;
+}
+function drawBooker(){
+  var el=$('#booker'),s=bk.svc&&svc(bk.svc);
+  if(!S.settings.online){el.innerHTML='<h3>Booking paused</h3><p class="hint">Call (705) 739-4044 and Hillary will find you a time.</p>';return}
+  var h='<div class="prog">'+[0,1,2,3].map(function(i){return '<i class="'+(i<=bk.step?'on':'')+'"></i>'}).join('')+'</div>';
+  if(bk.step===0){
+    h+='<h3>Choose a service</h3><p class="hint">One to start. Add more at the chair.</p><div class="opts">'+S.services.map(function(x){return '<button type="button" class="opt" data-pick="'+x.id+'" aria-pressed="'+(bk.svc===x.id)+'"><span><b style="font-weight:500">'+esc(x.name)+'</b><small>'+x.cat+' · '+x.dur+' min</small></span><span class="p">'+(x.price?m0(x.price)+x.plus:'Free')+'</span></button>'}).join('')+'</div>';
+  }else if(bk.step===1){
+    h+='<h3>Choose a stylist</h3><p class="hint">'+esc(s.name)+'</p><div class="opts"><button type="button" class="opt" data-staff="any" aria-pressed="'+(bk.staff==='any')+'"><span class="who"><span class="mini-port">Rx</span><span><b style="font-weight:500">First available</b><small>We\'ll match you with the right person</small></span></span></button>'+
+      BOOKABLE.filter(function(x){return canDo(x.id,s)}).map(function(x){var p=priceFor(s,x.id);return '<button type="button" class="opt" data-staff="'+x.id+'" aria-pressed="'+(bk.staff===x.id)+'"><span class="who"><span class="mini-port">'+ini(x.name)+'</span><span><b style="font-weight:500">'+esc(x.name)+'</b><small>'+esc(x.role)+'</small></span></span><span class="p">'+(s.price?m0(p)+s.plus:'Free')+'</span></button>'}).join('')+'</div>';
+  }else if(bk.step===2){
+    var base=new Date();base.setHours(0,0,0,0);
+    if(!bk.date){for(var k=0;k<21;k++){var dd=new Date(base);dd.setDate(dd.getDate()+k);if(free(dd,bk.staff,s).length){bk.date=dayKey(dd);break}}}
+    var ds='';for(var i=0;i<21;i++){var d=new Date(base);d.setDate(d.getDate()+i);var n=free(d,bk.staff,s).length;ds+='<button type="button" class="day" data-date="'+dayKey(d)+'" aria-pressed="'+(bk.date===dayKey(d))+'" '+(n?'':'disabled')+'><small>'+DAYS[d.getDay()]+'</small><b>'+d.getDate()+'</b><small>'+(n?n+' open':'—')+'</small></button>'}
+    var sl=bk.date?free(parseKey(bk.date),bk.staff,s):[];
+    h+='<h3>Choose a time</h3><p class="hint">'+esc(s.name)+' · '+(bk.staff==='any'?'First available':esc(staff(bk.staff).name))+'</p><div class="days">'+ds+'</div><div class="slots">'+(sl.length?sl.map(function(t){return '<button type="button" class="slot" data-time="'+t+'" aria-pressed="'+(bk.time===t)+'">'+fmtT(Math.floor(t/60),t%60)+'</button>'}).join(''):'<p class="hint">No openings that day.</p>')+'</div>';
+  }else if(bk.step===3){
+    var d2=parseKey(bk.date),pr=bk.staff==='any'?s.price:priceFor(s,bk.staff);
+    h+='<h3>Your details</h3><p class="hint">We\'ll text a reminder the day before.</p><div class="fg">'+
+      '<div class="fld"><label for="bk-name">Name</label><input id="bk-name" autocomplete="name" value="'+esc(bk.name||'')+'"></div>'+
+      '<div class="fld"><label for="bk-phone">Mobile</label><input id="bk-phone" type="tel" autocomplete="tel" value="'+esc(bk.phone||'')+'"></div>'+
+      '<div class="fld full"><label for="bk-email">Email</label><input id="bk-email" type="email" autocomplete="email" value="'+esc(bk.email||'')+'"></div>'+
+      '<div class="fld full"><label for="bk-note">Inspo, allergies, or your tea order</label><textarea id="bk-note">'+esc(bk.note||'')+'</textarea></div></div>'+
+      '<div class="sum"><b>'+esc(s.name)+'</b><span>'+DAYN[d2.getDay()]+', '+d2.toLocaleDateString([], {month:'long',day:'numeric'})+' at '+fmtT(Math.floor(bk.time/60),bk.time%60)+' · '+s.dur+' min</span><span>'+(bk.staff==='any'?'First available stylist':esc(staff(bk.staff).name))+' · '+(s.price?m0(pr)+s.plus:'Free')+'</span></div>'+
+      (S.settings.patch&&s.cat==='Colour'?'<p class="pol">First colour with us? We\'ll set up a quick patch test 48 hours before.</p>':'')+
+      '<p class="pol">24 hours\' notice to change or cancel, or a $50 rebooking charge applies.'+(S.settings.deposit?' A $25 deposit holds the spot.':'')+'</p>';
+  }else{
+    h='<div class="done"><svg class="mark" aria-hidden="true"><use href="#rxmark"/></svg><h3>You\'re booked</h3><p class="hint">'+esc(bk.summary)+'</p><p class="hint">Confirmation sent'+(bk.email?' to '+esc(bk.email):'')+'. Tea\'s on us.</p><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px"><button type="button" class="btn line sm" id="bkAgain">Book another</button><a class="btn sm" href="#admin-calendar">See it in the salon calendar</a></div></div>';
+  }
+  if(bk.step<4){var can=(bk.step===0&&bk.svc)||bk.step===1||(bk.step===2&&bk.date&&bk.time!=null)||bk.step===3;
+    h+='<div class="bnav">'+(bk.step>0?'<button type="button" class="btn line" id="bkBack">Back</button>':'<span></span>')+'<button type="button" class="btn '+(bk.step===3?'blue':'')+'" id="bkNext" '+(can?'':'disabled')+'>'+(bk.step===3?'Confirm booking':'Continue')+'</button></div>'}
+  el.innerHTML=h;
+}
+function keep(){['name','phone','email','note'].forEach(function(k){var el=$('#bk-'+k);if(el)bk[k]=el.value.trim()})}
+$('#booker').addEventListener('click',function(e){
+  var t=e.target.closest('button');if(!t)return;
+  if(t.dataset.pick){bk.svc=t.dataset.pick;bk.staff='any';bk.date=null;bk.time=null;drawBooker();return}
+  if(t.dataset.staff){bk.staff=t.dataset.staff;bk.date=null;bk.time=null;drawBooker();return}
+  if(t.dataset.date){bk.date=t.dataset.date;bk.time=null;drawBooker();return}
+  if(t.dataset.time){bk.time=+t.dataset.time;drawBooker();return}
+  if(t.id==='bkBack'){keep();bk.step--;drawBooker();return}
+  if(t.id==='bkAgain'){bk={step:0,svc:null,staff:'any',date:null,time:null};drawBooker();return}
+  if(t.id==='bkNext'){
+    if(bk.step===3){keep();if(!bk.name||!bk.phone){toast('Add your name and mobile so we can confirm.');return}
+      var s=svc(bk.svc),d=parseKey(bk.date),sid=bk.staff;
+      if(sid==='any')sid=BOOKABLE.filter(function(x){return canDo(x.id,s)&&x.days.indexOf(d.getDay())>-1&&free(d,x.id,s).indexOf(bk.time)>-1})[0].id;
+      var cl=S.clients.filter(function(c){return c.phone===bk.phone||c.name.toLowerCase()===bk.name.toLowerCase()})[0];
+      if(!cl){cl={id:'c'+Date.now(),name:bk.name,phone:bk.phone,email:bk.email||'',stylist:sid,since:'2026',visits:0,spend:0,last:null,pref:'',allergy:'',patch:null,formula:'—',notes:bk.note||'New client · booked online'};S.clients.unshift(cl)}
+      S.appts.push({id:'w'+Date.now(),staff:sid,client:cl.id,svc:s.id,date:bk.date,h:Math.floor(bk.time/60),m:bk.time%60,status:'new'});
+      bk.summary=s.name+' with '+staff(sid).name+', '+DAYN[d.getDay()]+' '+d.toLocaleDateString([], {month:'short',day:'numeric'})+' at '+fmtT(Math.floor(bk.time/60),bk.time%60);
+      save();bk.step=4;drawBooker();return}
+    bk.step++;drawBooker();
+  }
+});
+drawBooker();
+
+var IC={dashboard:'<path d="M3 13h8V3H3zM13 21h8V11h-8zM3 21h8v-6H3zM13 3v6h8V3z"/>',calendar:'<rect x="3" y="4" width="18" height="17"/><path d="M3 9h18M8 2v4M16 2v4"/>',clients:'<circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M17 11a3 3 0 1 0 0-6M22 21a6 6 0 0 0-4-5.6"/>',checkout:'<rect x="2" y="5" width="20" height="14"/><path d="M2 10h20M6 15h4"/>',inventory:'<path d="M21 8l-9-5-9 5 9 5z"/><path d="M3 8v8l9 5 9-5V8M12 13v8"/>',services:'<path d="M6 3l12 18M18 3L6 21"/><circle cx="5" cy="5" r="2"/><circle cx="19" cy="5" r="2"/>',staff:'<circle cx="12" cy="7" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',reports:'<path d="M3 21h18M6 17V9M11 17V5M16 17v-6M21 17v-3"/>',marketing:'<path d="M3 11l15-6v14L3 13z"/><path d="M7 13v5a2 2 0 0 0 4 0v-4"/>',settings:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>'};
+var PAGES=[['dashboard','Today'],['calendar','Calendar'],['clients','Clients'],['checkout','Checkout'],['inventory','Inventory'],['services','Services'],['staff','Team'],['reports','Reports'],['marketing','Marketing'],['settings','Settings']];
+var page='dashboard',calDay=openDay(),selC='c1',cart=[],cartC='',tip=15,invF='All',invQ='',cliQ='';
+function low(){return S.products.filter(function(p){return p.stock<=p.par}).length}
+function nnew(){return S.appts.filter(function(a){return a.status==='new'}).length}
+function nav(){
+  var badge={inventory:low(),calendar:nnew()};
+  $('#side').innerHTML='<a class="wordmark" href="#home"><span>SAL<svg class="mark" aria-hidden="true"><use href="#rxmark"/></svg>N<span class="rx">-Rx</span></span></a>'+PAGES.map(function(p){return '<a class="nv" href="#admin-'+p[0]+'" '+(page===p[0]?'aria-current="page"':'')+'><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">'+IC[p[0]]+'</svg>'+p[1]+(badge[p[0]]?'<span class="badge">'+badge[p[0]]+'</span>':'')+'</a>'}).join('')+'<div class="grow"></div><div class="who-me"><small>Signed in</small>Allison Arksey · Owner<br><a href="#home" style="color:#7aa9e6;font-size:12.5px">View website →</a></div>';
+  $('#mnav').innerHTML='<a href="#home">Site</a>'+PAGES.map(function(p){return '<a href="#admin-'+p[0]+'" '+(page===p[0]?'aria-current="page"':'')+'>'+p[1]+(badge[p[0]]?' · '+badge[p[0]]:'')+'</a>'}).join('');
+}
+function head(t,sub,a){return '<div class="ah"><div><h1>'+t+'</h1><div class="sub">'+sub+'</div></div><div class="acts">'+(a||'')+'</div></div>'}
+function kpi(k,v,d,up){return '<div class="panel kpi"><div class="k">'+k+'</div><div class="v">'+v+'</div><div class="d '+(up?'up':'')+'">'+d+'</div></div>'}
+function stat(s){return {confirmed:'<span class="st s-rx">Confirmed</span>',arrived:'<span class="st s-ok">In the chair</span>',pending:'<span class="st s-warn">Unconfirmed</span>',new:'<span class="st s-warn">New · online</span>',done:'<span class="st s-ok">Paid</span>',noshow:'<span class="st s-bad">No-show</span>'}[s]}
+function dayAppts(k){return S.appts.filter(function(a){return a.date===k}).sort(function(a,b){return a.h*60+a.m-(b.h*60+b.m)})}
+
+function pDashboard(){
+  var od=openDay(),k=dayKey(od),isT=k===dayKey(new Date()),ta=dayAppts(k),hh=HOURS[od.getDay()],now=new Date();
+  var booked=ta.reduce(function(s,a){return s+priceFor(svc(a.svc),a.staff)},0),taken=S.sales.reduce(function(s,x){return s+x.total},0),ret=S.sales.reduce(function(s,x){return s+x.ret},0);
+  var lw=S.products.filter(function(p){return p.stock<=p.par}),due=S.clients.filter(function(c){return c.last!=null&&c.last<=-42}),pt=S.clients.filter(function(c){return c.patch!=null&&c.patch<-180});
+  return head('Good '+(now.getHours()<12?'morning':now.getHours()<17?'afternoon':'evening'),(isT?'Today, ':'Closed today. Next open: ')+DAYN[od.getDay()]+' '+od.toLocaleDateString([], {month:'long',day:'numeric'})+' · '+fmtT(hh[0],0)+' – '+fmtT(hh[1],0),'<a class="btn sm" href="#admin-checkout">New sale</a><a class="btn sm line" href="#admin-calendar">Calendar</a>')+
+  '<div class="g g4">'+kpi('Booked',m0(booked),ta.length+' appointments')+kpi('Taken so far',m0(taken),'incl. tips & HST',1)+kpi('Retail',m0(ret),'goal $300')+kpi('Rebooked','68%','+6% vs October',1)+'</div>'+
+  '<div class="g g2" style="margin-top:18px"><div class="panel"><div class="ph"><h3>'+(isT?'The day':DAYN[od.getDay()])+'</h3></div><div class="tw"><table class="t"><thead><tr><th>Time</th><th>Client</th><th>Service</th><th>With</th><th>Status</th></tr></thead><tbody>'+
+    ta.map(function(a){var c=client(a.client);return '<tr class="click" data-client="'+c.id+'"><td style="font-family:var(--head)">'+fmtT(a.h,a.m)+'</td><td>'+esc(c.name)+(c.allergy?' <span class="st s-bad">Allergy</span>':'')+'</td><td>'+esc(svc(a.svc).name)+'</td><td>'+staff(a.staff).name.split(' ')[0]+'</td><td>'+stat(a.status)+'</td></tr>'}).join('')+
+  '</tbody></table></div></div><div class="g" style="align-content:start">'+
+    '<div class="panel"><div class="ph"><h3>Needs you</h3></div><div class="ls">'+
+      (nnew()?'<div class="it"><span>'+nnew()+' new online booking'+(nnew()>1?'s':'')+'</span><a class="btn sm blue" href="#admin-calendar">Review</a></div>':'')+
+      (lw.length?'<div class="it"><span>'+lw.length+' products at or below par</span><a class="btn sm line" href="#admin-inventory">Reorder</a></div>':'')+
+      '<div class="it"><span>'+due.length+' clients overdue to rebook</span><a class="btn sm line" href="#admin-marketing">Remind</a></div>'+
+      (pt.length?'<div class="it"><span>'+pt.length+' patch test expired</span><a class="btn sm line" href="#admin-clients">View</a></div>':'')+
+      (S.reserved.length?'<div class="it"><span>'+S.reserved.length+' curbside pickup'+(S.reserved.length>1?'s':'')+' reserved online</span><span class="st s-rx">Front desk</span></div>':'')+
+    '</div></div>'+
+    '<div class="panel"><div class="ph"><h3>Tea &amp; coffee orders</h3></div><div class="ls">'+ta.filter(function(a,i,arr){return arr.findIndex(function(x){return x.client===a.client})===i}).slice(0,6).map(function(a){var c=client(a.client);return '<div class="it"><span>'+esc(c.name.split(' ')[0])+' <span style="color:var(--gray)">· '+fmtT(a.h,a.m)+'</span></span><span class="script" style="font-size:17px">'+esc(c.pref||'ask at the door')+'</span></div>'}).join('')+'</div></div>'+
+  '</div></div>';
+}
+function pCalendar(){
+  var k=dayKey(calDay),dow=calDay.getDay(),hh=HOURS[dow]||[9,17],st=Math.min(8,hh[0]),en=Math.max(20,hh[1]),px=56,list=S.appts.filter(function(a){return a.date===k});
+  var cols='64px repeat('+BOOKABLE.length+',minmax(118px,1fr))';
+  var hd='<div class="ch"></div>'+BOOKABLE.map(function(s){return '<div class="ch">'+s.name.split(' ')[0]+' <small>'+(s.lvl==='inter'?'Int.':s.lvl==='junior'?'Jr.':'')+'</small></div>'}).join('');
+  var times='<div>'+Array.from({length:en-st},function(_,i){return '<div class="tl">'+fmtT(st+i,0)+'</div>'}).join('')+'</div>';
+  var now=new Date(),nt=(now.getHours()+now.getMinutes()/60-st)*px,shN=dayKey(now)===k&&nt>0&&nt<(en-st)*px;
+  var cs=BOOKABLE.map(function(s){var off=s.days.indexOf(dow)<0||!HOURS[dow];return '<div class="sc'+(off?' off':'')+'" style="height:'+(en-st)*px+'px">'+(shN?'<div class="nowl" style="top:'+nt+'px"></div>':'')+
+    list.filter(function(a){return a.staff===s.id}).map(function(a){var sv=svc(a.svc),c=client(a.client),top=(a.h+a.m/60-st)*px,hg=Math.max(26,sv.dur/60*px-3);
+      return '<button type="button" class="ap '+catClass(sv)+(a.status==='new'?' new':'')+'" data-appt="'+a.id+'" style="top:'+top+'px;height:'+hg+'px">'+(hg<44?'<b>'+fmtT(a.h,a.m)+' '+esc(c.name.split(' ')[0])+'</b>':'<span class="tm2">'+fmtT(a.h,a.m)+' · '+sv.dur+'m</span><b>'+esc(c.name)+'</b>'+esc(sv.name))+'</button>'}).join('')+'</div>'}).join('');
+  return head('Calendar',calDay.toLocaleDateString([], {weekday:'long',month:'long',day:'numeric'})+' · '+(HOURS[dow]?fmtT(hh[0],0)+' – '+fmtT(hh[1],0):'Salon closed')+' · '+list.length+' booked','<button class="btn sm line" id="cP" type="button" aria-label="Previous day">‹</button><button class="btn sm line" id="cT" type="button">Today</button><button class="btn sm line" id="cN" type="button" aria-label="Next day">›</button><button class="btn sm" id="cA" type="button">+ Appointment</button>')+
+  '<div class="cw"><div class="cal" style="grid-template-columns:'+cols+'">'+hd+times+cs+'</div></div><div class="legend"><span><i style="background:var(--cobalt-soft);border-left:3px solid var(--cobalt)"></i>Colour</span><span><i style="background:var(--bone);border-left:3px solid var(--gold)"></i>Extensions</span><span><i style="background:var(--bone);border-left:3px solid var(--ink)"></i>Cut &amp; style</span><span><i style="outline:1px dashed var(--cobalt)"></i>New online booking</span></div>';
+}
+function pClients(){
+  var q=cliQ.toLowerCase(),list=S.clients.filter(function(c){return !q||(c.name+' '+c.phone+' '+c.email).toLowerCase().indexOf(q)>-1});
+  var c=client(selC)||S.clients[0];selC=c.id;var st=staff(c.stylist)||STAFF[0];
+  var up=S.appts.filter(function(a){return a.client===c.id}).map(function(a){return '<div class="v"><span>'+(a.date===dayKey(new Date())?'Today':parseKey(a.date).toLocaleDateString([], {month:'short',day:'numeric'}))+'</span><span>'+esc(svc(a.svc).name)+' · '+staff(a.staff).name.split(' ')[0]+'</span><span>'+stat(a.status)+'</span></div>'}).join('');
+  var past=c.last==null?'':[c.last,c.last-49,c.last-98].map(function(x,i){return '<div class="v"><span>'+ago(x)+'</span><span>'+(i?'Maintenance':esc(c.formula.split('\n')[0]))+'</span><span style="font-family:var(--head)">'+m0(c.visits?c.spend/c.visits:0)+'</span></div>'}).join('');
+  var pt=c.patch==null?'<span class="st s-warn">Not on file</span>':c.patch<-180?'<span class="st s-bad">Expired · '+ago(c.patch)+'</span>':'<span class="st s-ok">Valid · '+ago(c.patch)+'</span>';
+  return head('Clients',S.clients.length+' clients · formulas, history and the little things','<button class="btn sm" id="cliAdd" type="button">+ Client</button>')+
+  '<div class="cg"><div class="panel"><input class="inp" id="cliQ" type="search" placeholder="Search name, phone or email" value="'+esc(cliQ)+'" style="width:100%;margin-bottom:12px" aria-label="Search clients"><div class="tw"><table class="t"><thead><tr><th>Client</th><th>Last in</th><th class="num">Lifetime</th></tr></thead><tbody>'+
+    list.map(function(x){return '<tr class="click'+(x.id===c.id?' sel':'')+'" data-client="'+x.id+'"><td><span class="who"><span class="av">'+ini(x.name)+'</span><span>'+esc(x.name)+'<small>'+esc((staff(x.stylist)||STAFF[0]).name.split(' ')[0])+'\'s client</small></span></span></td><td>'+(x.last==null?'<span class="st s-rx">New</span>':ago(x.last)+(x.last<=-42?' <span class="st s-warn">Due</span>':''))+'</td><td class="num">'+m0(x.spend)+'</td></tr>'}).join('')+
+  '</tbody></table></div></div><div class="g" style="align-content:start"><div class="ccard"><div class="hd"><div><h2>'+esc(c.name)+'</h2><div style="color:var(--gray);font-size:13px;margin-top:4px">Since '+c.since+' · '+c.visits+' visits · '+m0(c.spend)+'</div></div><span class="rxbig">Rx</span></div>'+
+    '<dl><dt>Stylist</dt><dd>'+esc(st.name)+'</dd><dt>Contact</dt><dd>'+esc(c.phone)+'<br>'+esc(c.email)+'</dd><dt>Formula</dt><dd><div class="fx" id="fx" contenteditable="true" aria-label="Colour formula, editable">'+esc(c.formula)+'</div></dd><dt>Patch test</dt><dd>'+pt+'</dd><dt>Tea order</dt><dd class="script" style="font-size:18px">'+esc(c.pref||'—')+'</dd><dt>Notes</dt><dd>'+esc(c.notes)+'</dd></dl>'+
+    (c.allergy?'<div class="alert">Allergy: '+esc(c.allergy)+'</div>':'')+
+    '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:18px"><button class="btn sm" id="fxS" type="button">Save formula</button><button class="btn sm line" id="cliB" type="button">Book next</button><button class="btn sm line" id="cliSell" type="button">Ring up</button></div></div>'+
+    '<div class="panel hist"><div class="ph"><h3>History</h3></div>'+(up+past||'<p style="color:var(--gray);margin:0;font-size:14px">First visit coming up.</p>')+'</div></div></div>';
+}
+function pCheckout(){
+  var sv=S.services.filter(function(s){return s.price>0}).map(function(s){return '<button type="button" data-add="s:'+s.id+'"><b>'+esc(s.name)+'</b><span>'+m0(s.price)+s.plus+'</span></button>'}).join('');
+  var pr=S.products.filter(function(p){return p.price>0}).map(function(p){return '<button type="button" data-add="p:'+p.sku+'" '+(p.stock<=0?'disabled style="opacity:.35"':'')+'><b>'+esc(p.name)+'</b><span>'+esc(p.brand)+' · '+m0(p.price)+' · '+p.stock+' left</span></button>'}).join('');
+  var sub=cart.reduce(function(s,x){return s+x.price},0),ss=cart.filter(function(x){return x.k==='s'}).reduce(function(s,x){return s+x.price},0),tx=sub*HST,tp=ss*tip/100,tot=sub+tx+tp;
+  return head('Checkout','Services, retail and tips. Retail comes off inventory automatically.')+
+  '<div class="pos"><div class="panel"><div class="ph"><h3>Services</h3></div><div class="pick">'+sv+'</div><div class="ph" style="margin-top:22px"><h3>Retail</h3></div><div class="pick">'+pr+'</div></div>'+
+  '<div class="tkt"><div class="ph"><h3>Ticket</h3><select class="inp" id="cartC" aria-label="Client"><option value="">Walk-in</option>'+S.clients.map(function(c){return '<option value="'+c.id+'" '+(cartC===c.id?'selected':'')+'>'+esc(c.name)+'</option>'}).join('')+'</select></div>'+
+    (cart.length?cart.map(function(x,i){return '<div class="ln"><span>'+esc(x.name)+'</span><span>'+money(x.price)+'<button type="button" data-rm="'+i+'" aria-label="Remove '+esc(x.name)+'">✕</button></span></div>'}).join(''):'<p style="color:var(--gray);font-size:14px">Tap a service or product.</p>')+
+    '<div class="tips" role="group" aria-label="Tip on services">'+[0,15,18,20].map(function(p){return '<button type="button" data-tip="'+p+'" aria-pressed="'+(tip===p)+'">'+(p?p+'%':'None')+'</button>'}).join('')+'</div>'+
+    '<div class="tot"><span>Subtotal</span><span>'+money(sub)+'</span></div><div class="tot"><span>HST 13%</span><span>'+money(tx)+'</span></div><div class="tot"><span>Tip</span><span>'+money(tp)+'</span></div>'+
+    '<div class="grand"><span>Total</span><b>'+money(tot)+'</b></div>'+
+    '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:16px"><button type="button" class="btn sm blue" data-pay="Card" '+(cart.length?'':'disabled')+'>Card</button><button type="button" class="btn sm line" data-pay="Cash" '+(cart.length?'':'disabled')+'>Cash</button><button type="button" class="btn sm line" data-pay="Gift card" '+(cart.length?'':'disabled')+'>Gift card</button></div></div></div>';
+}
+function pInventory(){
+  var q=invQ.toLowerCase(),list=S.products.filter(function(p){return (invF==='All'||(invF==='Low'?p.stock<=p.par:p.type===invF))&&(!q||(p.brand+' '+p.name+' '+p.sku).toLowerCase().indexOf(q)>-1)});
+  var val=S.products.reduce(function(s,p){return s+p.cost*p.stock},0),rv=S.products.reduce(function(s,p){return s+p.price*p.stock},0),lw=S.products.filter(function(p){return p.stock<=p.par}),po={};
+  lw.forEach(function(p){(po[p.sup]=po[p.sup]||[]).push(p)});
+  return head('Inventory','Retail shelf, Goldwell back bar and extension hair.','<button class="btn sm" id="invAdd" type="button">+ Product</button>')+
+  '<div class="g g4">'+kpi('Stock at cost',m0(Math.round(val)),S.products.length+' SKUs')+kpi('Shelf value',m0(Math.round(rv)),'retail price')+kpi('At / below par',String(lw.length),'reorder suggested')+kpi('Curbside holds',String(S.reserved.length),'reserved online')+'</div>'+
+  '<div class="g g2" style="margin-top:18px"><div class="panel"><div class="ph"><div class="seg" role="group" aria-label="Filter">'+['All','Retail','Back bar','Extensions','Low'].map(function(f){return '<button type="button" data-if="'+f+'" aria-pressed="'+(invF===f)+'">'+(f==='Low'?'Low stock':f)+'</button>'}).join('')+'</div><input class="inp" id="invQ" type="search" placeholder="Search" value="'+esc(invQ)+'" aria-label="Search inventory"></div>'+
+  '<div class="tw"><table class="t"><thead><tr><th>Product</th><th>On hand</th><th class="num">Cost</th><th class="num">Retail</th><th></th></tr></thead><tbody>'+
+  list.map(function(p){var pc=Math.min(100,p.stock/(p.par*2)*100),col=p.stock<=0?'var(--bad)':p.stock<=p.par?'var(--warn)':'var(--ok)';return '<tr><td><span style="font-size:14px">'+esc(p.name)+'</span><div style="font-family:var(--head);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);margin-top:2px">'+esc(p.brand)+' · '+p.type+'</div></td><td style="font-family:var(--head)">'+p.stock+' <span style="color:var(--gray)">/ '+p.par+'</span><div class="lvlbar"><i style="width:'+pc+'%;background:'+col+'"></i></div></td><td class="num">'+money(p.cost)+'</td><td class="num">'+(p.price?money(p.price):'—')+'</td><td style="white-space:nowrap;text-align:right"><button class="btn sm line" type="button" data-adj="'+p.sku+'|-1" aria-label="Use one '+esc(p.name)+'">−</button> <button class="btn sm line" type="button" data-adj="'+p.sku+'|1" aria-label="Receive one '+esc(p.name)+'">+</button></td></tr>'}).join('')+
+  '</tbody></table></div></div><div class="panel" style="align-self:start"><div class="ph"><h3>Purchase orders</h3></div>'+
+  (Object.keys(po).length?Object.keys(po).map(function(s){var it=po[s],t=it.reduce(function(a,p){return a+(p.par*2-p.stock)*p.cost},0);return '<div class="po"><small>'+esc(s)+'</small>'+it.map(function(p){return '<div style="display:flex;justify-content:space-between;gap:8px"><span>'+esc(p.name)+'</span><span style="font-family:var(--head)">× '+(p.par*2-p.stock)+'</span></div>'}).join('')+'<div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;gap:8px"><span style="font-family:var(--head)">'+money(t)+'</span><button class="btn sm" type="button" data-po="'+esc(s)+'">Mark received</button></div></div>'}).join(''):'<p style="color:var(--gray);margin:0">All above par.</p>')+
+  '</div></div>';
+}
+function pServices(){
+  return head('Services','Edit a price here and the website\'s price list updates. Intermediate stylists are priced 25% off cut and colour automatically.')+
+  '<div class="panel"><div class="tw"><table class="t"><thead><tr><th>Service</th><th>Category</th><th class="num">Minutes</th><th class="num">Senior</th><th class="num">Intermediate</th></tr></thead><tbody>'+
+  S.services.map(function(s,i){return '<tr><td>'+esc(s.name)+'</td><td><span class="st s-mute">'+s.cat+'</span></td><td class="num"><input class="inp" type="number" min="15" step="15" value="'+s.dur+'" data-sdur="'+i+'" style="width:76px;text-align:right" aria-label="Minutes, '+esc(s.name)+'"></td><td class="num"><input class="inp" type="number" min="0" step="5" value="'+s.price+'" data-sprice="'+i+'" style="width:84px;text-align:right" aria-label="Price, '+esc(s.name)+'"></td><td class="num" style="color:var(--gray)">'+(s.tier&&s.price?m0(s.price*.75):'—')+'</td></tr>'}).join('')+
+  '</tbody></table></div></div>';
+}
+function pStaff(){
+  var od=openDay(),k=dayKey(od),hh=HOURS[od.getDay()];
+  return head('Team','Who\'s in, how full their chair is, and what they\'ve booked.')+
+  '<div class="panel"><div class="tw"><table class="t"><thead><tr><th>Name</th><th>Level</th><th>Works</th><th class="num">Chair booked</th><th class="num">Services</th></tr></thead><tbody>'+
+  STAFF.map(function(s){var ap=S.appts.filter(function(a){return a.staff===s.id&&a.date===k}),mins=ap.reduce(function(t,a){return t+svc(a.svc).dur},0),av=s.book&&s.days.indexOf(od.getDay())>-1?(hh[1]-hh[0])*60:0,rv=ap.reduce(function(t,a){return t+priceFor(svc(a.svc),a.staff)},0);
+    return '<tr><td><span class="who"><span class="av">'+ini(s.name)+'</span><span>'+esc(s.name)+'<small>'+esc(s.role)+'</small></span></span></td><td><span class="st '+(s.lvl==='owner'||s.lvl==='senior'?'s-rx':'s-mute')+'">'+({owner:'Owner',senior:'Senior',inter:'Intermediate',junior:'Junior',desk:'Front desk',social:'Social'})[s.lvl]+'</span></td><td style="font-family:var(--head);font-size:12px;letter-spacing:.08em">'+(s.days.length?s.days.map(function(d){return DAYS[d]}).join(' · '):'Remote')+'</td><td class="num">'+(av?Math.round(mins/av*100)+'%':'—')+'</td><td class="num">'+(s.book?m0(rv):'—')+'</td></tr>'}).join('')+
+  '</tbody></table></div></div><div class="g g3" style="margin-top:18px">'+
+  '<div class="panel"><h3>Time off</h3><div class="ls" style="margin-top:8px"><div class="it"><span>Frank · Dec 24 – 27</span><button class="btn sm" type="button" data-to="1">Approve</button></div><div class="it"><span>Josh · Jan 9</span><button class="btn sm" type="button" data-to="1">Approve</button></div></div></div>'+
+  '<div class="panel"><h3>Retail this month</h3><div style="margin-top:10px">'+[['Allison',412],['Josh',298],['Alana',264],['Nickie',240],['Tanya',176]].map(function(r){return '<div class="hb" style="grid-template-columns:64px minmax(0,1fr) 50px"><span>'+r[0]+'</span><span class="tr"><i class="b" style="width:'+r[1]/412*100+'%"></i></span><span class="n">$'+r[1]+'</span></div>'}).join('')+'</div></div>'+
+  '<div class="panel"><h3>Social queue</h3><p style="font-size:13.5px;color:var(--gray);margin:8px 0 0">Kristie picks before-and-afters straight from tagged appointments.</p><div class="ls"><div class="it"><span>Dana · the blue refresh</span><span class="st s-rx">Ready</span></div><div class="it"><span>Hannah · winter blonde</span><span class="st s-warn">Needs consent</span></div></div></div></div>';
+}
+function pReports(){
+  var w=[5820,6110,5960,6480,6290,6720,6610,7020],r=[820,910,780,990,940,1020,1000,1110],W=640,H=240,pd=40,mx=8000,bw=(W-pd-8)/w.length;
+  var grid=[0,2000,4000,6000,8000].map(function(v){var y=H-26-(v/mx)*(H-44);return '<line x1="'+pd+'" x2="'+(W-4)+'" y1="'+y+'" y2="'+y+'" stroke="var(--rule)"/><text x="'+(pd-8)+'" y="'+(y+4)+'" text-anchor="end" font-size="11" fill="var(--gray)" font-family="Josefin Sans,sans-serif">'+(v?'$'+v/1000+'k':'0')+'</text>'}).join('');
+  var bars=w.map(function(v,i){var x=pd+8+i*bw,hs=(v-r[i])/mx*(H-44),hr=r[i]/mx*(H-44),y0=H-26;return '<rect x="'+x+'" y="'+(y0-hs)+'" width="'+(bw-16)+'" height="'+hs+'" fill="var(--ink)"/><rect x="'+x+'" y="'+(y0-hs-hr)+'" width="'+(bw-16)+'" height="'+hr+'" fill="var(--cobalt)"/>'+(i===w.length-1?'<text x="'+(x+(bw-16)/2)+'" y="'+(y0-hs-hr-7)+'" text-anchor="middle" font-size="12" fill="var(--ink)" font-family="Josefin Sans,sans-serif">$'+(v/1000).toFixed(1)+'k</text>':'')+'<text x="'+(x+(bw-16)/2)+'" y="'+(H-8)+'" text-anchor="middle" font-size="10.5" fill="var(--gray)" font-family="Josefin Sans,sans-serif">WK '+(i+1)+'</text>'}).join('');
+  var mix=[['Colour',46],['Cut & style',19],['Blow dry',11],['Extensions',10],['Weddings',8],['Treatments',6]];
+  return head('Reports','Last 8 weeks.','<button class="btn sm line" type="button" id="exp">Export for bookkeeper</button>')+
+  '<div class="g g4">'+kpi('Revenue · 8 wks','$51,010','+11% vs prior 8',1)+kpi('Average ticket','$142','+$9',1)+kpi('New clients','27','11 booked online',1)+kpi('Late cancels','1.8%','$50 fee collected 6×')+'</div>'+
+  '<div class="g g2" style="margin-top:18px"><div class="panel chart"><div class="ph"><h3>Weekly revenue</h3><span class="demo">Sample figures</span></div><svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Weekly revenue over 8 weeks, rising from about 5.8 to 7.0 thousand dollars">'+grid+bars+'</svg><div class="legend"><span><i style="background:var(--ink)"></i>Services</span><span><i style="background:var(--cobalt)"></i>Retail</span></div></div>'+
+  '<div class="panel"><div class="ph"><h3>Service mix</h3></div>'+mix.map(function(m,i){return '<div class="hb"><span>'+m[0]+'</span><span class="tr"><i class="'+(i?'':'b')+'" style="width:'+m[1]/46*100+'%"></i></span><span class="n">'+m[1]+'%</span></div>'}).join('')+'</div></div>';
+}
+function pMarketing(){
+  var due=S.clients.filter(function(c){return c.last!=null&&c.last<=-42});
+  return head('Marketing','Reminders, rebooking nudges, reviews and gift cards.')+
+  '<div class="g g2"><div class="panel"><div class="ph"><h3>Due to rebook</h3><button class="btn sm" type="button" id="sendAll">Text all '+due.length+'</button></div><div class="ls">'+
+  due.map(function(c){return '<div class="it"><span class="who"><span class="av">'+ini(c.name)+'</span><span>'+esc(c.name)+'<small>Last in '+ago(c.last)+' · '+(staff(c.stylist)||STAFF[0]).name.split(' ')[0]+'</small></span></span><button class="btn sm line" type="button" data-remind="'+c.id+'">Send</button></div>'}).join('')+'</div></div>'+
+  '<div class="g" style="align-content:start"><div class="panel"><div class="ph"><h3>Automatic texts</h3></div>'+
+    '<div class="tmpl"><small>Day before</small>Hi {first}! See you tomorrow at {time} with {stylist}. Reply C to confirm. Kettle\'s on.</div>'+
+    '<div class="tmpl"><small>6 weeks after colour</small>Your roots are coming back to haunt you. Book your refill: salonrx.ca/book</div>'+
+    '<div class="tmpl"><small>2 hours after visit</small>Loving it? A quick Google review means the world to our little salon.</div></div>'+
+  '<div class="panel"><div class="ph"><h3>Gift cards</h3></div><div class="ls"><div class="it"><span>Sold this month</span><span style="font-family:var(--head)">14 · $1,150</span></div><div class="it"><span>Outstanding</span><span style="font-family:var(--head)">$3,420</span></div><div class="it"><span>Holiday offer</span><span class="st s-rx">Buy $100, get $20</span></div></div></div></div></div>';
+}
+function pSettings(){
+  function sw(k,t,d){return '<label class="sw" for="set-'+k+'"><span>'+t+'<br><span style="color:var(--gray);font-size:13px">'+d+'</span></span><input type="checkbox" id="set-'+k+'" data-set="'+k+'" '+(S.settings[k]?'checked':'')+'></label>'}
+  return head('Settings','Booking rules and policies.')+
+  '<div class="g g2"><div class="panel"><div class="ph"><h3>Online booking</h3></div>'+sw('online','Accept online bookings','Pauses the booking form on the website.')+sw('deposit','$25 deposit','For colour and extension appointments.')+sw('patch','Patch test prompt','New colour clients book a test 48 hours before.')+sw('reminders','Day-before texts','Cuts no-shows and late cancels.')+sw('rebook','Rebook nudges','6 weeks after colour.')+sw('reviews','Ask for a Google review','2 hours after checkout.')+'</div>'+
+  '<div class="g" style="align-content:start"><div class="panel"><div class="ph"><h3>Cancellation policy</h3></div><p style="font-size:14px;margin:0">24 hours\' notice. Late cancellations: $50 non-refundable rebooking charge. Clients with 3+ last-minute cancellations are not rebooked.</p></div>'+
+  '<div class="panel"><div class="ph"><h3>Hours</h3></div><table class="hrs"><tbody>'+[3,4,5,6,0,1,2].map(function(i){var h=HOURS[i];return '<tr><td>'+DAYN[i]+'</td><td>'+(h?fmtT(h[0],0)+' – '+fmtT(h[1],0):'Closed')+'</td></tr>'}).join('')+'</tbody></table></div>'+
+  '<div class="panel"><div class="ph"><h3>Demo data</h3></div><p style="font-size:13.5px;color:var(--gray);margin:0 0 12px">Clients, sales and stock here are samples saved in this browser only.</p><button class="btn sm line" type="button" id="reset">Reset demo</button></div></div></div>';
+}
+var R={dashboard:pDashboard,calendar:pCalendar,clients:pClients,checkout:pCheckout,inventory:pInventory,services:pServices,staff:pStaff,reports:pReports,marketing:pMarketing,settings:pSettings};
+function drawA(){nav();$('#am').innerHTML=R[page]();window.scrollTo(0,0)}
+function re(){var y=window.scrollY;nav();$('#am').innerHTML=R[page]();window.scrollTo(0,y)}
+
+function modal(h){$('#mroot').innerHTML='<div class="mbg" id="mbg"><div class="modal" role="dialog" aria-modal="true">'+h+'</div></div>';var f=$('#mroot input,#mroot select,#mroot button');if(f)f.focus()}
+function closeM(){$('#mroot').innerHTML=''}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeM()});
+$('#mroot').addEventListener('click',function(e){
+  if(e.target.id==='mbg'||e.target.closest('[data-close]')){closeM();return}
+  var s=e.target.closest('[data-status]');
+  if(s){var a=S.appts.filter(function(x){return x.id===s.dataset.id})[0];
+    if(s.dataset.status==='checkout'){var sv=svc(a.svc);cart=[{k:'s',id:sv.id,name:sv.name,price:priceFor(sv,a.staff)}];cartC=a.client;a.status='done';save();closeM();location.hash='admin-checkout';return}
+    if(s.dataset.status==='delete')S.appts=S.appts.filter(function(x){return x.id!==a.id});else a.status=s.dataset.status;save();closeM();re();toast('Updated');return}
+  if(e.target.id==='naS'){var t=$('#na-t').value.split(':');S.appts.push({id:'m'+Date.now(),staff:$('#na-s').value,client:$('#na-c').value,svc:$('#na-v').value,date:dayKey(calDay),h:+t[0],m:+t[1],status:'confirmed'});save();closeM();re();toast('Added to the calendar');return}
+  if(e.target.id==='ncS'){var n=$('#nc-n').value.trim();if(!n){toast('Add a name');return}var c={id:'c'+Date.now(),name:n,phone:$('#nc-p').value,email:$('#nc-e').value,stylist:$('#nc-s').value,since:'2026',visits:0,spend:0,last:null,pref:$('#nc-t').value,allergy:$('#nc-a').value,patch:null,formula:'—',notes:''};S.clients.unshift(c);selC=c.id;save();closeM();re();toast('Client added');return}
+  if(e.target.id==='npS'){var nm=$('#np-n').value.trim();if(!nm){toast('Add a product name');return}S.products.push({sku:'NEW-'+String(Date.now()).slice(-4),brand:$('#np-b').value||'—',name:nm,type:$('#np-ty').value,cost:+$('#np-c').value||0,price:+$('#np-p').value||0,stock:+$('#np-s').value||0,par:+$('#np-r').value||2,sup:$('#np-b').value||'Supplier',color:'#9aa3b8'});save();closeM();re();toast('Product added');return}
+});
+function F(id,l,inner,full){return '<div class="fld'+(full?' full':'')+'"><label for="'+id+'">'+l+'</label>'+inner+'</div>'}
+$('#am').addEventListener('click',function(e){
+  var t=e.target.closest('button,tr,a');if(!t)return;
+  if(t.dataset.client){selC=t.dataset.client;if(page!=='clients')location.hash='admin-clients';else re();return}
+  if(t.dataset.appt){var a=S.appts.filter(function(x){return x.id===t.dataset.appt})[0],c=client(a.client),sv=svc(a.svc);
+    modal('<h3>'+esc(c.name)+'</h3><p style="margin:0">'+esc(sv.name)+' · '+fmtT(a.h,a.m)+' · '+sv.dur+' min · '+m0(priceFor(sv,a.staff))+'</p><p style="margin:4px 0 14px;color:var(--gray);font-size:14px">With '+staff(a.staff).name+' · '+stat(a.status)+'</p>'+(c.allergy?'<div class="alert" style="margin:0 0 12px">Allergy: '+esc(c.allergy)+'</div>':'')+'<div class="fx" style="margin-bottom:12px">'+esc(c.formula)+'</div><p class="script" style="font-size:19px;margin:0 0 16px">Tea order: '+esc(c.pref||'ask at the door')+'</p><div style="display:flex;flex-wrap:wrap;gap:6px">'+(a.status==='new'||a.status==='pending'?'<button class="btn sm blue" data-status="confirmed" data-id="'+a.id+'">Confirm</button>':'')+'<button class="btn sm line" data-status="arrived" data-id="'+a.id+'">Check in</button><button class="btn sm" data-status="checkout" data-id="'+a.id+'">Check out</button><button class="btn sm line" data-status="noshow" data-id="'+a.id+'">No-show</button><button class="btn sm line" data-status="delete" data-id="'+a.id+'" style="color:var(--bad)">Cancel</button><button class="btn sm line" data-close>Close</button></div>');return}
+  if(t.id==='cP'){calDay.setDate(calDay.getDate()-1);re();return}
+  if(t.id==='cN'){calDay.setDate(calDay.getDate()+1);re();return}
+  if(t.id==='cT'){calDay=openDay();re();return}
+  if(t.id==='cA'){var o=[];for(var h=8;h<20;h++)o.push(h+':00',h+':30');
+    modal('<h3>New appointment</h3><div class="fg">'+F('na-c','Client','<select id="na-c">'+S.clients.map(function(c){return '<option value="'+c.id+'">'+esc(c.name)+'</option>'}).join('')+'</select>',1)+F('na-v','Service','<select id="na-v">'+S.services.map(function(s){return '<option value="'+s.id+'">'+esc(s.name)+' · '+s.dur+'m</option>'}).join('')+'</select>',1)+F('na-s','Stylist','<select id="na-s">'+BOOKABLE.map(function(s){return '<option value="'+s.id+'">'+s.name+'</option>'}).join('')+'</select>')+F('na-t','Time','<select id="na-t">'+o.map(function(x){return '<option>'+x+'</option>'}).join('')+'</select>')+'</div><div class="bnav"><button class="btn line" data-close>Cancel</button><button class="btn" id="naS">Add</button></div>');return}
+  if(t.id==='cliAdd'){modal('<h3>New client</h3><div class="fg">'+F('nc-n','Name','<input id="nc-n">',1)+F('nc-p','Mobile','<input id="nc-p" type="tel">')+F('nc-e','Email','<input id="nc-e" type="email">')+F('nc-s','Stylist','<select id="nc-s">'+BOOKABLE.map(function(s){return '<option value="'+s.id+'">'+s.name+'</option>'}).join('')+'</select>')+F('nc-t','Tea order','<input id="nc-t" placeholder="Oat latte">')+F('nc-a','Allergies','<input id="nc-a">',1)+'</div><div class="bnav"><button class="btn line" data-close>Cancel</button><button class="btn" id="ncS">Save</button></div>');return}
+  if(t.id==='fxS'){client(selC).formula=$('#fx').innerText.trim();save();toast('Formula saved');return}
+  if(t.id==='cliB'){var c2=client(selC);bk={step:0,svc:null,staff:'any',date:null,time:null,name:c2.name,phone:c2.phone,email:c2.email};drawBooker();location.hash='book';return}
+  if(t.id==='cliSell'){cartC=selC;location.hash='admin-checkout';return}
+  if(t.dataset.add){var p=t.dataset.add.split(':');if(p[0]==='s'){var s=svc(p[1]);cart.push({k:'s',id:s.id,name:s.name,price:s.price})}else{var pr=S.products.filter(function(x){return x.sku===p[1]})[0];if(cart.filter(function(x){return x.id===pr.sku}).length>=pr.stock){toast('Only '+pr.stock+' on hand');return}cart.push({k:'p',id:pr.sku,name:pr.name,price:pr.price})}re();return}
+  if(t.dataset.rm!=null){cart.splice(+t.dataset.rm,1);re();return}
+  if(t.dataset.tip!=null){tip=+t.dataset.tip;re();return}
+  if(t.dataset.pay){var sub=cart.reduce(function(s,x){return s+x.price},0),ss=cart.filter(function(x){return x.k==='s'}).reduce(function(s,x){return s+x.price},0),tp=ss*tip/100,tot=sub*(1+HST)+tp;
+    cart.filter(function(x){return x.k==='p'}).forEach(function(x){var q=S.products.filter(function(p){return p.sku===x.id})[0];q.stock=Math.max(0,q.stock-1);var i=S.reserved.indexOf(q.sku);if(i>-1)S.reserved.splice(i,1)});
+    if(cartC){var cc=client(cartC);cc.spend+=Math.round(sub);cc.visits++;cc.last=0}
+    S.sales.push({t:t.dataset.pay,total:tot,svc:ss,ret:sub-ss,tip:tp});cart=[];cartC='';save();re();drawShop();toast(t.dataset.pay+' · '+money(tot)+' paid. Receipt sent.');return}
+  if(t.dataset.if){invF=t.dataset.if;re();return}
+  if(t.dataset.adj){var q2=t.dataset.adj.split('|'),pp=S.products.filter(function(x){return x.sku===q2[0]})[0];pp.stock=Math.max(0,pp.stock+(+q2[1]));save();re();drawShop();return}
+  if(t.dataset.po){S.products.forEach(function(p){if(p.sup===t.dataset.po&&p.stock<=p.par)p.stock=p.par*2});save();re();drawShop();toast('Received from '+t.dataset.po);return}
+  if(t.id==='invAdd'){modal('<h3>Add product</h3><div class="fg">'+F('np-n','Product','<input id="np-n">',1)+F('np-b','Brand','<input id="np-b">')+F('np-ty','Type','<select id="np-ty"><option>Retail</option><option>Back bar</option><option>Extensions</option></select>')+F('np-c','Cost','<input id="np-c" type="number" step="0.01">')+F('np-p','Retail','<input id="np-p" type="number" step="0.01">')+F('np-s','On hand','<input id="np-s" type="number">')+F('np-r','Reorder at','<input id="np-r" type="number">')+'</div><div class="bnav"><button class="btn line" data-close>Cancel</button><button class="btn" id="npS">Add</button></div>');return}
+  if(t.dataset.remind){toast('Text sent to '+client(t.dataset.remind).name.split(' ')[0]);t.textContent='Sent';t.disabled=true;return}
+  if(t.id==='sendAll'){toast('Rebook texts sent');t.textContent='Sent';t.disabled=true;return}
+  if(t.dataset.to){t.insertAdjacentHTML('afterend','<span class="st s-ok">Approved</span>');t.remove();return}
+  if(t.id==='exp'){toast('In the live system this downloads a CSV');return}
+  if(t.id==='reset'){S=fresh();save();cart=[];re();drawShop();drawPL();drawBooker();toast('Demo reset');return}
+});
+$('#am').addEventListener('input',function(e){var t=e.target;
+  if(t.id==='cliQ'||t.id==='invQ'){if(t.id==='cliQ')cliQ=t.value;else invQ=t.value;var p=t.selectionStart,id=t.id;re();var n=document.getElementById(id);n.focus();n.setSelectionRange(p,p)}});
+$('#am').addEventListener('change',function(e){var t=e.target;
+  if(t.id==='cartC'){cartC=t.value;return}
+  if(t.dataset.sprice!=null){S.services[+t.dataset.sprice].price=+t.value;save();drawPL();re();toast('Price updated on the website');return}
+  if(t.dataset.sdur!=null){S.services[+t.dataset.sdur].dur=+t.value;save();toast('Duration updated');return}
+  if(t.dataset.set){S.settings[t.dataset.set]=t.checked;save();drawBooker();toast('Saved');return}});
+
+function route(){var h=location.hash.replace('#','');
+  if(h.indexOf('admin-')===0){var p=h.slice(6);page=R[p]?p:'dashboard';$('#site').hidden=true;$('#admin').hidden=false;drawA()}
+  else{$('#admin').hidden=true;$('#site').hidden=false;closeM();if(h){var el=document.getElementById(h);if(el)setTimeout(function(){el.scrollIntoView({block:'start'})},0)}}}
+window.addEventListener('hashchange',route);route();
+})();
+</script>
+
+</body></html>
