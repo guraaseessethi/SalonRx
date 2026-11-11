@@ -1,0 +1,21 @@
+.modal {
+  padding: 28px;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  width: min(540px, calc(100% - 32px));
+  max-height: 90vh;
+  overflow: auto;
+  border-radius: 0;
+}
+.modal::backdrop {
+  background: rgba(8, 8, 10, 0.55);
+}
+.title {
+  font-family: var(--head);
+  font-weight: 300;
+  font-size: 26px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
