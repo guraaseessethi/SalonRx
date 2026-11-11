@@ -29,16 +29,15 @@ for (const scheme of ["light", "dark"] as const) {
   }
 }
 
-test("axe: booking steps 2-4 and confirmation", async ({ page }) => {
-  await page.goto("/book?service=cut-sr");
-  await page.getByRole("button", { name: "Continue" }).click();
-  expect(await scan(page)).toEqual([]);
+test("axe: every booking step and the error state", async ({ page }) => {
+  await page.goto("/book?service=cut-sr"); // starts on the stylist step
+  expect(await scan(page), "stylist step").toEqual([]);
   await page.getByRole("button", { name: "Continue" }).click();
   await page.getByRole("group", { name: /^Times on/ }).getByRole("button").first().click();
-  expect(await scan(page)).toEqual([]);
+  expect(await scan(page), "time step").toEqual([]);
   await page.getByRole("button", { name: "Continue" }).click();
   await page.getByRole("button", { name: "Confirm booking" }).click(); // shows the error state
-  expect(await scan(page)).toEqual([]);
+  expect(await scan(page), "details step with errors").toEqual([]);
 });
 
 for (const scheme of ["light", "dark"] as const) {
