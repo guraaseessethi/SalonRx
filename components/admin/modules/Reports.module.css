@@ -1,0 +1,63 @@
+.chart svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 12.5px;
+  color: var(--gray);
+  margin-top: 12px;
+}
+.legend i {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 6px;
+  vertical-align: -1px;
+}
+.demo {
+  font-family: var(--head);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cobalt);
+  border: 1px solid currentColor;
+  padding: 3px 8px;
+}
+.hb {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr) 54px;
+  gap: 12px;
+  align-items: center;
+  font-size: 13.5px;
+  padding: 6px 0;
+}
+.tr {
+  height: 6px;
+  background: var(--bone);
+}
+.tr i {
+  display: block;
+  height: 100%;
+  width: var(--w);
+  background: var(--ink);
+}
+.tr i.b {
+  background: var(--cobalt);
+}
+.n {
+  text-align: right;
+  font-family: var(--head);
+}
+.details {
+  margin-top: 14px;
+  font-size: 13.5px;
+}
+.details summary {
+  cursor: pointer;
+  color: var(--cobalt);
+  min-height: 24px;
+}

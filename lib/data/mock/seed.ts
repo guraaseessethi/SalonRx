@@ -1,5 +1,6 @@
 import { priceForLevel, computeTotals } from "@/lib/booking/pricing";
-import { addDays, addMinutes, instantAt, minutesOfDay, todayKey, weekdayOf, type DateKey } from "@/lib/booking/time";
+import { nextOpenDay } from "@/lib/booking/schedule";
+import { addMinutes, instantAt, weekdayOf, type DateKey } from "@/lib/booking/time";
 import type {
   Appointment,
   AppointmentStatus,
@@ -236,17 +237,6 @@ function buildClients(now: Date): Client[] {
 }
 
 /* ---------- appointments ---------- */
-
-/** First day the salon is open and not already closed for the day, within the next 8 days. */
-export function nextOpenDay(now: Date, hours: WeekHours): DateKey {
-  const today = todayKey(now);
-  for (let i = 0; i < 8; i++) {
-    const key = addDays(today, i);
-    const day = hours[weekdayOf(key)];
-    if (day && !(i === 0 && minutesOfDay(now) >= day.closeMin)) return key;
-  }
-  return today;
-}
 
 type SeedAppt = [staffId: string, clientId: string, serviceId: string, hour: number, minute: number, status: AppointmentStatus];
 

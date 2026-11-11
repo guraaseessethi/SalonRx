@@ -1,0 +1,140 @@
+.cg {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+  gap: 18px;
+}
+@media (max-width: 1050px) {
+  .cg {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.search {
+  width: 100%;
+  margin-bottom: 12px;
+}
+.pick {
+  all: unset;
+  display: block;
+  width: 100%;
+  cursor: pointer;
+}
+.pick:focus-visible {
+  outline: 2px solid var(--cobalt);
+  outline-offset: 2px;
+}
+.ccard {
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  padding: 26px;
+}
+.hd {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+}
+.hd h2 {
+  font-family: var(--head);
+  font-weight: 300;
+  font-size: 28px;
+  letter-spacing: 0.04em;
+}
+.since {
+  color: var(--gray);
+  font-size: 13px;
+  margin-top: 4px;
+}
+.rxbig {
+  font-family: var(--script);
+  font-style: italic;
+  font-size: 46px;
+  line-height: 0.8;
+  color: var(--cobalt);
+}
+.dl {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 12px 14px;
+  margin: 0;
+  font-size: 14px;
+}
+.dl dt {
+  font-family: var(--head);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gray);
+  padding-top: 3px;
+}
+.dl dd {
+  margin: 0;
+  min-width: 0;
+}
+.fx {
+  width: 100%;
+  min-height: 96px;
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  background: var(--bone);
+  padding: 10px 12px;
+  border: 0;
+  border-left: 2px solid var(--cobalt);
+  resize: vertical;
+  color: var(--ink);
+}
+.alert {
+  color: var(--bad);
+  border: 1px solid currentColor;
+  padding: 8px 12px;
+  font-size: 13px;
+  margin-top: 14px;
+}
+.btns {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+.hist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.hist li {
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr) auto;
+  gap: 12px;
+  font-size: 14px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.hist li:last-child {
+  border-bottom: 0;
+}
+.hist li span:first-child {
+  font-family: var(--head);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--gray);
+}
+.tea {
+  font-size: 18px;
+}
+@media (max-width: 520px) {
+  .dl {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+  }
+  .dl dd {
+    margin-bottom: 10px;
+  }
+  .ccard {
+    padding: 18px;
+  }
+  .hist li {
+    grid-template-columns: 70px minmax(0, 1fr);
+  }
+}

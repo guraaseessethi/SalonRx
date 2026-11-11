@@ -1,0 +1,243 @@
+.panel {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 22px;
+  min-width: 0;
+}
+.ph {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.ph h2,
+.ph h3,
+.panelTitle {
+  font-family: var(--head);
+  font-size: 12.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.g {
+  display: grid;
+  gap: 18px;
+}
+.g4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.g2 {
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+}
+.g3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.top {
+  margin-top: 18px;
+}
+.start {
+  align-content: start;
+}
+@media (max-width: 1050px) {
+  .g4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .g2,
+  .g3 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 520px) {
+  .g4 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.kpi .k {
+  font-family: var(--head);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+.kpi .v {
+  font-family: var(--head);
+  font-weight: 300;
+  font-size: 38px;
+  line-height: 1.1;
+  margin-top: 8px;
+  font-variant-numeric: tabular-nums;
+}
+.kpi .d {
+  font-size: 12.5px;
+  margin-top: 4px;
+  color: var(--gray);
+}
+.kpi .d.up {
+  color: var(--ok);
+}
+.st {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--head);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.st::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.ok {
+  color: var(--ok);
+}
+.warn {
+  color: var(--warn);
+}
+.bad {
+  color: var(--bad);
+}
+.rx {
+  color: var(--cobalt);
+}
+.mute {
+  color: var(--gray);
+}
+.ls {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.ls > li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 14px;
+}
+.ls > li:last-child {
+  border-bottom: 0;
+}
+.av {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: var(--script);
+  font-style: italic;
+  font-size: 15px;
+  border: 1px solid var(--rule);
+  background: var(--bone);
+  flex-shrink: 0;
+}
+.who {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.who small {
+  display: block;
+  color: var(--gray);
+  font-size: 12px;
+}
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--rule);
+}
+.head h1 {
+  font-family: var(--head);
+  font-weight: 300;
+  font-size: 34px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+.head .sub {
+  color: var(--gray);
+  font-size: 14px;
+  margin-top: 8px;
+}
+.acts {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.inp {
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  padding: 9px 12px;
+  min-height: 40px;
+  font-size: 14px;
+  min-width: 0;
+  border-radius: 0;
+}
+.fld {
+  display: grid;
+  gap: 6px;
+}
+.fld label {
+  font-family: var(--head);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+.fld input,
+.fld select,
+.fld textarea {
+  border: 0;
+  border-bottom: 1px solid var(--ink);
+  background: transparent;
+  padding: 9px 0;
+  min-height: 40px;
+  font-size: 15px;
+  border-radius: 0;
+  min-width: 0;
+  width: 100%;
+}
+.fld select {
+  background: var(--paper);
+}
+.fg {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.full {
+  grid-column: 1 / -1;
+}
+.bnav {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 26px;
+}
+.muted {
+  color: var(--gray);
+  font-size: 14px;
+  margin: 0;
+}
+@media (max-width: 520px) {
+  .fg {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .head h1 {
+    font-size: 28px;
+  }
+}

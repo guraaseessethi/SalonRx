@@ -45,8 +45,6 @@ import {
   type SaleInput,
   type SaleLine,
   type Service,
-  type Settings,
-  type Staff,
   type StaffAppointmentInput,
   type ToggleSettingKey,
 } from "@/lib/domain/types";
@@ -60,7 +58,8 @@ import {
   type DemoMessageInput,
   type OpenDaysQuery,
 } from "../repository";
-import { createSeedState, nextOpenDay, sampleReports, buildSeedAppointments, DEFAULT_HOURS } from "./seed";
+import { nextOpenDay } from "@/lib/booking/schedule";
+import { createSeedState, sampleReports, buildSeedAppointments, DEFAULT_HOURS } from "./seed";
 import type { StorageAdapter } from "./storage";
 
 export const STATE_KEY = "salonrx-demo-v4";

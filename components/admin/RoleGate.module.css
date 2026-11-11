@@ -1,0 +1,122 @@
+.gate {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 32px 16px;
+  background: var(--bone);
+}
+.card {
+  width: min(720px, 100%);
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  padding: 40px;
+}
+.card h1 {
+  font-family: var(--head);
+  font-weight: 300;
+  font-size: clamp(28px, 4vw, 40px);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.05;
+  margin: 18px 0 8px;
+}
+.demo {
+  display: inline-block;
+  font-family: var(--head);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cobalt);
+  border: 1px solid currentColor;
+  padding: 3px 8px;
+}
+.lead {
+  color: var(--gray);
+  margin: 0 0 24px;
+  max-width: 52ch;
+}
+.roles {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--rule);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.roles li {
+  border-bottom: 1px solid var(--rule);
+}
+.role {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 6px;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  min-height: 56px;
+}
+.role:hover {
+  background: var(--cobalt-soft);
+}
+.role b {
+  display: block;
+  font-family: var(--head);
+  font-size: 15px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.role small {
+  display: block;
+  color: var(--gray);
+  font-size: 13px;
+}
+.go {
+  font-family: var(--head);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cobalt);
+  white-space: nowrap;
+}
+.stylist {
+  padding: 14px 6px 4px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.stylist label {
+  font-family: var(--head);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+.stylist select {
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  padding: 8px 10px;
+  min-height: 40px;
+}
+.foot {
+  margin-top: 22px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--gray);
+}
+.foot a {
+  color: var(--cobalt);
+}
+@media (max-width: 520px) {
+  .card {
+    padding: 24px;
+  }
+}

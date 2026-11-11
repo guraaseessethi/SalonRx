@@ -1,0 +1,70 @@
+.name small {
+  display: block;
+  font-family: var(--head);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-top: 2px;
+}
+.onhand {
+  font-family: var(--head);
+  white-space: nowrap;
+}
+.onhand span {
+  color: var(--gray);
+}
+.bar {
+  height: 3px;
+  background: var(--rule);
+  min-width: 70px;
+  margin-top: 6px;
+}
+.bar i {
+  display: block;
+  height: 100%;
+  width: var(--w);
+  background: var(--c);
+}
+.adj {
+  white-space: nowrap;
+  text-align: right;
+}
+.po {
+  border: 1px solid var(--rule);
+  padding: 14px;
+  font-size: 14px;
+}
+.po + .po {
+  margin-top: 10px;
+}
+.po small {
+  display: block;
+  font-family: var(--head);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 6px;
+}
+.poLine {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+.poFoot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  gap: 8px;
+  font-family: var(--head);
+}
+.tools {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}

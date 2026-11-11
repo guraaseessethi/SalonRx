@@ -1,0 +1,32 @@
+.hb {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr) 50px;
+  gap: 12px;
+  align-items: center;
+  font-size: 13.5px;
+  padding: 6px 0;
+}
+.tr {
+  height: 6px;
+  background: var(--bone);
+}
+.tr i {
+  display: block;
+  height: 100%;
+  width: var(--w);
+  background: var(--cobalt);
+}
+.n {
+  text-align: right;
+  font-family: var(--head);
+}
+.days {
+  font-family: var(--head);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+.note {
+  font-size: 13.5px;
+  color: var(--gray);
+  margin: 8px 0 0;
+}
