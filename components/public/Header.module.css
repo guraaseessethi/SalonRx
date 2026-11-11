@@ -1,0 +1,115 @@
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+  padding-top: env(safe-area-inset-top, 0px);
+}
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-block: 16px;
+}
+.nav {
+  display: flex;
+  gap: 26px;
+}
+.nav a {
+  font-family: var(--head);
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  padding-block: 8px 3px;
+  border-bottom: 1px solid transparent;
+}
+.nav a:hover,
+.nav a[aria-current="page"] {
+  border-color: var(--cobalt);
+  color: var(--cobalt);
+}
+.right {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.staff {
+  font-family: var(--head);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gray);
+  text-decoration: none;
+  padding: 8px 4px;
+}
+.staff:hover {
+  color: var(--ink);
+}
+.menuBtn {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--rule);
+  background: transparent;
+  padding: 9px 12px;
+  min-height: 40px;
+  font-family: var(--head);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.bars {
+  display: grid;
+  gap: 4px;
+  width: 16px;
+}
+.bars i {
+  display: block;
+  height: 1.5px;
+  background: currentColor;
+}
+.panel {
+  border-top: 1px solid var(--rule);
+  background: var(--paper);
+}
+.panel ul {
+  list-style: none;
+  margin: 0;
+  padding: 8px 0 16px;
+}
+.panel a {
+  display: block;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--head);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.panel a[aria-current="page"] {
+  color: var(--cobalt);
+}
+@media (max-width: 980px) {
+  .nav {
+    display: none;
+  }
+  .menuBtn {
+    display: inline-flex;
+  }
+}
+@media (min-width: 981px) {
+  .panel {
+    display: none;
+  }
+}
+@media (max-width: 480px) {
+  .staff {
+    display: none;
+  }
+}

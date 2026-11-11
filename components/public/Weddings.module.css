@@ -1,0 +1,94 @@
+.sec {
+  padding-block: 88px;
+}
+.wed {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  border: 1px solid var(--ink);
+}
+.dark {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 44px;
+  position: relative;
+}
+.dark .lab {
+  color: var(--paper);
+  opacity: 0.7;
+}
+.dark h2 {
+  font-family: var(--script);
+  font-style: italic;
+  font-size: clamp(40px, 5vw, 64px);
+  line-height: 1;
+  margin-top: 14px;
+}
+.dark p {
+  opacity: 0.85;
+  max-width: 38ch;
+  margin-top: 14px;
+}
+.cta {
+  margin-top: 22px !important;
+  opacity: 1 !important;
+}
+.prices {
+  padding: 44px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.prices > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--rule);
+  gap: 10px;
+}
+.prices > div:first-child {
+  padding-top: 0;
+}
+.prices > div:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+.prices dt {
+  font-family: var(--head);
+  font-size: 14px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.prices dd {
+  margin: 0;
+  font-family: var(--head);
+  font-weight: 300;
+  font-size: 34px;
+}
+.quoted dt,
+.quoted dd {
+  color: var(--gray);
+}
+.quoted dd {
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  font-weight: 300;
+}
+.photo {
+  margin-top: 28px;
+  border-color: rgba(255, 255, 255, 0.2);
+  max-width: 320px;
+}
+@media (max-width: 900px) {
+  .sec {
+    padding-block: 60px;
+  }
+  .wed {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .dark,
+  .prices {
+    padding: 28px;
+  }
+}

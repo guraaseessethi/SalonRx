@@ -1,0 +1,17 @@
+.ribbon {
+  position: fixed;
+  left: 0;
+  bottom: calc(0px + env(safe-area-inset-bottom, 0px));
+  z-index: 40;
+  background: var(--paper);
+  color: var(--cobalt);
+  border: 1px solid var(--cobalt);
+  border-left: 0;
+  border-bottom: 0;
+  padding: 3px 10px 3px max(10px, env(safe-area-inset-left, 0px));
+  font-family: var(--head);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  pointer-events: none;
+}

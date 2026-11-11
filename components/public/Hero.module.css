@@ -1,0 +1,141 @@
+.hero {
+  border-bottom: 1px solid var(--rule);
+}
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: 48px;
+  align-items: center;
+  padding-block: 64px 72px;
+}
+.h1 {
+  font-family: var(--script);
+  font-style: italic;
+  font-size: clamp(54px, 8.6vw, 118px);
+  line-height: 0.88;
+  letter-spacing: -0.01em;
+}
+.h1 .kicker {
+  display: block;
+  font-family: var(--head);
+  font-style: normal;
+  font-weight: 300;
+  font-size: 0.34em;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  margin-bottom: 22px;
+  color: var(--gray);
+}
+.h1 em {
+  color: var(--cobalt);
+}
+.copy {
+  max-width: 44ch;
+  font-size: 17px;
+  color: var(--gray);
+  margin: 26px 0 0;
+}
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 34px;
+}
+.art {
+  position: relative;
+  aspect-ratio: 1;
+  width: min(440px, 100%);
+  justify-self: center;
+}
+.burst {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.disc {
+  position: absolute;
+  left: 16%;
+  top: 16%;
+  width: 68%;
+  height: 68%;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.disc img {
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.05);
+}
+.tag {
+  position: absolute;
+  left: -6%;
+  bottom: 6%;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 14px 18px;
+  max-width: 230px;
+}
+.tag b {
+  font-family: var(--head);
+  font-weight: 600;
+  font-size: 28px;
+  display: block;
+  line-height: 1;
+}
+.tag span {
+  font-size: 12.5px;
+  color: var(--gray);
+}
+.facts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid var(--rule);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.facts li {
+  padding: 22px 0 22px 22px;
+  border-left: 1px solid var(--rule);
+}
+.facts li:first-child {
+  border-left: 0;
+  padding-left: 0;
+}
+.facts b {
+  font-family: var(--head);
+  font-weight: 400;
+  font-size: 30px;
+  display: block;
+  line-height: 1.1;
+}
+.facts span {
+  font-size: 13px;
+  color: var(--gray);
+}
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    padding-block: 40px 48px;
+  }
+  .art {
+    width: min(320px, 86%);
+  }
+  .tag {
+    left: 0;
+  }
+  .facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .facts li:nth-child(3) {
+    border-left: 0;
+    padding-left: 0;
+  }
+  .facts li {
+    border-top: 1px solid var(--rule);
+  }
+  .facts li:first-child,
+  .facts li:nth-child(2) {
+    border-top: 0;
+  }
+}

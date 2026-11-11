@@ -1,0 +1,74 @@
+.sec {
+  padding-block: 88px;
+  background: var(--bone);
+}
+.team {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 40px 24px;
+}
+.tm {
+  text-align: center;
+}
+.port {
+  width: 100%;
+  max-width: 170px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  margin: 0 auto 16px;
+  display: grid;
+  place-items: center;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  font-family: var(--script);
+  font-style: italic;
+  font-size: 46px;
+  color: var(--ink);
+  transition:
+    border-color 0.2s,
+    color 0.2s;
+}
+.tm:hover .port {
+  border-color: var(--cobalt);
+  color: var(--cobalt);
+}
+.tm h3 {
+  font-family: var(--head);
+  font-size: 16px;
+  letter-spacing: 0.08em;
+}
+.role {
+  font-family: var(--head);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cobalt);
+  margin-top: 4px;
+}
+.tm p.bio {
+  font-size: 13px;
+  color: var(--gray);
+  margin: 8px 0 0;
+}
+@media (max-width: 980px) {
+  .team {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 900px) {
+  .sec {
+    padding-block: 60px;
+  }
+}
+@media (max-width: 560px) {
+  .team {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px 14px;
+  }
+  .port {
+    font-size: 38px;
+  }
+}
