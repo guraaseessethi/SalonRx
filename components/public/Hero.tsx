@@ -77,7 +77,7 @@ export function Hero() {
           </svg>
           {photo.file && (
             <div className={styles.disc}>
-              <Image src={`/images/${photo.file}`} alt={photo.alt} fill sizes="(max-width: 900px) 70vw, 300px" priority />
+              <Image src={`/images/${photo.file}`} alt={photo.alt} fill sizes="(max-width: 900px) 70vw, 300px" priority fetchPriority="high" />
             </div>
           )}
           <div className={styles.tag}>

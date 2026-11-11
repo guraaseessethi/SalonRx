@@ -10,7 +10,7 @@ import "./globals.css";
 // Self-hosted by next/font at build time: no runtime requests to Google.
 const josefin = Josefin_Sans({
   subsets: ["latin"],
-  weight: ["300", "400", "600", "700"],
+  weight: ["300", "400", "600"],
   variable: "--font-josefin",
   display: "swap",
 });
