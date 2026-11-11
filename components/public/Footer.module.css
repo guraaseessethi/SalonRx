@@ -1,6 +1,6 @@
 .foot {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--admin-bg);
+  color: var(--admin-ink);
   padding-block: 56px 28px;
 }
 .grid {
@@ -23,11 +23,11 @@
   opacity: 0.9;
 }
 .foot a {
-  color: var(--paper);
+  color: var(--admin-ink);
 }
 .brand {
   font-size: 30px;
-  color: var(--paper);
+  color: var(--admin-ink);
 }
 .fine {
   grid-column: 1 / -1;

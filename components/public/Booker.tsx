@@ -334,15 +334,15 @@ export function Booker({ initialServices, initialStaff, initialSettings, initial
                 className={styles.day}
                 disabled={d.open === 0}
                 aria-pressed={date === d.date}
-                aria-label={`${formatDateKeyLong(d.date)}, ${d.open ? `${d.open} open times` : "no openings"}`}
                 onClick={() => {
                   setPickedDate(d.date);
                   setStartsAt(null);
                 }}
               >
-                <small aria-hidden="true">{DAY_SHORT[weekdayOf(d.date)]}</small>
-                <b aria-hidden="true">{dayOfMonth(d.date)}</b>
-                <small aria-hidden="true">{d.open ? `${d.open} open` : "—"}</small>
+                <small>{DAY_SHORT[weekdayOf(d.date)]}</small>
+                <b>{dayOfMonth(d.date)}</b>
+                <small>{d.open ? `${d.open} open` : "—"}</small>
+                <span className="sr-only">, {formatDateKeyLong(d.date)}</span>
               </button>
             ))}
           </div>

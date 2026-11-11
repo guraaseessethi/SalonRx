@@ -60,7 +60,7 @@ export function Marketing() {
                 {sent.includes(c.id) ? (
                   <Status tone="ok">Logged</Status>
                 ) : (
-                  <Button size="sm" variant="line" aria-label={`Text ${c.name}`} onClick={() => remind(c.id)}>
+                  <Button size="sm" variant="line" aria-label={`Send text to ${c.name}`} onClick={() => remind(c.id)}>
                     Send
                   </Button>
                 )}

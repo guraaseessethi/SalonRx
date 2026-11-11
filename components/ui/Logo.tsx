@@ -33,10 +33,11 @@ interface Props {
 /** "SAL(mark)N-Rx" wordmark. */
 export function Wordmark({ href = "/", size = 26, tagline = false, onDark = false, className = "" }: Props) {
   return (
-    <Link href={href} className={`${styles.wordmark} ${onDark ? styles.onDark : ""} ${className}`} style={{ fontSize: size }} aria-label="Salon Rx home">
-      <span className={styles.inner} aria-hidden="true">
+    <Link href={href} className={`${styles.wordmark} ${onDark ? styles.onDark : ""} ${className}`} style={{ fontSize: size }}>
+      <span className={styles.inner}>
         SAL
-        <RxMark />N<span className={styles.rx}>-Rx</span>
+        <RxMark />
+        <span className="sr-only">O</span>N<span className={styles.rx}>-Rx</span>
         {tagline && <small className={styles.small}>your prescription to beauty</small>}
       </span>
     </Link>

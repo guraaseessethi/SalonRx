@@ -149,8 +149,8 @@ export function Calendar() {
                         className={cls}
                         style={{ "--top": `${top}px`, "--h": `${h}px` } as React.CSSProperties}
                         onClick={() => setSelectedId(a.id)}
-                        aria-label={`${formatTime(a.startsAt)}, ${c?.name ?? "Client"}, ${sv?.name ?? ""}, ${dur} minutes${a.status === "new" ? ", new online booking" : ""}`}
                       >
+                        {a.status === "new" && <span className="sr-only">New online booking: </span>}
                         {h < 44 ? (
                           <b>
                             {formatTime(a.startsAt)} {c?.name.split(" ")[0]}

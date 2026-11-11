@@ -12,9 +12,9 @@
   padding: 44px;
   position: relative;
 }
-.dark .lab {
+.dark :global(.lab) {
   color: var(--paper);
-  opacity: 0.7;
+  opacity: 0.85;
 }
 .dark h2 {
   font-family: var(--script);

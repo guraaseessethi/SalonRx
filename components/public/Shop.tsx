@@ -71,7 +71,7 @@ export function Shop({ initialProducts, limit }: Props) {
                 size="sm"
                 variant={reserved ? "blue" : "line"}
                 aria-pressed={reserved}
-                aria-label={`${reserved ? "Reserved" : "Reserve"} ${p.name} for curbside pickup`}
+                aria-label={`${reserved ? "Reserved" : "Reserve · curbside"}: ${p.name}`}
                 disabled={p.stock <= 0 && !reserved}
                 onClick={() => toggle(p)}
               >
