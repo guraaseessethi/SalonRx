@@ -3,7 +3,8 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
   title: "Meet the team",
-  description: "The Salon Rx stylists in Barrie, led by founder Allison Arksey. Colour, cutting, extensions and wedding hair.",
+  description:
+    "The Salon Rx stylists in Barrie, led by founder Allison Arksey. Colour, cutting, extensions and wedding hair.",
   path: "/team",
 });
 

@@ -1,12 +1,17 @@
 import { expect, test } from "@playwright/test";
 
-test("a booking made on the public site shows up in the admin calendar and dashboard", async ({ page }) => {
+test("a booking made on the public site shows up in the admin calendar and dashboard", async ({
+  page,
+}) => {
   await page.goto("/book");
   await expect(page.getByRole("heading", { level: 1, name: /book in a minute/i })).toBeVisible();
 
   // 1. service
   await page.getByRole("button", { name: "Cut", exact: true }).click();
-  await page.getByRole("button", { name: /^Cut & style\s*Cut · 60 min/ }).first().click();
+  await page
+    .getByRole("button", { name: /^Cut & style\s*Cut · 60 min/ })
+    .first()
+    .click();
   await page.getByRole("button", { name: "Continue" }).click();
 
   // 2. stylist: first available
@@ -16,7 +21,10 @@ test("a booking made on the public site shows up in the admin calendar and dashb
 
   // 3. time (the first open day is preselected)
   await expect(page.getByRole("heading", { name: "Choose a time" })).toBeFocused();
-  const slot = page.getByRole("group", { name: /^Times on/ }).getByRole("button").first();
+  const slot = page
+    .getByRole("group", { name: /^Times on/ })
+    .getByRole("button")
+    .first();
   await expect(slot).toBeVisible();
   await slot.click();
   await page.getByRole("button", { name: "Continue" }).click();
@@ -46,11 +54,17 @@ test("a booking made on the public site shows up in the admin calendar and dashb
   await expect(page.getByRole("heading", { level: 1, name: "Calendar" })).toBeVisible();
   await expect(page.getByRole("button", { name: /E2E Tester/ })).toBeVisible();
 
-  await page.getByRole("link", { name: /^Today/ }).first().click();
+  await page
+    .getByRole("link", { name: /^Today/ })
+    .first()
+    .click();
   await expect(page.getByText(/new online booking/)).toBeVisible();
 
   // the confirmation text and email were logged, not sent
-  await page.getByRole("link", { name: /^Outbox/ }).first().click();
+  await page
+    .getByRole("link", { name: /^Outbox/ })
+    .first()
+    .click();
   await expect(page.getByText("e2e@example.com")).toBeVisible();
 });
 
@@ -79,7 +93,9 @@ test("roles change what is visible", async ({ page }) => {
   await expect(nav.getByRole("link", { name: "Calendar" })).toBeVisible();
 });
 
-test("checkout takes retail off the shelf and the price list follows the services editor", async ({ page }) => {
+test("checkout takes retail off the shelf and the price list follows the services editor", async ({
+  page,
+}) => {
   await page.goto("/admin/services");
   await page.getByRole("button", { name: /^Owner/ }).click();
   const price = page.getByLabel("Price in dollars, Toner");
@@ -109,7 +125,9 @@ test("mobile menu is an accessible disclosure", async ({ page }) => {
   await expect(button).toHaveAttribute("aria-expanded", "false");
   await button.click();
   await expect(button).toHaveAttribute("aria-expanded", "true");
-  await expect(page.getByRole("navigation", { name: "Main (mobile)" }).getByRole("link", { name: "Services" })).toBeVisible();
+  await expect(
+    page.getByRole("navigation", { name: "Main (mobile)" }).getByRole("link", { name: "Services" }),
+  ).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(button).toHaveAttribute("aria-expanded", "false");
   await expect(button).toBeFocused();

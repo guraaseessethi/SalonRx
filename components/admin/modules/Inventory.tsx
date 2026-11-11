@@ -12,7 +12,10 @@ import { Field, Kpi, PageHead, Panel, ui } from "../primitives";
 import styles from "./Inventory.module.css";
 
 type Filter = "All" | "Retail" | "Back bar" | "Extensions" | "Low";
-const FILTERS = (["All", "Retail", "Back bar", "Extensions", "Low"] as const).map((f) => ({ value: f, label: f === "Low" ? "Low stock" : f }));
+const FILTERS = (["All", "Retail", "Back bar", "Extensions", "Low"] as const).map((f) => ({
+  value: f,
+  label: f === "Low" ? "Low stock" : f,
+}));
 
 export function Inventory() {
   const { repo, toast, products, reservations } = useAdmin();
@@ -21,11 +24,18 @@ export function Inventory() {
   const [adding, setAdding] = useState(false);
 
   const q = query.toLowerCase();
-  const list = products.filter((p) => (filter === "All" || (filter === "Low" ? p.stock <= p.par : p.type === filter)) && (!q || `${p.brand} ${p.name} ${p.sku}`.toLowerCase().includes(q)));
+  const list = products.filter(
+    (p) =>
+      (filter === "All" || (filter === "Low" ? p.stock <= p.par : p.type === filter)) &&
+      (!q || `${p.brand} ${p.name} ${p.sku}`.toLowerCase().includes(q)),
+  );
   const cost = products.reduce((s, p) => s + p.costCents * p.stock, 0);
   const shelf = products.reduce((s, p) => s + p.priceCents * p.stock, 0);
   const low = products.filter((p) => p.stock <= p.par);
-  const orders = low.reduce<Record<string, Product[]>>((acc, p) => ((acc[p.supplier] ??= []).push(p), acc), {});
+  const orders = low.reduce<Record<string, Product[]>>(
+    (acc, p) => ((acc[p.supplier] ??= []).push(p), acc),
+    {},
+  );
 
   async function addProduct(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -50,9 +60,21 @@ export function Inventory() {
 
   return (
     <>
-      <PageHead title="Inventory" sub="Retail shelf, Goldwell back bar and extension hair." actions={<Button size="sm" onClick={() => setAdding(true)}>+ Product</Button>} />
+      <PageHead
+        title="Inventory"
+        sub="Retail shelf, Goldwell back bar and extension hair."
+        actions={
+          <Button size="sm" onClick={() => setAdding(true)}>
+            + Product
+          </Button>
+        }
+      />
       <div className={`${ui.g} ${ui.g4}`}>
-        <Kpi label="Stock at cost" value={formatMoneyCompact(cost)} note={`${products.length} SKUs`} />
+        <Kpi
+          label="Stock at cost"
+          value={formatMoneyCompact(cost)}
+          note={`${products.length} SKUs`}
+        />
         <Kpi label="Shelf value" value={formatMoneyCompact(shelf)} note="retail price" />
         <Kpi label="At / below par" value={String(low.length)} note="reorder suggested" />
         <Kpi label="Curbside holds" value={String(reservations.length)} note="reserved online" />
@@ -60,8 +82,21 @@ export function Inventory() {
       <div className={`${ui.g} ${ui.g2} ${ui.top}`}>
         <Panel title="Stock">
           <div className={styles.tools}>
-            <ToggleGroup label="Filter" variant="segment" options={FILTERS} value={filter} onChange={setFilter} />
-            <input className={ui.inp} type="search" placeholder="Search" aria-label="Search inventory" value={query} onChange={(e) => setQuery(e.target.value)} />
+            <ToggleGroup
+              label="Filter"
+              variant="segment"
+              options={FILTERS}
+              value={filter}
+              onChange={setFilter}
+            />
+            <input
+              className={ui.inp}
+              type="search"
+              placeholder="Search"
+              aria-label="Search inventory"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
           </div>
           <Table label="Inventory">
             <thead>
@@ -78,7 +113,8 @@ export function Inventory() {
             <tbody>
               {list.map((p) => {
                 const pct = Math.min(100, (p.stock / Math.max(1, p.par * 2)) * 100);
-                const color = p.stock <= 0 ? "var(--bad)" : p.stock <= p.par ? "var(--warn)" : "var(--ok)";
+                const color =
+                  p.stock <= 0 ? "var(--bad)" : p.stock <= p.par ? "var(--warn)" : "var(--ok)";
                 return (
                   <tr key={p.sku}>
                     <td className={styles.name}>
@@ -97,10 +133,20 @@ export function Inventory() {
                     <td className={t.num}>{formatMoney(p.costCents)}</td>
                     <td className={t.num}>{p.priceCents ? formatMoney(p.priceCents) : "—"}</td>
                     <td className={styles.adj}>
-                      <Button size="sm" variant="line" aria-label={`Use one ${p.name}`} onClick={() => repo.adjustStock(p.sku, -1)}>
+                      <Button
+                        size="sm"
+                        variant="line"
+                        aria-label={`Use one ${p.name}`}
+                        onClick={() => repo.adjustStock(p.sku, -1)}
+                      >
                         −
                       </Button>{" "}
-                      <Button size="sm" variant="line" aria-label={`Receive one ${p.name}`} onClick={() => repo.adjustStock(p.sku, 1)}>
+                      <Button
+                        size="sm"
+                        variant="line"
+                        aria-label={`Receive one ${p.name}`}
+                        onClick={() => repo.adjustStock(p.sku, 1)}
+                      >
                         +
                       </Button>
                     </td>
@@ -125,7 +171,13 @@ export function Inventory() {
                   ))}
                   <div className={styles.poFoot}>
                     <span>{formatMoney(total)}</span>
-                    <Button size="sm" onClick={async () => { await repo.receivePurchaseOrder(supplier); toast(`Received from ${supplier}`); }}>
+                    <Button
+                      size="sm"
+                      onClick={async () => {
+                        await repo.receivePurchaseOrder(supplier);
+                        toast(`Received from ${supplier}`);
+                      }}
+                    >
                       Mark received
                     </Button>
                   </div>

@@ -37,8 +37,8 @@ export function Hero() {
             to <em>beauty</em>
           </h1>
           <p className={styles.copy}>
-            Colour, cuts, extensions and wedding hair at 213 Bayfield Street. Come in for the hair, stay for the tea,
-            the cookies and the hand massage.
+            Colour, cuts, extensions and wedding hair at 213 Bayfield Street. Come in for the hair,
+            stay for the tea, the cookies and the hand massage.
           </p>
           <div className={styles.ctas}>
             <ButtonLink href="/book" variant="blue">
@@ -70,14 +70,33 @@ export function Hero() {
                   </linearGradient>
                 </defs>
                 <circle cx="200" cy="200" r="128" fill="url(#hero-g)" />
-                <path d="M214 76 C170 104 160 170 186 222 C204 258 240 290 282 300" stroke="#fff" strokeWidth="2" fill="none" opacity=".85" />
-                <path d="M226 80 C190 112 184 168 206 212 C222 244 254 270 292 282" stroke="#fff" strokeWidth="1" fill="none" opacity=".5" />
+                <path
+                  d="M214 76 C170 104 160 170 186 222 C204 258 240 290 282 300"
+                  stroke="#fff"
+                  strokeWidth="2"
+                  fill="none"
+                  opacity=".85"
+                />
+                <path
+                  d="M226 80 C190 112 184 168 206 212 C222 244 254 270 292 282"
+                  stroke="#fff"
+                  strokeWidth="1"
+                  fill="none"
+                  opacity=".5"
+                />
               </>
             )}
           </svg>
           {photo.file && (
             <div className={styles.disc}>
-              <Image src={`/images/${photo.file}`} alt={photo.alt} fill sizes="(max-width: 900px) 70vw, 300px" priority fetchPriority="high" />
+              <Image
+                src={`/images/${photo.file}`}
+                alt={photo.alt}
+                fill
+                sizes="(max-width: 900px) 70vw, 300px"
+                priority
+                fetchPriority="high"
+              />
             </div>
           )}
           <div className={styles.tag}>

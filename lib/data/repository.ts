@@ -81,7 +81,10 @@ export interface DataRepository {
 
   /* catalog */
   listServices(): Promise<Service[]>;
-  updateService(id: string, patch: Partial<Pick<Service, "priceCents" | "durationMin">>): Promise<Service>;
+  updateService(
+    id: string,
+    patch: Partial<Pick<Service, "priceCents" | "durationMin">>,
+  ): Promise<Service>;
   listStaff(): Promise<Staff[]>;
   getSettings(): Promise<Settings>;
   setSetting(key: ToggleSettingKey, value: boolean): Promise<Settings>;

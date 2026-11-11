@@ -14,7 +14,10 @@ export default async function PublicLayout({ children }: { children: React.React
       </main>
       <Footer />
       <DemoRibbon />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdString(hairSalonJsonLd(settings.hours)) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdString(hairSalonJsonLd(settings.hours)) }}
+      />
     </>
   );
 }

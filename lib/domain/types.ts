@@ -14,7 +14,14 @@ const cents = z.number().int().nonnegative();
 
 /* ---------- Staff ---------- */
 
-export const staffLevelSchema = z.enum(["owner", "senior", "intermediate", "junior", "desk", "social"]);
+export const staffLevelSchema = z.enum([
+  "owner",
+  "senior",
+  "intermediate",
+  "junior",
+  "desk",
+  "social",
+]);
 export type StaffLevel = z.infer<typeof staffLevelSchema>;
 
 export const staffSchema = z.object({
@@ -138,7 +145,11 @@ export const bookingInputSchema = z.object({
   /** A staff id, or "any" for the first available stylist. */
   staffId: id,
   startsAt: isoInstant,
-  name: z.string().trim().min(2, "Add your name so we know who to expect").max(80, "That name is a bit long"),
+  name: z
+    .string()
+    .trim()
+    .min(2, "Add your name so we know who to expect")
+    .max(80, "That name is a bit long"),
   phone: phoneField,
   email: z.union([z.literal(""), z.email("That email doesn't look right")]).default(""),
   note: z.string().trim().max(500, "Please keep notes under 500 characters").default(""),

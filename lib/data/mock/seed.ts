@@ -43,16 +43,96 @@ export const DEFAULT_SETTINGS: Settings = {
 };
 
 export const SEED_STAFF: Staff[] = [
-  { id: "allison", name: "Allison Arksey", level: "owner", role: "Founder & owner", bio: "Colour and creative cutting, with a long-standing clientele.", workDays: [3, 4, 5, 6], bookable: true },
-  { id: "tanya", name: "Tanya Noland", level: "senior", role: "Senior stylist", bio: "Creative colour, blondes, and men's and women's styling.", workDays: [3, 4, 6], bookable: true },
-  { id: "frank", name: "Frank Zanotti", level: "senior", role: "Senior stylist", bio: "Listens first and teaches you to style it at home.", workDays: [3, 4, 5], bookable: true },
-  { id: "nickie", name: "Nickie Pynn", level: "senior", role: "Senior stylist", bio: "Hot Fusion and Tape-In extensions, wearable everyday looks.", workDays: [4, 5, 6], bookable: true },
-  { id: "josh", name: "Josh Henderson", level: "senior", role: "Senior stylist", bio: "Lived-in blonde specialist who loves long hair and blowouts.", workDays: [3, 4, 5, 6], bookable: true },
-  { id: "kim", name: "Kim Garcia", level: "intermediate", role: "Intermediate stylist", bio: "Balayage, textured cuts and men's cuts.", workDays: [3, 4, 6], bookable: true },
-  { id: "alana", name: "Alana Ruscio", level: "junior", role: "Junior stylist", bio: "Your go-to for hair care and product knowledge.", workDays: [4, 5, 6], bookable: true },
-  { id: "tryla", name: "Tryla", level: "junior", role: "Junior stylist", bio: "Recent graduate bringing fresh energy to every appointment.", workDays: [3, 5, 6], bookable: true },
-  { id: "hillary", name: "Hillary Calder", level: "desk", role: "Front desk", bio: "The friendly face at the door and the voice on the phone.", workDays: [3, 4, 5, 6], bookable: false },
-  { id: "kristie", name: "Kristie Stoodley", level: "social", role: "Social media", bio: "Years in fashion and publishing, now behind our feed.", workDays: [], bookable: false },
+  {
+    id: "allison",
+    name: "Allison Arksey",
+    level: "owner",
+    role: "Founder & owner",
+    bio: "Colour and creative cutting, with a long-standing clientele.",
+    workDays: [3, 4, 5, 6],
+    bookable: true,
+  },
+  {
+    id: "tanya",
+    name: "Tanya Noland",
+    level: "senior",
+    role: "Senior stylist",
+    bio: "Creative colour, blondes, and men's and women's styling.",
+    workDays: [3, 4, 6],
+    bookable: true,
+  },
+  {
+    id: "frank",
+    name: "Frank Zanotti",
+    level: "senior",
+    role: "Senior stylist",
+    bio: "Listens first and teaches you to style it at home.",
+    workDays: [3, 4, 5],
+    bookable: true,
+  },
+  {
+    id: "nickie",
+    name: "Nickie Pynn",
+    level: "senior",
+    role: "Senior stylist",
+    bio: "Hot Fusion and Tape-In extensions, wearable everyday looks.",
+    workDays: [4, 5, 6],
+    bookable: true,
+  },
+  {
+    id: "josh",
+    name: "Josh Henderson",
+    level: "senior",
+    role: "Senior stylist",
+    bio: "Lived-in blonde specialist who loves long hair and blowouts.",
+    workDays: [3, 4, 5, 6],
+    bookable: true,
+  },
+  {
+    id: "kim",
+    name: "Kim Garcia",
+    level: "intermediate",
+    role: "Intermediate stylist",
+    bio: "Balayage, textured cuts and men's cuts.",
+    workDays: [3, 4, 6],
+    bookable: true,
+  },
+  {
+    id: "alana",
+    name: "Alana Ruscio",
+    level: "junior",
+    role: "Junior stylist",
+    bio: "Your go-to for hair care and product knowledge.",
+    workDays: [4, 5, 6],
+    bookable: true,
+  },
+  {
+    id: "tryla",
+    name: "Tryla",
+    level: "junior",
+    role: "Junior stylist",
+    bio: "Recent graduate bringing fresh energy to every appointment.",
+    workDays: [3, 5, 6],
+    bookable: true,
+  },
+  {
+    id: "hillary",
+    name: "Hillary Calder",
+    level: "desk",
+    role: "Front desk",
+    bio: "The friendly face at the door and the voice on the phone.",
+    workDays: [3, 4, 5, 6],
+    bookable: false,
+  },
+  {
+    id: "kristie",
+    name: "Kristie Stoodley",
+    level: "social",
+    role: "Social media",
+    bio: "Years in fashion and publishing, now behind our feed.",
+    workDays: [],
+    bookable: false,
+  },
 ];
 
 /** [id, category, name, price $, minutes, tiered (25% off for intermediate), plus] */
@@ -93,20 +173,22 @@ const SERVICE_ROWS: ServiceRow[] = [
   ["w-trial", "Weddings", "Wedding trial", 130, 90, 0],
 ];
 
-export const SEED_SERVICES: Service[] = SERVICE_ROWS.map(([id, category, name, price, durationMin, tiered, plus]) => ({
-  id,
-  category,
-  name,
-  priceCents: price * 100,
-  durationMin,
-  tiered: tiered === 1,
-  plus: plus === "+",
-}));
+export const SEED_SERVICES: Service[] = SERVICE_ROWS.map(
+  ([id, category, name, price, durationMin, tiered, plus]) => ({
+    id,
+    category,
+    name,
+    priceCents: price * 100,
+    durationMin,
+    tiered: tiered === 1,
+    plus: plus === "+",
+  }),
+);
 
 /* ---------- products ---------- */
 
 const BRAND_PREFIX: Record<string, string> = {
-  "Kérastase": "KER",
+  Kérastase: "KER",
   Moroccanoil: "MOR",
   "Color Wow": "CWW",
   "Schwarzkopf OSiS+": "OSI",
@@ -124,7 +206,14 @@ function sku(brand: string): string {
   return `${prefix}-${String(counters[prefix]).padStart(3, "0")}`;
 }
 
-function retail(brand: string, name: string, price: number, stock: number, par: number, color: string): Product {
+function retail(
+  brand: string,
+  name: string,
+  price: number,
+  stock: number,
+  par: number,
+  color: string,
+): Product {
   return {
     sku: sku(brand),
     brand,
@@ -139,8 +228,27 @@ function retail(brand: string, name: string, price: number, stock: number, par: 
   };
 }
 
-function backBar(brand: string, name: string, type: ProductType, cost: number, stock: number, par: number, supplier: string): Product {
-  return { sku: sku(brand), brand, name, type, costCents: cost * 100, priceCents: 0, stock, par, supplier, color: "#9aa3b8" };
+function backBar(
+  brand: string,
+  name: string,
+  type: ProductType,
+  cost: number,
+  stock: number,
+  par: number,
+  supplier: string,
+): Product {
+  return {
+    sku: sku(brand),
+    brand,
+    name,
+    type,
+    costCents: cost * 100,
+    priceCents: 0,
+    stock,
+    par,
+    supplier,
+    color: "#9aa3b8",
+  };
 }
 
 function buildProducts(): Product[] {
@@ -181,8 +289,24 @@ function buildProducts(): Product[] {
     backBar("Goldwell", "Oxycur Platin lightener 500 g", "Back bar", 46, 5, 3, "Goldwell"),
     backBar("Goldwell", "Topchic developer 6%, 1 L", "Back bar", 16, 5, 4, "Goldwell"),
     backBar("Supplies", 'Foil roll 5"', "Back bar", 24, 2, 3, "Salon supply"),
-    backBar("Extensions", 'Hot Fusion bonds, 22" (pack)', "Extensions", 150, 4, 2, "Extension supplier"),
-    backBar("Extensions", 'Tape-In wefts, 20" (pack)', "Extensions", 95, 1, 3, "Extension supplier"),
+    backBar(
+      "Extensions",
+      'Hot Fusion bonds, 22" (pack)',
+      "Extensions",
+      150,
+      4,
+      2,
+      "Extension supplier",
+    ),
+    backBar(
+      "Extensions",
+      'Tape-In wefts, 20" (pack)',
+      "Extensions",
+      95,
+      1,
+      3,
+      "Extension supplier",
+    ),
   ];
 }
 
@@ -225,20 +349,139 @@ function buildClients(now: Date): Client[] {
   });
 
   return [
-    c("c1", "Megan Doyle", "705-555-0142", "allison", "2017", 44, 6120, 27, "Oat latte, chocolate chip cookie", "", 40, "Base: Topchic 7N + 7G 1:1 · 6% · 35 min\nFoils: Oxycur Platin + 6%, babylights\nToner: 9V + 9N 1:1 · 20 min", "Soft at the hairline. Hard water at home, add decalcifying treatment."),
-    c("c2", "Priya Raman", "705-555-0177", "nickie", "2022", 16, 4210, 49, "Green tea, no sugar", "PPD sensitivity, use Elumen", 120, 'Tape-In 20", 6 packs\nElumen over lifted ends · 20 min', "Extension move-up due. Prefers Wednesday evenings."),
-    c("c3", "Dana Whitfield", "705-555-0119", "tanya", "2016", 58, 7120, 12, "Black coffee", "", 30, "Pre-lighten mid to ends\nVivid blue: direct dye, cobalt + clear 1:1", "The blue! Refresh every 5 weeks. Sulphate-free at home."),
-    c("c4", "Jordan Ellis", "705-555-0164", "kim", "2024", 6, 270, 21, "Water", "", null, "—", "Short taper, #2 sides, scissor on top."),
-    c("c5", "Sophie Lambert", "705-555-0108", "tanya", "2026", 1, 130, 60, "Chai", "", null, "Trial: low textured bun, face-framing pieces", "Wedding 12 June 2027 · party of 5 · on location."),
-    c("c6", "Rachel Kim", "705-555-0131", "frank", "2020", 24, 3280, 35, "Peppermint tea", "Latex", 200, "All over: Topchic 5N + 6RB 2:1 · 6% · 35 min", "Grey coverage at temples. Patch test expired."),
-    c("c7", "Hannah Morris", "705-555-0185", "josh", "2021", 19, 3655, 8, "Latte, oat milk", "", 90, "Balayage: Oxycur Platin + 6%, open-air\nToner: 8V + 9N 1:1", "Winter: richer tone, keep the dimension."),
-    c("c8", "Olivia Tremblay", "705-555-0150", "josh", "2023", 9, 1990, 63, "Coffee, 2 creams", "", 150, 'Hot Fusion 22", 100 g', "Overdue for maintenance."),
+    c(
+      "c1",
+      "Megan Doyle",
+      "705-555-0142",
+      "allison",
+      "2017",
+      44,
+      6120,
+      27,
+      "Oat latte, chocolate chip cookie",
+      "",
+      40,
+      "Base: Topchic 7N + 7G 1:1 · 6% · 35 min\nFoils: Oxycur Platin + 6%, babylights\nToner: 9V + 9N 1:1 · 20 min",
+      "Soft at the hairline. Hard water at home, add decalcifying treatment.",
+    ),
+    c(
+      "c2",
+      "Priya Raman",
+      "705-555-0177",
+      "nickie",
+      "2022",
+      16,
+      4210,
+      49,
+      "Green tea, no sugar",
+      "PPD sensitivity, use Elumen",
+      120,
+      'Tape-In 20", 6 packs\nElumen over lifted ends · 20 min',
+      "Extension move-up due. Prefers Wednesday evenings.",
+    ),
+    c(
+      "c3",
+      "Dana Whitfield",
+      "705-555-0119",
+      "tanya",
+      "2016",
+      58,
+      7120,
+      12,
+      "Black coffee",
+      "",
+      30,
+      "Pre-lighten mid to ends\nVivid blue: direct dye, cobalt + clear 1:1",
+      "The blue! Refresh every 5 weeks. Sulphate-free at home.",
+    ),
+    c(
+      "c4",
+      "Jordan Ellis",
+      "705-555-0164",
+      "kim",
+      "2024",
+      6,
+      270,
+      21,
+      "Water",
+      "",
+      null,
+      "—",
+      "Short taper, #2 sides, scissor on top.",
+    ),
+    c(
+      "c5",
+      "Sophie Lambert",
+      "705-555-0108",
+      "tanya",
+      "2026",
+      1,
+      130,
+      60,
+      "Chai",
+      "",
+      null,
+      "Trial: low textured bun, face-framing pieces",
+      "Wedding 12 June 2027 · party of 5 · on location.",
+    ),
+    c(
+      "c6",
+      "Rachel Kim",
+      "705-555-0131",
+      "frank",
+      "2020",
+      24,
+      3280,
+      35,
+      "Peppermint tea",
+      "Latex",
+      200,
+      "All over: Topchic 5N + 6RB 2:1 · 6% · 35 min",
+      "Grey coverage at temples. Patch test expired.",
+    ),
+    c(
+      "c7",
+      "Hannah Morris",
+      "705-555-0185",
+      "josh",
+      "2021",
+      19,
+      3655,
+      8,
+      "Latte, oat milk",
+      "",
+      90,
+      "Balayage: Oxycur Platin + 6%, open-air\nToner: 8V + 9N 1:1",
+      "Winter: richer tone, keep the dimension.",
+    ),
+    c(
+      "c8",
+      "Olivia Tremblay",
+      "705-555-0150",
+      "josh",
+      "2023",
+      9,
+      1990,
+      63,
+      "Coffee, 2 creams",
+      "",
+      150,
+      'Hot Fusion 22", 100 g',
+      "Overdue for maintenance.",
+    ),
   ];
 }
 
 /* ---------- appointments ---------- */
 
-type SeedAppt = [staffId: string, clientId: string, serviceId: string, hour: number, minute: number, status: AppointmentStatus];
+type SeedAppt = [
+  staffId: string,
+  clientId: string,
+  serviceId: string,
+  hour: number,
+  minute: number,
+  status: AppointmentStatus,
+];
 
 const SEED_APPTS: SeedAppt[] = [
   ["allison", "c1", "c-basehalf", 10, 0, "confirmed"],

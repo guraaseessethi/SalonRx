@@ -9,7 +9,9 @@ export function Footer() {
       <div className={`wrap ${styles.grid}`}>
         <div>
           <Wordmark size={30} onDark className={styles.brand} />
-          <p style={{ marginTop: 14 }}>More than just hair. Creating confidence, connection and a little self-care.</p>
+          <p style={{ marginTop: 14 }}>
+            More than just hair. Creating confidence, connection and a little self-care.
+          </p>
         </div>
         <div>
           <h2>Visit</h2>

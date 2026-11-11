@@ -11,9 +11,20 @@ import { queries } from "@/lib/data/queries";
 import type { Product, Reservation } from "@/lib/domain/types";
 import styles from "./Shop.module.css";
 
-const BRANDS = ["All", "Kérastase", "Moroccanoil", "Color Wow", "Schwarzkopf OSiS+", "KMS", "Salon Rx"] as const;
+const BRANDS = [
+  "All",
+  "Kérastase",
+  "Moroccanoil",
+  "Color Wow",
+  "Schwarzkopf OSiS+",
+  "KMS",
+  "Salon Rx",
+] as const;
 type Brand = (typeof BRANDS)[number];
-const BRAND_OPTIONS = BRANDS.map((b) => ({ value: b, label: b === "Schwarzkopf OSiS+" ? "OSiS+" : b }));
+const BRAND_OPTIONS = BRANDS.map((b) => ({
+  value: b,
+  label: b === "Schwarzkopf OSiS+" ? "OSiS+" : b,
+}));
 
 function Stock({ stock }: { stock: number }) {
   if (stock <= 0) return <span className={`${styles.stk} ${styles.out}`}>Sold out</span>;
@@ -35,7 +46,9 @@ export function Shop({ initialProducts, limit }: Props) {
   const [brand, setBrand] = useState<Brand>("All");
 
   const list = useMemo(() => {
-    const retail = products.filter((p) => p.type === "Retail" && (brand === "All" || p.brand === brand));
+    const retail = products.filter(
+      (p) => p.type === "Retail" && (brand === "All" || p.brand === brand),
+    );
     return brand === "All" && limit ? retail.slice(0, limit) : retail;
   }, [products, brand, limit]);
 
@@ -47,7 +60,12 @@ export function Shop({ initialProducts, limit }: Props) {
   return (
     <>
       <div className={styles.bar}>
-        <ToggleGroup label="Filter by brand" options={BRAND_OPTIONS} value={brand} onChange={setBrand} />
+        <ToggleGroup
+          label="Filter by brand"
+          options={BRAND_OPTIONS}
+          value={brand}
+          onChange={setBrand}
+        />
       </div>
       <ul className={styles.grid}>
         {list.map((p) => {

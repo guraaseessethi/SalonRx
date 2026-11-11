@@ -10,8 +10,21 @@ import { useAdmin } from "../AdminContext";
 import { Avatar, PageHead, Panel, Status, ui } from "../primitives";
 import styles from "./Team.module.css";
 
-const LEVEL: Record<string, string> = { owner: "Owner", senior: "Senior", intermediate: "Intermediate", junior: "Junior", desk: "Front desk", social: "Social" };
-const RETAIL_SAMPLE: [string, number][] = [["Allison", 412], ["Josh", 298], ["Alana", 264], ["Nickie", 240], ["Tanya", 176]];
+const LEVEL: Record<string, string> = {
+  owner: "Owner",
+  senior: "Senior",
+  intermediate: "Intermediate",
+  junior: "Junior",
+  desk: "Front desk",
+  social: "Social",
+};
+const RETAIL_SAMPLE: [string, number][] = [
+  ["Allison", 412],
+  ["Josh", 298],
+  ["Alana", 264],
+  ["Nickie", 240],
+  ["Tanya", 176],
+];
 
 export function Team() {
   const { staff, appointments, settings, openDay } = useAdmin();
@@ -36,9 +49,21 @@ export function Team() {
           </thead>
           <tbody>
             {staff.map((s) => {
-              const day = appointments.filter((a) => a.staffId === s.id && toDateKey(a.startsAt) === openDay && a.status !== "cancelled");
-              const mins = day.reduce((sum, a) => sum + (new Date(a.endsAt).getTime() - new Date(a.startsAt).getTime()) / 60_000, 0);
-              const available = s.bookable && hours && s.workDays.includes(weekday) ? hours.closeMin - hours.openMin : 0;
+              const day = appointments.filter(
+                (a) =>
+                  a.staffId === s.id &&
+                  toDateKey(a.startsAt) === openDay &&
+                  a.status !== "cancelled",
+              );
+              const mins = day.reduce(
+                (sum, a) =>
+                  sum + (new Date(a.endsAt).getTime() - new Date(a.startsAt).getTime()) / 60_000,
+                0,
+              );
+              const available =
+                s.bookable && hours && s.workDays.includes(weekday)
+                  ? hours.closeMin - hours.openMin
+                  : 0;
               const revenue = day.reduce((sum, a) => sum + a.priceCents, 0);
               return (
                 <tr key={s.id}>
@@ -52,10 +77,16 @@ export function Team() {
                     </span>
                   </td>
                   <td>
-                    <Status tone={s.level === "owner" || s.level === "senior" ? "rx" : "mute"}>{LEVEL[s.level]}</Status>
+                    <Status tone={s.level === "owner" || s.level === "senior" ? "rx" : "mute"}>
+                      {LEVEL[s.level]}
+                    </Status>
                   </td>
-                  <td className={styles.days}>{s.workDays.length ? s.workDays.map((d) => DAY_SHORT[d]).join(" · ") : "Remote"}</td>
-                  <td className={t.num}>{available ? `${Math.round((mins / available) * 100)}%` : "—"}</td>
+                  <td className={styles.days}>
+                    {s.workDays.length ? s.workDays.map((d) => DAY_SHORT[d]).join(" · ") : "Remote"}
+                  </td>
+                  <td className={t.num}>
+                    {available ? `${Math.round((mins / available) * 100)}%` : "—"}
+                  </td>
                   <td className={t.num}>{s.bookable ? formatMoneyCompact(revenue) : "—"}</td>
                 </tr>
               );
@@ -69,7 +100,13 @@ export function Team() {
             {TIME_OFF.map((r) => (
               <li key={r}>
                 <span>{r}</span>
-                {approved.includes(r) ? <Status tone="ok">Approved</Status> : <Button size="sm" onClick={() => setApproved((a) => [...a, r])}>Approve</Button>}
+                {approved.includes(r) ? (
+                  <Status tone="ok">Approved</Status>
+                ) : (
+                  <Button size="sm" onClick={() => setApproved((a) => [...a, r])}>
+                    Approve
+                  </Button>
+                )}
               </li>
             ))}
           </ul>
@@ -89,7 +126,9 @@ export function Team() {
           <p className={styles.note}>Sample figures.</p>
         </Panel>
         <Panel title="Social queue">
-          <p className={styles.note}>Kristie picks before-and-afters straight from tagged appointments.</p>
+          <p className={styles.note}>
+            Kristie picks before-and-afters straight from tagged appointments.
+          </p>
           <ul className={ui.ls}>
             <li>
               <span>Dana · the blue refresh</span>

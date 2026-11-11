@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Salon Rx
 
-## Getting Started
+Website and back office for **Salon Rx**, an independent hair salon at 213 Bayfield Street, Barrie, Ontario.
+Built by Kooht Studio. **Phase 1: a clickable mockup** (public site and staff back office on demo data stored in the
+browser). Phase 2 swaps in a real database; see `docs/`.
 
-First, run the development server:
+## Run it
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
+cp .env.example .env.local   # NEXT_PUBLIC_DATA_SOURCE=mock
+pnpm dev                     # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Scripts
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Command                                              | What it does                                                                            |
+| ---------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `pnpm typecheck` / `pnpm lint` / `pnpm format:check` | TypeScript strict, ESLint, Prettier                                                     |
+| `pnpm test`                                          | Vitest: availability, pricing, calendar file, permissions, mock repository              |
+| `pnpm build && pnpm test:e2e`                        | Playwright against a production build: booking flow, roles, checkout, axe accessibility |
+| `pnpm build && pnpm screenshots`                     | Screenshots into `docs/screenshots` (360, 768, 1280 px; light and dark)                 |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Try the demo
 
-## Learn More
+1. Open the site, book an appointment at **/book** (confirmation, "Add to calendar" `.ics`).
+2. Click **See it in the salon calendar**, pick a role on the demo gate (no password) and find the booking in the
+   calendar, on the dashboard (as "new online booking") and the confirmation text and email in the demo outbox.
+3. Add `?review=1` to any public URL to mark content that must be verified with the salon.
+4. **Reset demo data** is in the admin sidebar and in Settings.
 
-To learn more about Next.js, take a look at the following resources:
+## Docs
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+[Architecture](docs/ARCHITECTURE.md) · [Security](docs/SECURITY.md) · [Migration](docs/MIGRATION.md) ·
+[Costs](docs/COSTS.md) · [Content to verify](docs/CONTENT_TODO.md) · [Images](public/images/README.md)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`reference/salon-rx-concept.html` is the approved visual concept (design source of truth). It is not shipped.

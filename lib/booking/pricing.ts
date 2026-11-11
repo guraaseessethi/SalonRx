@@ -1,7 +1,4 @@
-import {
-  HST_RATE_PERCENT,
-  INTERMEDIATE_DISCOUNT_PERCENT,
-} from "@/lib/domain/constants";
+import { HST_RATE_PERCENT, INTERMEDIATE_DISCOUNT_PERCENT } from "@/lib/domain/constants";
 import type { Service, StaffLevel } from "@/lib/domain/types";
 
 /** Price of a service for a stylist of the given level. Integer cents. */
@@ -31,8 +28,12 @@ export interface Totals {
 
 /** HST applies to services and retail. The tip is a percentage of the services only and is not taxed. */
 export function computeTotals(lines: TotalsLine[], tipPercent: number): Totals {
-  const serviceCents = lines.filter((l) => l.kind === "service").reduce((s, l) => s + l.priceCents, 0);
-  const retailCents = lines.filter((l) => l.kind === "product").reduce((s, l) => s + l.priceCents, 0);
+  const serviceCents = lines
+    .filter((l) => l.kind === "service")
+    .reduce((s, l) => s + l.priceCents, 0);
+  const retailCents = lines
+    .filter((l) => l.kind === "product")
+    .reduce((s, l) => s + l.priceCents, 0);
   const subtotalCents = serviceCents + retailCents;
   const taxCents = Math.round((subtotalCents * HST_RATE_PERCENT) / 100);
   const tipCents = Math.round((serviceCents * tipPercent) / 100);

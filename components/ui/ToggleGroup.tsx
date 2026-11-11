@@ -21,11 +21,27 @@ interface Props<T extends string> {
  * A row of mutually exclusive buttons. Uses aria-pressed (not role=tab) because it filters a list in
  * place rather than switching between separate panels.
  */
-export function ToggleGroup<T extends string>({ label, options, value, onChange, variant = "tabs", className = "" }: Props<T>) {
+export function ToggleGroup<T extends string>({
+  label,
+  options,
+  value,
+  onChange,
+  variant = "tabs",
+  className = "",
+}: Props<T>) {
   return (
-    <div role="group" aria-label={label} className={`${variant === "tabs" ? styles.tabs : styles.segment} ${className}`}>
+    <div
+      role="group"
+      aria-label={label}
+      className={`${variant === "tabs" ? styles.tabs : styles.segment} ${className}`}
+    >
       {options.map((o) => (
-        <button key={o.value} type="button" aria-pressed={o.value === value} onClick={() => onChange(o.value)}>
+        <button
+          key={o.value}
+          type="button"
+          aria-pressed={o.value === value}
+          onClick={() => onChange(o.value)}
+        >
           {o.label}
         </button>
       ))}

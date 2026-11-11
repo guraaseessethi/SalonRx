@@ -37,7 +37,17 @@ export const MODULE_LABELS: Record<AdminModule, string> = {
 const ACCESS: Record<Role, readonly AdminModule[]> = {
   owner: ADMIN_MODULES,
   // Front desk runs the floor: everything except reports and settings.
-  frontdesk: ["dashboard", "calendar", "clients", "checkout", "inventory", "services", "staff", "marketing", "outbox"],
+  frontdesk: [
+    "dashboard",
+    "calendar",
+    "clients",
+    "checkout",
+    "inventory",
+    "services",
+    "staff",
+    "marketing",
+    "outbox",
+  ],
   // A stylist sees their own day, their own clients and their own checkout.
   stylist: ["dashboard", "calendar", "clients", "checkout"],
 };

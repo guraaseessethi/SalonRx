@@ -3,7 +3,8 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
   title: "Shop",
-  description: "Kérastase, Moroccanoil, Color Wow, OSiS+ and KMS at Salon Rx. Reserve online for curbside pickup in Barrie.",
+  description:
+    "Kérastase, Moroccanoil, Color Wow, OSiS+ and KMS at Salon Rx. Reserve online for curbside pickup in Barrie.",
   path: "/shop",
 });
 

@@ -2,7 +2,13 @@ import type { ReactNode } from "react";
 import { Verify } from "@/components/providers/ReviewMode";
 import { ButtonLink } from "@/components/ui/Button";
 import { formatMinutes, todayKey, weekdayOf } from "@/lib/booking/time";
-import { CANCELLATION_NOTICE_HOURS, DAY_DISPLAY_ORDER, DAY_NAMES, LATE_CANCEL_FEE_CENTS, MAX_LAST_MINUTE_CANCELS } from "@/lib/domain/constants";
+import {
+  CANCELLATION_NOTICE_HOURS,
+  DAY_DISPLAY_ORDER,
+  DAY_NAMES,
+  LATE_CANCEL_FEE_CENTS,
+  MAX_LAST_MINUTE_CANCELS,
+} from "@/lib/domain/constants";
 import type { WeekHours } from "@/lib/domain/types";
 import { SITE } from "@/lib/site";
 import { Photo } from "./Photo";
@@ -17,7 +23,11 @@ export function HoursTable({ hours }: { hours: WeekHours }) {
         {DAY_DISPLAY_ORDER.map((i) => {
           const h = hours[i];
           return (
-            <tr key={i} className={i === today ? styles.today : undefined} aria-current={i === today ? "date" : undefined}>
+            <tr
+              key={i}
+              className={i === today ? styles.today : undefined}
+              aria-current={i === today ? "date" : undefined}
+            >
               <th scope="row">{DAY_NAMES[i]}</th>
               <td>{h ? `${formatMinutes(h.openMin)} – ${formatMinutes(h.closeMin)}` : "Closed"}</td>
             </tr>
@@ -66,7 +76,8 @@ export function VisitInfo({
           {SITE.address.city}, {SITE.address.region} {SITE.address.postal}
         </p>
         <p>
-          <a href={SITE.phoneHref}>{SITE.phone}</a> · <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+          <a href={SITE.phoneHref}>{SITE.phone}</a> ·{" "}
+          <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
           <Verify />
         </p>
         <p>
@@ -78,11 +89,14 @@ export function VisitInfo({
       <div className={styles.block}>
         <h3>Cancellations</h3>
         <p>
-          {CANCELLATION_NOTICE_HOURS} hours&apos; notice, please. Late cancellations carry a ${LATE_CANCEL_FEE_CENTS / 100} non-refundable rebooking
-          charge. We don&apos;t rebook after {MAX_LAST_MINUTE_CANCELS} last-minute cancellations.
+          {CANCELLATION_NOTICE_HOURS} hours&apos; notice, please. Late cancellations carry a $
+          {LATE_CANCEL_FEE_CENTS / 100} non-refundable rebooking charge. We don&apos;t rebook after{" "}
+          {MAX_LAST_MINUTE_CANCELS} last-minute cancellations.
         </p>
       </div>
-      {withPhoto && <Photo slot="visit" className={styles.photo} sizes="(max-width: 900px) 90vw, 440px" />}
+      {withPhoto && (
+        <Photo slot="visit" className={styles.photo} sizes="(max-width: 900px) 90vw, 440px" />
+      )}
     </div>
   );
 }

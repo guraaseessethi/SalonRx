@@ -7,7 +7,21 @@ import type { Service } from "@/lib/domain/types";
 import { useAdmin } from "../AdminContext";
 import { PageHead, Panel, Status, ui } from "../primitives";
 
-function NumberCell({ value, step, min, label, width, onCommit }: { value: number; step: number; min: number; label: string; width: number; onCommit: (v: number) => void }) {
+function NumberCell({
+  value,
+  step,
+  min,
+  label,
+  width,
+  onCommit,
+}: {
+  value: number;
+  step: number;
+  min: number;
+  label: string;
+  width: number;
+  onCommit: (v: number) => void;
+}) {
   return (
     <input
       // remount when the stored value changes so the field never shows stale text
@@ -33,14 +47,21 @@ export function Services() {
   const { repo, toast, services, role } = useAdmin();
   const editable = canEditCatalog(role);
 
-  async function update(s: Service, patch: Partial<Pick<Service, "priceCents" | "durationMin">>, message: string) {
+  async function update(
+    s: Service,
+    patch: Partial<Pick<Service, "priceCents" | "durationMin">>,
+    message: string,
+  ) {
     await repo.updateService(s.id, patch);
     toast(message);
   }
 
   return (
     <>
-      <PageHead title="Services" sub="Edit a price here and the website's price list updates. Intermediate stylists are priced 25% off cut and colour automatically." />
+      <PageHead
+        title="Services"
+        sub="Edit a price here and the website's price list updates. Intermediate stylists are priced 25% off cut and colour automatically."
+      />
       {!editable && (
         <p className={ui.muted} style={{ marginBottom: 14 }}>
           <Status tone="mute">View only</Status> Only the owner can change prices and durations.
@@ -66,20 +87,42 @@ export function Services() {
                 </td>
                 <td className={t.num}>
                   {editable ? (
-                    <NumberCell value={s.durationMin} min={15} step={15} width={76} label={`Minutes, ${s.name}`} onCommit={(v) => update(s, { durationMin: v }, "Duration updated")} />
+                    <NumberCell
+                      value={s.durationMin}
+                      min={15}
+                      step={15}
+                      width={76}
+                      label={`Minutes, ${s.name}`}
+                      onCommit={(v) => update(s, { durationMin: v }, "Duration updated")}
+                    />
                   ) : (
                     s.durationMin
                   )}
                 </td>
                 <td className={t.num}>
                   {editable ? (
-                    <NumberCell value={s.priceCents / 100} min={0} step={5} width={84} label={`Price in dollars, ${s.name}`} onCommit={(v) => update(s, { priceCents: Math.round(v * 100) }, "Price updated on the website")} />
+                    <NumberCell
+                      value={s.priceCents / 100}
+                      min={0}
+                      step={5}
+                      width={84}
+                      label={`Price in dollars, ${s.name}`}
+                      onCommit={(v) =>
+                        update(
+                          s,
+                          { priceCents: Math.round(v * 100) },
+                          "Price updated on the website",
+                        )
+                      }
+                    />
                   ) : (
                     formatMoneyCompact(s.priceCents)
                   )}
                 </td>
                 <td className={t.num} style={{ color: "var(--gray)" }}>
-                  {s.tiered && s.priceCents ? formatMoneyCompact(priceForLevel(s, "intermediate")) : "—"}
+                  {s.tiered && s.priceCents
+                    ? formatMoneyCompact(priceForLevel(s, "intermediate"))
+                    : "—"}
                 </td>
               </tr>
             ))}

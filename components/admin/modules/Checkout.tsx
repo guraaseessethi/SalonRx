@@ -3,7 +3,12 @@
 import { useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/Button";
-import { computeTotals, formatMoney, formatMoneyCompact, priceForLevel } from "@/lib/booking/pricing";
+import {
+  computeTotals,
+  formatMoney,
+  formatMoneyCompact,
+  priceForLevel,
+} from "@/lib/booking/pricing";
 import { TIP_PRESETS } from "@/lib/domain/constants";
 import { PAYMENT_METHODS, type PaymentMethod } from "@/lib/domain/types";
 import { useAdmin, useDemoSend } from "../AdminContext";
@@ -19,7 +24,8 @@ interface CartLine {
 }
 
 export function Checkout() {
-  const { repo, toast, scopedStaffId, me, services, products, clients, staff, appointments } = useAdmin();
+  const { repo, toast, scopedStaffId, me, services, products, clients, staff, appointments } =
+    useAdmin();
   const params = useSearchParams();
   const demoSend = useDemoSend();
 
@@ -29,9 +35,21 @@ export function Checkout() {
   const fromService = fromAppt ? services.find((s) => s.id === fromAppt.serviceId) : undefined;
 
   const [cart, setCart] = useState<CartLine[]>(() =>
-    fromAppt && fromService ? [{ key: `appt-${fromAppt.id}`, kind: "service", refId: fromService.id, name: fromService.name, priceCents: fromAppt.priceCents }] : [],
+    fromAppt && fromService
+      ? [
+          {
+            key: `appt-${fromAppt.id}`,
+            kind: "service",
+            refId: fromService.id,
+            name: fromService.name,
+            priceCents: fromAppt.priceCents,
+          },
+        ]
+      : [],
   );
-  const [clientId, setClientId] = useState<string>(fromAppt?.clientId ?? params.get("client") ?? "");
+  const [clientId, setClientId] = useState<string>(
+    fromAppt?.clientId ?? params.get("client") ?? "",
+  );
   const [stylistId, setStylistId] = useState<string>(fromAppt?.staffId ?? scopedStaffId ?? "");
   const [tip, setTip] = useState<number>(15);
   const [retailQuery, setRetailQuery] = useState("");
@@ -42,14 +60,29 @@ export function Checkout() {
   const clientChoices = clients.filter((c) => !scopedStaffId || c.stylistId === scopedStaffId);
 
   const retail = useMemo(
-    () => products.filter((p) => p.priceCents > 0 && (!retailQuery || `${p.brand} ${p.name}`.toLowerCase().includes(retailQuery.toLowerCase()))),
+    () =>
+      products.filter(
+        (p) =>
+          p.priceCents > 0 &&
+          (!retailQuery ||
+            `${p.brand} ${p.name}`.toLowerCase().includes(retailQuery.toLowerCase())),
+      ),
     [products, retailQuery],
   );
 
   function addService(id: string) {
     const s = services.find((x) => x.id === id);
     if (!s) return;
-    setCart((c) => [...c, { key: `${id}-${c.length}-${Date.now()}`, kind: "service", refId: id, name: s.name, priceCents: priceForLevel(s, stylist?.level) }]);
+    setCart((c) => [
+      ...c,
+      {
+        key: `${id}-${c.length}-${Date.now()}`,
+        kind: "service",
+        refId: id,
+        name: s.name,
+        priceCents: priceForLevel(s, stylist?.level),
+      },
+    ]);
   }
 
   function addProduct(sku: string) {
@@ -59,7 +92,16 @@ export function Checkout() {
       toast(`Only ${p.stock} on hand`);
       return;
     }
-    setCart((c) => [...c, { key: `${sku}-${c.length}-${Date.now()}`, kind: "product", refId: sku, name: p.name, priceCents: p.priceCents }]);
+    setCart((c) => [
+      ...c,
+      {
+        key: `${sku}-${c.length}-${Date.now()}`,
+        kind: "product",
+        refId: sku,
+        name: p.name,
+        priceCents: p.priceCents,
+      },
+    ]);
   }
 
   function changeStylist(id: string) {
@@ -83,15 +125,30 @@ export function Checkout() {
         appointmentId: fromAppt?.id,
         paymentMethod: method,
         tipPercent: tip,
-        lines: cart.map((l) => (l.kind === "service" ? { kind: "service" as const, serviceId: l.refId, staffId: stylistId || undefined } : { kind: "product" as const, sku: l.refId })),
+        lines: cart.map((l) =>
+          l.kind === "service"
+            ? { kind: "service" as const, serviceId: l.refId, staffId: stylistId || undefined }
+            : { kind: "product" as const, sku: l.refId },
+        ),
       });
       const client = clients.find((c) => c.id === clientId);
       if (client?.email) {
-        await demoSend({ channel: "email", to: client.email, kind: "Receipt", subject: "Your Salon Rx receipt", body: `Thank you, ${client.name.split(" ")[0]}! ${sale.lines.map((l) => l.name).join(", ")}. Total ${formatMoney(sale.totalCents)} (${method}).` }, true);
+        await demoSend(
+          {
+            channel: "email",
+            to: client.email,
+            kind: "Receipt",
+            subject: "Your Salon Rx receipt",
+            body: `Thank you, ${client.name.split(" ")[0]}! ${sale.lines.map((l) => l.name).join(", ")}. Total ${formatMoney(sale.totalCents)} (${method}).`,
+          },
+          true,
+        );
       }
       setCart([]);
       setClientId("");
-      toast(`${method} · ${formatMoney(sale.totalCents)} paid. Receipt would send in the full build.`);
+      toast(
+        `${method} · ${formatMoney(sale.totalCents)} paid. Receipt would send in the full build.`,
+      );
     } catch (err) {
       toast(err instanceof Error ? err.message : "Could not complete the sale");
     } finally {
@@ -101,7 +158,10 @@ export function Checkout() {
 
   return (
     <>
-      <PageHead title="Checkout" sub="Services, retail and tips. Retail comes off inventory automatically." />
+      <PageHead
+        title="Checkout"
+        sub="Services, retail and tips. Retail comes off inventory automatically."
+      />
       <div className={styles.pos}>
         <Panel title="Services">
           <ul className={styles.pick}>
@@ -122,7 +182,14 @@ export function Checkout() {
           <div className={`${ui.ph} ${styles.sub}`}>
             <h2 className={ui.panelTitle}>Retail</h2>
           </div>
-          <input className={`${ui.inp} ${styles.search}`} type="search" placeholder="Search retail" aria-label="Search retail products" value={retailQuery} onChange={(e) => setRetailQuery(e.target.value)} />
+          <input
+            className={`${ui.inp} ${styles.search}`}
+            type="search"
+            placeholder="Search retail"
+            aria-label="Search retail products"
+            value={retailQuery}
+            onChange={(e) => setRetailQuery(e.target.value)}
+          />
           <ul className={styles.pick}>
             {retail.map((p) => (
               <li key={p.sku}>
@@ -154,7 +221,12 @@ export function Checkout() {
             </div>
             <div className={ui.fld}>
               <label htmlFor="co-stylist">Stylist (sets the price level)</label>
-              <select id="co-stylist" value={stylistId} onChange={(e) => changeStylist(e.target.value)} disabled={!!scopedStaffId}>
+              <select
+                id="co-stylist"
+                value={stylistId}
+                onChange={(e) => changeStylist(e.target.value)}
+                disabled={!!scopedStaffId}
+              >
                 <option value="">List price</option>
                 {staff
                   .filter((s) => s.bookable)
@@ -173,7 +245,11 @@ export function Checkout() {
                   <span>{l.name}</span>
                   <span>
                     {formatMoney(l.priceCents)}
-                    <button type="button" aria-label={`Remove ${l.name}`} onClick={() => setCart((c) => c.filter((_, j) => j !== i))}>
+                    <button
+                      type="button"
+                      aria-label={`Remove ${l.name}`}
+                      onClick={() => setCart((c) => c.filter((_, j) => j !== i))}
+                    >
                       ✕
                     </button>
                   </span>
@@ -211,12 +287,22 @@ export function Checkout() {
           </div>
           <div className={styles.pay}>
             {PAYMENT_METHODS.map((m, i) => (
-              <Button key={m} size="sm" variant={i === 0 ? "blue" : "line"} disabled={!cart.length || paying} onClick={() => pay(m)}>
+              <Button
+                key={m}
+                size="sm"
+                variant={i === 0 ? "blue" : "line"}
+                disabled={!cart.length || paying}
+                onClick={() => pay(m)}
+              >
                 {m}
               </Button>
             ))}
           </div>
-          {me && <p className={ui.muted} style={{ marginTop: 12, fontSize: 12.5 }}>Sales are recorded under {me.name}.</p>}
+          {me && (
+            <p className={ui.muted} style={{ marginTop: 12, fontSize: 12.5 }}>
+              Sales are recorded under {me.name}.
+            </p>
+          )}
         </section>
       </div>
     </>

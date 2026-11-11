@@ -2,16 +2,31 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
 const PUBLIC = ["/", "/book", "/services", "/weddings", "/team", "/shop", "/visit"];
-const ADMIN = ["dashboard", "calendar", "clients", "checkout", "inventory", "services", "staff", "reports", "marketing", "settings", "outbox"];
+const ADMIN = [
+  "dashboard",
+  "calendar",
+  "clients",
+  "checkout",
+  "inventory",
+  "services",
+  "staff",
+  "reports",
+  "marketing",
+  "settings",
+  "outbox",
+];
 
 async function scan(page: import("@playwright/test").Page) {
-  const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"]).analyze();
+  const results = await new AxeBuilder({ page })
+    .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
+    .analyze();
   // compact summary so a failure is readable
   return results.violations
     .filter((v) => v.impact === "serious" || v.impact === "critical")
     .flatMap((v) =>
       v.nodes.map((n) => {
-        const d = n.any[0]?.data as { fgColor?: string; bgColor?: string; contrastRatio?: number } | undefined;
+        const d = n.any[0]?.data as
+          { fgColor?: string; bgColor?: string; contrastRatio?: number } | undefined;
         return `${v.id}: ${n.target.join(" ")}${d?.contrastRatio ? ` (${d.fgColor} on ${d.bgColor} = ${d.contrastRatio})` : ""}`;
       }),
     );
@@ -33,7 +48,11 @@ test("axe: every booking step and the error state", async ({ page }) => {
   await page.goto("/book?service=cut-sr"); // starts on the stylist step
   expect(await scan(page), "stylist step").toEqual([]);
   await page.getByRole("button", { name: "Continue" }).click();
-  await page.getByRole("group", { name: /^Times on/ }).getByRole("button").first().click();
+  await page
+    .getByRole("group", { name: /^Times on/ })
+    .getByRole("button")
+    .first()
+    .click();
   expect(await scan(page), "time step").toEqual([]);
   await page.getByRole("button", { name: "Continue" }).click();
   await page.getByRole("button", { name: "Confirm booking" }).click(); // shows the error state

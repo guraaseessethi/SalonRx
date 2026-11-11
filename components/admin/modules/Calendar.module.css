@@ -49,7 +49,11 @@
 .sc {
   position: relative;
   height: calc(var(--px) * var(--hours));
-  background: repeating-linear-gradient(180deg, transparent 0 calc(var(--px) - 1px), var(--rule) calc(var(--px) - 1px) var(--px));
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0 calc(var(--px) - 1px),
+    var(--rule) calc(var(--px) - 1px) var(--px)
+  );
 }
 .off {
   background: repeating-linear-gradient(135deg, var(--bone) 0 6px, transparent 6px 12px);

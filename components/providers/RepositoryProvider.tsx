@@ -44,8 +44,13 @@ export interface QueryResult<T> {
  * `initial` is what the server rendered (seed content), so the first client render matches the HTML.
  * Pass a stable function (see lib/data/queries.ts).
  */
-export function useRepoQuery<T>(query: (repo: DataRepository) => Promise<T>, initial: T): QueryResult<T>;
-export function useRepoQuery<T>(query: (repo: DataRepository) => Promise<T>): QueryResult<T | undefined>;
+export function useRepoQuery<T>(
+  query: (repo: DataRepository) => Promise<T>,
+  initial: T,
+): QueryResult<T>;
+export function useRepoQuery<T>(
+  query: (repo: DataRepository) => Promise<T>,
+): QueryResult<T | undefined>;
 export function useRepoQuery<T>(
   query: (repo: DataRepository) => Promise<T>,
   initial?: T,

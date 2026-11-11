@@ -27,8 +27,14 @@ describe("ics", () => {
   });
 
   it("folds long lines at 75 octets", () => {
-    const long = buildIcs({ uid: "x", startsAt: "2026-11-18T15:00:00Z", endsAt: "2026-11-18T16:00:00Z", summary: "a".repeat(200) });
-    for (const line of long.split("\r\n")) expect(new TextEncoder().encode(line).length).toBeLessThanOrEqual(75);
+    const long = buildIcs({
+      uid: "x",
+      startsAt: "2026-11-18T15:00:00Z",
+      endsAt: "2026-11-18T16:00:00Z",
+      summary: "a".repeat(200),
+    });
+    for (const line of long.split("\r\n"))
+      expect(new TextEncoder().encode(line).length).toBeLessThanOrEqual(75);
   });
 });
 
@@ -44,7 +50,12 @@ describe("permissions", () => {
     expect(canAccess("frontdesk", "inventory")).toBe(true);
   });
   it("stylists only get their own day, clients and checkout", () => {
-    expect([...visibleModules("stylist")]).toEqual(["dashboard", "calendar", "clients", "checkout"]);
+    expect([...visibleModules("stylist")]).toEqual([
+      "dashboard",
+      "calendar",
+      "clients",
+      "checkout",
+    ]);
   });
 });
 

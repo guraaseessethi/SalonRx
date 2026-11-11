@@ -28,10 +28,26 @@ const START_HOUR = 8;
 const END_HOUR = 20;
 const PX = 56;
 
-const TIME_OPTIONS = Array.from({ length: (END_HOUR - START_HOUR) * 2 }, (_, i) => (START_HOUR * 60) + i * 30);
+const TIME_OPTIONS = Array.from(
+  { length: (END_HOUR - START_HOUR) * 2 },
+  (_, i) => START_HOUR * 60 + i * 30,
+);
 
 export function Calendar() {
-  const { repo, toast, role, scopedStaffId, staff, clients, services, appointments, settings, now, today, openDay } = useAdmin();
+  const {
+    repo,
+    toast,
+    role,
+    scopedStaffId,
+    staff,
+    clients,
+    services,
+    appointments,
+    settings,
+    now,
+    today,
+    openDay,
+  } = useAdmin();
   const params = useSearchParams();
   const router = useRouter();
   const demoSend = useDemoSend();
@@ -45,7 +61,9 @@ export function Calendar() {
   const weekday = weekdayOf(day);
   const hours = settings.hours[weekday];
   const columns = staff.filter((s) => s.bookable && (!scopedStaffId || s.id === scopedStaffId));
-  const list = appointments.filter((a) => a.status !== "cancelled" && toDateKey(a.startsAt) === day);
+  const list = appointments.filter(
+    (a) => a.status !== "cancelled" && toDateKey(a.startsAt) === day,
+  );
   const selected = selectedId ? appointments.find((a) => a.id === selectedId) : undefined;
 
   const svc = (id: string) => services.find((s) => s.id === id);
@@ -53,14 +71,24 @@ export function Calendar() {
   const nowMin = minutesOfDay(now);
   const showNow = day === today && nowMin / 60 > START_HOUR && nowMin / 60 < END_HOUR;
 
-  const clientChoices = clients.filter((c) => !scopedStaffId || c.stylistId === scopedStaffId || appointments.some((a) => a.clientId === c.id && a.staffId === scopedStaffId));
+  const clientChoices = clients.filter(
+    (c) =>
+      !scopedStaffId ||
+      c.stylistId === scopedStaffId ||
+      appointments.some((a) => a.clientId === c.id && a.staffId === scopedStaffId),
+  );
 
   async function setStatus(a: Appointment, status: Appointment["status"]) {
     await repo.setAppointmentStatus(a.id, status);
     setSelectedId(null);
     const c = cli(a.clientId);
     if (status === "confirmed" && c) {
-      await demoSend({ channel: "sms", to: c.phone, kind: "Appointment confirmed", body: `Hi ${c.name.split(" ")[0]}, you're confirmed for ${formatTime(a.startsAt)}. See you at Salon Rx! Reply C to confirm.` });
+      await demoSend({
+        channel: "sms",
+        to: c.phone,
+        kind: "Appointment confirmed",
+        body: `Hi ${c.name.split(" ")[0]}, you're confirmed for ${formatTime(a.startsAt)}. See you at Salon Rx! Reply C to confirm.`,
+      });
     } else {
       toast("Updated");
     }
@@ -91,18 +119,32 @@ export function Calendar() {
         title="Calendar"
         sub={
           <>
-            {formatDateKeyLong(day)} · {hours ? `${formatMinutes(hours.openMin)} – ${formatMinutes(hours.closeMin)}` : "Salon closed"} · {list.filter((a) => !scopedStaffId || a.staffId === scopedStaffId).length} booked
+            {formatDateKeyLong(day)} ·{" "}
+            {hours
+              ? `${formatMinutes(hours.openMin)} – ${formatMinutes(hours.closeMin)}`
+              : "Salon closed"}{" "}
+            · {list.filter((a) => !scopedStaffId || a.staffId === scopedStaffId).length} booked
           </>
         }
         actions={
           <>
-            <Button size="sm" variant="line" aria-label="Previous day" onClick={() => setDay(addDays(day, -1))}>
+            <Button
+              size="sm"
+              variant="line"
+              aria-label="Previous day"
+              onClick={() => setDay(addDays(day, -1))}
+            >
               ‹
             </Button>
             <Button size="sm" variant="line" onClick={() => setDay(openDay)}>
               Today
             </Button>
-            <Button size="sm" variant="line" aria-label="Next day" onClick={() => setDay(addDays(day, 1))}>
+            <Button
+              size="sm"
+              variant="line"
+              aria-label="Next day"
+              onClick={() => setDay(addDays(day, 1))}
+            >
               ›
             </Button>
             <Button size="sm" onClick={() => setAdding(true)}>
@@ -111,10 +153,21 @@ export function Calendar() {
           </>
         }
       />
-      <div className={styles.cw} role="region" aria-label={`Calendar for ${formatDateKeyLong(day)}`} tabIndex={0}>
+      <div
+        className={styles.cw}
+        role="region"
+        aria-label={`Calendar for ${formatDateKeyLong(day)}`}
+        tabIndex={0}
+      >
         <div
           className={styles.cal}
-          style={{ gridTemplateColumns: `64px repeat(${columns.length}, minmax(118px, 1fr))`, "--px": `${PX}px`, "--hours": END_HOUR - START_HOUR } as React.CSSProperties}
+          style={
+            {
+              gridTemplateColumns: `64px repeat(${columns.length}, minmax(118px, 1fr))`,
+              "--px": `${PX}px`,
+              "--hours": END_HOUR - START_HOUR,
+            } as React.CSSProperties
+          }
         >
           <div className={styles.col} aria-hidden="true">
             <div className={styles.ch} />
@@ -128,20 +181,44 @@ export function Calendar() {
             const off = !s.workDays.includes(weekday) || !hours;
             const mine = list.filter((a) => a.staffId === s.id);
             return (
-              <div key={s.id} className={styles.col} role="group" aria-label={`${s.name}${off ? ", not working" : `, ${mine.length} appointments`}`}>
+              <div
+                key={s.id}
+                className={styles.col}
+                role="group"
+                aria-label={`${s.name}${off ? ", not working" : `, ${mine.length} appointments`}`}
+              >
                 <h2 className={styles.ch}>
-                  {s.name.split(" ")[0]} <small>{s.level === "intermediate" ? "Int." : s.level === "junior" ? "Jr." : ""}</small>
+                  {s.name.split(" ")[0]}{" "}
+                  <small>
+                    {s.level === "intermediate" ? "Int." : s.level === "junior" ? "Jr." : ""}
+                  </small>
                 </h2>
                 <div className={`${styles.sc} ${off ? styles.off : ""}`}>
-                  {showNow && <div className={styles.nowl} style={{ "--top": `${(nowMin / 60 - START_HOUR) * PX}px` } as React.CSSProperties} />}
+                  {showNow && (
+                    <div
+                      className={styles.nowl}
+                      style={
+                        { "--top": `${(nowMin / 60 - START_HOUR) * PX}px` } as React.CSSProperties
+                      }
+                    />
+                  )}
                   {mine.map((a) => {
                     const sv = svc(a.serviceId);
                     const c = cli(a.clientId);
                     const startMin = minutesOfDay(a.startsAt);
-                    const dur = (new Date(a.endsAt).getTime() - new Date(a.startsAt).getTime()) / 60_000;
+                    const dur =
+                      (new Date(a.endsAt).getTime() - new Date(a.startsAt).getTime()) / 60_000;
                     const top = (startMin / 60 - START_HOUR) * PX;
                     const h = Math.max(26, (dur / 60) * PX - 3);
-                    const cls = [styles.ap, sv?.category === "Colour" ? styles.colour : sv?.id === "t-ext" ? styles.ext : "", a.status === "new" ? styles.isnew : ""].join(" ");
+                    const cls = [
+                      styles.ap,
+                      sv?.category === "Colour"
+                        ? styles.colour
+                        : sv?.id === "t-ext"
+                          ? styles.ext
+                          : "",
+                      a.status === "new" ? styles.isnew : "",
+                    ].join(" ");
                     return (
                       <button
                         key={a.id}
@@ -150,7 +227,9 @@ export function Calendar() {
                         style={{ "--top": `${top}px`, "--h": `${h}px` } as React.CSSProperties}
                         onClick={() => setSelectedId(a.id)}
                       >
-                        {a.status === "new" && <span className="sr-only">New online booking: </span>}
+                        {a.status === "new" && (
+                          <span className="sr-only">New online booking: </span>
+                        )}
                         {h < 44 ? (
                           <b>
                             {formatTime(a.startsAt)} {c?.name.split(" ")[0]}
@@ -192,19 +271,31 @@ export function Calendar() {
         </span>
       </div>
 
-      <Modal open={!!selected} title={cli(selected?.clientId ?? "")?.name ?? "Appointment"} onClose={() => setSelectedId(null)}>
+      <Modal
+        open={!!selected}
+        title={cli(selected?.clientId ?? "")?.name ?? "Appointment"}
+        onClose={() => setSelectedId(null)}
+      >
         {selected && (
           <div className={styles.detail}>
             <p>
-              {svc(selected.serviceId)?.name} · {formatTime(selected.startsAt)} · {(new Date(selected.endsAt).getTime() - new Date(selected.startsAt).getTime()) / 60_000} min · {formatMoneyCompact(selected.priceCents)}
+              {svc(selected.serviceId)?.name} · {formatTime(selected.startsAt)} ·{" "}
+              {(new Date(selected.endsAt).getTime() - new Date(selected.startsAt).getTime()) /
+                60_000}{" "}
+              min · {formatMoneyCompact(selected.priceCents)}
             </p>
             <p className={styles.sub}>
-              With {staff.find((s) => s.id === selected.staffId)?.name} · <ApptStatus status={selected.status} />
+              With {staff.find((s) => s.id === selected.staffId)?.name} ·{" "}
+              <ApptStatus status={selected.status} />
             </p>
             {selected.note && <p className={styles.sub}>Note: {selected.note}</p>}
-            {cli(selected.clientId)?.allergy && <div className={styles.alert}>Allergy: {cli(selected.clientId)?.allergy}</div>}
+            {cli(selected.clientId)?.allergy && (
+              <div className={styles.alert}>Allergy: {cli(selected.clientId)?.allergy}</div>
+            )}
             <div className={styles.fx}>{cli(selected.clientId)?.formula}</div>
-            <p className={`script ${styles.tea}`}>Tea order: {cli(selected.clientId)?.teaOrder || "ask at the door"}</p>
+            <p className={`script ${styles.tea}`}>
+              Tea order: {cli(selected.clientId)?.teaOrder || "ask at the door"}
+            </p>
             {canTouch(selected) && (
               <div className={styles.actions}>
                 {(selected.status === "new" || selected.status === "pending") && (
@@ -215,7 +306,10 @@ export function Calendar() {
                 <Button size="sm" variant="line" onClick={() => setStatus(selected, "arrived")}>
                   Check in
                 </Button>
-                <Button size="sm" onClick={() => router.push(`/admin/checkout?appointment=${selected.id}`)}>
+                <Button
+                  size="sm"
+                  onClick={() => router.push(`/admin/checkout?appointment=${selected.id}`)}
+                >
                   Check out
                 </Button>
                 <Button size="sm" variant="line" onClick={() => setStatus(selected, "noshow")}>
@@ -274,7 +368,13 @@ export function Calendar() {
             </Field>
           </div>
           <div className={ui.bnav}>
-            <Button variant="line" onClick={() => { setAdding(false); setNewClient(null); }}>
+            <Button
+              variant="line"
+              onClick={() => {
+                setAdding(false);
+                setNewClient(null);
+              }}
+            >
               Cancel
             </Button>
             <Button type="submit">Add</Button>

@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { computeTotals, formatMoney, formatMoneyCompact, priceForLevel, priceLabel } from "@/lib/booking/pricing";
+import {
+  computeTotals,
+  formatMoney,
+  formatMoneyCompact,
+  priceForLevel,
+  priceLabel,
+} from "@/lib/booking/pricing";
 import { COLOUR, CUT } from "./fixtures";
 
 describe("tier pricing", () => {

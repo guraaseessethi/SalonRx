@@ -55,7 +55,15 @@ export function useAdmin(): AdminContextValue {
 }
 
 /** Loads everything the console needs once, then renders children. */
-export function AdminDataProvider({ session, children, fallback }: { session: DemoSession; children: ReactNode; fallback: ReactNode }) {
+export function AdminDataProvider({
+  session,
+  children,
+  fallback,
+}: {
+  session: DemoSession;
+  children: ReactNode;
+  fallback: ReactNode;
+}) {
   const repo = useRepository();
   const toast = useToast();
   const services = useRepoQuery(queries.services);
@@ -69,12 +77,23 @@ export function AdminDataProvider({ session, children, fallback }: { session: De
   const outbox = useRepoQuery(queries.outbox);
   const [now] = useState(() => new Date());
 
-  const ready = [services, staff, clients, appointments, products, sales, reservations, settings, outbox].every((q) => q.ready);
+  const ready = [
+    services,
+    staff,
+    clients,
+    appointments,
+    products,
+    sales,
+    reservations,
+    settings,
+    outbox,
+  ].every((q) => q.ready);
 
   const value = useMemo<AdminContextValue | null>(() => {
     if (!ready) return null;
     const staffList = staff.data!;
-    const me = session.role === "stylist" ? (staffList.find((s) => s.id === session.staffId) ?? null) : null;
+    const me =
+      session.role === "stylist" ? (staffList.find((s) => s.id === session.staffId) ?? null) : null;
     return {
       repo,
       toast,
@@ -94,7 +113,22 @@ export function AdminDataProvider({ session, children, fallback }: { session: De
       today: toDateKey(now),
       openDay: nextOpenDay(now, settings.data!.hours),
     };
-  }, [ready, repo, toast, session, now, services.data, staff.data, clients.data, appointments.data, products.data, sales.data, reservations.data, settings.data, outbox.data]);
+  }, [
+    ready,
+    repo,
+    toast,
+    session,
+    now,
+    services.data,
+    staff.data,
+    clients.data,
+    appointments.data,
+    products.data,
+    sales.data,
+    reservations.data,
+    settings.data,
+    outbox.data,
+  ]);
 
   if (!value) return <>{fallback}</>;
   return <AdminContext.Provider value={value}>{children}</AdminContext.Provider>;

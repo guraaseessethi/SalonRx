@@ -12,7 +12,11 @@ export async function BookSection({
   initialServiceId?: string;
 }) {
   const repo = getRepository();
-  const [services, staff, settings] = await Promise.all([repo.listServices(), repo.listStaff(), repo.getSettings()]);
+  const [services, staff, settings] = await Promise.all([
+    repo.listServices(),
+    repo.listStaff(),
+    repo.getSettings(),
+  ]);
   return (
     <section className={styles.sec} id="book" aria-label="Book and visit">
       <div className={`wrap ${styles.layout}`}>

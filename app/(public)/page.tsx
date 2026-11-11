@@ -9,7 +9,9 @@ import { TeamSection } from "@/components/public/TeamSection";
 import { WeddingsSection } from "@/components/public/WeddingsSection";
 
 export const metadata: Metadata = {
-  title: { absolute: "Salon Rx · Hair salon in Barrie, Ontario | Colour, cuts, extensions, weddings" },
+  title: {
+    absolute: "Salon Rx · Hair salon in Barrie, Ontario | Colour, cuts, extensions, weddings",
+  },
   description:
     "Independent hair salon at 213 Bayfield Street, Barrie. Colour, cuts, Hot Fusion and Tape-In extensions, wedding hair and Kérastase. Book online.",
   alternates: { canonical: "/" },

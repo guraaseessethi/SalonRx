@@ -3,7 +3,8 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
   title: "Services & price list",
-  description: "Salon Rx price list in Barrie: blow dry, cuts, colour, balayage, extension consultations, treatments and wedding hair.",
+  description:
+    "Salon Rx price list in Barrie: blow dry, cuts, colour, balayage, extension consultations, treatments and wedding hair.",
   path: "/services",
 });
 

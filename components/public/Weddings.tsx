@@ -15,7 +15,13 @@ const ROWS = [
   { id: "w-trial", label: "Trial" },
 ];
 
-export function Weddings({ initialServices, as: Tag = "h2" }: { initialServices: Service[]; as?: "h1" | "h2" }) {
+export function Weddings({
+  initialServices,
+  as: Tag = "h2",
+}: {
+  initialServices: Service[];
+  as?: "h1" | "h2";
+}) {
   const { data: services } = useRepoQuery(queries.services, initialServices);
   return (
     <section className={styles.sec} id="weddings" aria-labelledby="weddings-title">
@@ -25,8 +31,8 @@ export function Weddings({ initialServices, as: Tag = "h2" }: { initialServices:
             <div className="lab">Weddings</div>
             <Tag id="weddings-title">The morning of.</Tag>
             <p>
-              Hair for the bride and the whole party, in the salon or on location. Book a trial and we&apos;ll plan the
-              look and the timeline together.
+              Hair for the bride and the whole party, in the salon or on location. Book a trial and
+              we&apos;ll plan the look and the timeline together.
             </p>
             <p className={styles.cta}>
               <ButtonLink href="/book?service=w-trial" variant="blue">

@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { ANY_STAFF, canPerform, eligibleStaff, getOpenDays, getSlots, pickStaffForSlot } from "@/lib/booking/availability";
+import {
+  ANY_STAFF,
+  canPerform,
+  eligibleStaff,
+  getOpenDays,
+  getSlots,
+  pickStaffForSlot,
+} from "@/lib/booking/availability";
 import { minutesOfDay } from "@/lib/booking/time";
 import { appt, COLOUR, CUT, FRI, HOURS, LONG_AGO, SAT, SHORT, STAFF, SUN, WED } from "./fixtures";
 
@@ -54,7 +61,9 @@ describe("who can be booked", () => {
   it("only offers stylists on the days they work", () => {
     // junior does not work Wednesday
     expect(getSlots({ ...base, date: WED, service: CUT, staffId: "junior" })).toEqual([]);
-    expect(getSlots({ ...base, date: FRI, service: CUT, staffId: "junior" }).length).toBeGreaterThan(0);
+    expect(
+      getSlots({ ...base, date: FRI, service: CUT, staffId: "junior" }).length,
+    ).toBeGreaterThan(0);
     // intermediate does not work Friday
     expect(getSlots({ ...base, date: FRI, service: CUT, staffId: "inter" })).toEqual([]);
   });
@@ -83,7 +92,9 @@ describe("overlaps", () => {
   const taken = appt("senior", "2026-11-18T16:00:00.000Z", "2026-11-18T17:00:00.000Z"); // 11:00-12:00 local
 
   it("removes slots that overlap an existing appointment", () => {
-    const t = times(getSlots({ ...base, appointments: [taken], date: WED, service: CUT, staffId: "senior" }));
+    const t = times(
+      getSlots({ ...base, appointments: [taken], date: WED, service: CUT, staffId: "senior" }),
+    );
     expect(t).not.toContain(10 * 60 + 30); // 10:30-11:30 overlaps
     expect(t).not.toContain(11 * 60);
     expect(t).not.toContain(11 * 60 + 30);
@@ -92,20 +103,30 @@ describe("overlaps", () => {
   });
 
   it("only blocks the stylist who is busy", () => {
-    const slots = getSlots({ ...base, appointments: [taken], date: WED, service: CUT, staffId: ANY_STAFF });
+    const slots = getSlots({
+      ...base,
+      appointments: [taken],
+      date: WED,
+      service: CUT,
+      staffId: ANY_STAFF,
+    });
     const eleven = slots.find((s) => minutesOfDay(s.startsAt) === 11 * 60);
     expect(eleven?.staffIds).toEqual(["inter"]);
   });
 
   it("frees the slot when the appointment is cancelled", () => {
     const cancelled = { ...taken, status: "cancelled" as const };
-    const t = times(getSlots({ ...base, appointments: [cancelled], date: WED, service: CUT, staffId: "senior" }));
+    const t = times(
+      getSlots({ ...base, appointments: [cancelled], date: WED, service: CUT, staffId: "senior" }),
+    );
     expect(t).toContain(11 * 60);
   });
 
   it("treats a no-show as still having held the time", () => {
     const noshow = { ...taken, status: "noshow" as const };
-    const t = times(getSlots({ ...base, appointments: [noshow], date: WED, service: CUT, staffId: "senior" }));
+    const t = times(
+      getSlots({ ...base, appointments: [noshow], date: WED, service: CUT, staffId: "senior" }),
+    );
     expect(t).not.toContain(11 * 60);
   });
 });
@@ -140,9 +161,21 @@ describe("no booking within 30 minutes of now", () => {
 
 describe("getOpenDays", () => {
   it("counts open slots per date and shows closed days as zero", () => {
-    const days = getOpenDays({ ...base, from: "2026-11-16", days: 7, service: CUT, staffId: "senior" });
+    const days = getOpenDays({
+      ...base,
+      from: "2026-11-16",
+      days: 7,
+      service: CUT,
+      staffId: "senior",
+    });
     expect(days.map((d) => d.date)).toEqual([
-      "2026-11-16", "2026-11-17", "2026-11-18", "2026-11-19", "2026-11-20", "2026-11-21", "2026-11-22",
+      "2026-11-16",
+      "2026-11-17",
+      "2026-11-18",
+      "2026-11-19",
+      "2026-11-20",
+      "2026-11-21",
+      "2026-11-22",
     ]);
     expect(days[0].open).toBe(0);
     expect(days[1].open).toBe(0);

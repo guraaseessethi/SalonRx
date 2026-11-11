@@ -47,14 +47,20 @@ export interface SlotQuery {
 }
 
 /** Can this person take this service at all? (Ignores the calendar.) */
-export function canPerform(staff: Pick<StaffForSlots, "level" | "bookable">, service: Pick<Service, "category">): boolean {
+export function canPerform(
+  staff: Pick<StaffForSlots, "level" | "bookable">,
+  service: Pick<Service, "category">,
+): boolean {
   if (!staff.bookable) return false;
   if (staff.level === "junior" && service.category === "Colour") return false;
   return true;
 }
 
 /** Stylists a client may choose for this service, in display order. */
-export function eligibleStaff<T extends StaffForSlots>(staff: T[], service: Pick<Service, "category">): T[] {
+export function eligibleStaff<T extends StaffForSlots>(
+  staff: T[],
+  service: Pick<Service, "category">,
+): T[] {
   return staff.filter((s) => canPerform(s, service));
 }
 
@@ -100,7 +106,9 @@ export function getSlots(q: SlotQuery): Slot[] {
     const start = instantAt(q.date, t);
     if (start.getTime() <= earliest) continue;
     const end = addMinutes(start, q.service.durationMin);
-    const free = working.filter((s) => isStaffFree(s.id, start, end, q.appointments)).map((s) => s.id);
+    const free = working
+      .filter((s) => isStaffFree(s.id, start, end, q.appointments))
+      .map((s) => s.id);
     if (free.length) {
       slots.push({ startsAt: start.toISOString(), endsAt: end.toISOString(), staffIds: free });
     }

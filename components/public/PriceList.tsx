@@ -29,14 +29,20 @@ function Row({ service, level }: { service: Service; level: Level }) {
         {discounted ? (
           <>
             <s aria-hidden="true">{formatMoneyCompact(service.priceCents)}</s>
-            <span className="sr-only">Senior price {formatMoneyCompact(service.priceCents)}, intermediate price </span>
+            <span className="sr-only">
+              Senior price {formatMoneyCompact(service.priceCents)}, intermediate price{" "}
+            </span>
             {priceLabel(service, cents)}
           </>
         ) : (
           priceLabel(service)
         )}
       </span>
-      <Link className={styles.book} href={`/book?service=${service.id}`} aria-label={`Book ${service.name}`}>
+      <Link
+        className={styles.book}
+        href={`/book?service=${service.id}`}
+        aria-label={`Book ${service.name}`}
+      >
         Book
       </Link>
     </li>
@@ -54,8 +60,19 @@ export function PriceList({ initialServices }: { initialServices: Service[] }) {
   return (
     <>
       <div className={styles.bar}>
-        <ToggleGroup label="Service category" options={CATEGORY_OPTIONS} value={category} onChange={setCategory} />
-        <ToggleGroup label="Stylist level" variant="segment" options={LEVEL_OPTIONS} value={level} onChange={setLevel} />
+        <ToggleGroup
+          label="Service category"
+          options={CATEGORY_OPTIONS}
+          value={category}
+          onChange={setCategory}
+        />
+        <ToggleGroup
+          label="Stylist level"
+          variant="segment"
+          options={LEVEL_OPTIONS}
+          value={level}
+          onChange={setLevel}
+        />
       </div>
       <div className={styles.pl}>
         <ul className={styles.group} aria-label={`${category}, first half`}>
@@ -70,7 +87,8 @@ export function PriceList({ initialServices }: { initialServices: Service[] }) {
         </ul>
       </div>
       <p className={styles.note}>
-        Cancellations need 24 hours&apos; notice. Inside 24 hours, a $50 non-refundable charge applies to rebook.
+        Cancellations need 24 hours&apos; notice. Inside 24 hours, a $50 non-refundable charge
+        applies to rebook.
         <Verify />
       </p>
     </>

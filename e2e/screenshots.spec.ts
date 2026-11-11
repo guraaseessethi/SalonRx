@@ -17,7 +17,10 @@ for (const scheme of SCHEMES) {
   for (const width of WIDTHS) {
     test(`screenshots ${scheme} ${width}`, async ({ browser }) => {
       test.setTimeout(120_000);
-      const context = await browser.newContext({ viewport: { width, height: 900 }, colorScheme: scheme });
+      const context = await browser.newContext({
+        viewport: { width, height: 900 },
+        colorScheme: scheme,
+      });
       const page = await context.newPage();
       const shot = async (name: string) => {
         // scroll through the page so lazy-loaded photos are in the picture
@@ -29,7 +32,12 @@ for (const scheme of SCHEMES) {
           window.scrollTo(0, 0);
         });
         await page.waitForTimeout(250);
-        await page.screenshot({ path: `docs/screenshots/${name}-${width}-${scheme}.jpg`, type: "jpeg", quality: 72, fullPage: true });
+        await page.screenshot({
+          path: `docs/screenshots/${name}-${width}-${scheme}.jpg`,
+          type: "jpeg",
+          quality: 72,
+          fullPage: true,
+        });
       };
 
       for (const [name, path] of PUBLIC) {

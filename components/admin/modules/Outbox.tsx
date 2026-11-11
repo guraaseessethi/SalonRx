@@ -9,10 +9,16 @@ export function Outbox() {
   const { outbox } = useAdmin();
   return (
     <>
-      <PageHead title="Demo outbox" sub="Every text and email the full build would send. Nothing leaves this browser." />
+      <PageHead
+        title="Demo outbox"
+        sub="Every text and email the full build would send. Nothing leaves this browser."
+      />
       <Panel>
         {outbox.length === 0 ? (
-          <p className={ui.muted}>Nothing yet. Make a booking on the website, confirm one in the calendar, or text a client from Marketing.</p>
+          <p className={ui.muted}>
+            Nothing yet. Make a booking on the website, confirm one in the calendar, or text a
+            client from Marketing.
+          </p>
         ) : (
           <Table label="Demo outbox">
             <thead>
@@ -30,7 +36,9 @@ export function Outbox() {
                     {formatDayShort(m.at)} {formatTime(m.at)}
                   </td>
                   <td>
-                    <Status tone={m.channel === "sms" ? "rx" : "mute"}>{m.channel === "sms" ? "Text" : "Email"}</Status>
+                    <Status tone={m.channel === "sms" ? "rx" : "mute"}>
+                      {m.channel === "sms" ? "Text" : "Email"}
+                    </Status>
                     <div style={{ fontSize: 12, color: "var(--gray)" }}>{m.kind}</div>
                   </td>
                   <td>{m.to}</td>

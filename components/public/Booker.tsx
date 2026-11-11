@@ -33,7 +33,12 @@ import {
 import { SITE } from "@/lib/site";
 import styles from "./Booker.module.css";
 
-const STEP_TITLES = ["Choose a service", "Choose a stylist", "Choose a time", "Your details"] as const;
+const STEP_TITLES = [
+  "Choose a service",
+  "Choose a stylist",
+  "Choose a time",
+  "Your details",
+] as const;
 const initials = (name: string) =>
   name
     .split(" ")
@@ -53,13 +58,21 @@ interface Props {
   headingLevel?: "h2" | "h3";
 }
 
-export function Booker({ initialServices, initialStaff, initialSettings, initialServiceId, headingLevel = "h3" }: Props) {
+export function Booker({
+  initialServices,
+  initialStaff,
+  initialSettings,
+  initialServiceId,
+  headingLevel = "h3",
+}: Props) {
   const repo = useRepository();
   const { data: services } = useRepoQuery(queries.services, initialServices);
   const { data: staff } = useRepoQuery(queries.staff, initialStaff);
   const { data: settings } = useRepoQuery(queries.settings, initialSettings);
 
-  const startService = initialServices.some((s) => s.id === initialServiceId) ? initialServiceId : undefined;
+  const startService = initialServices.some((s) => s.id === initialServiceId)
+    ? initialServiceId
+    : undefined;
   const [step, setStep] = useState<0 | 1 | 2 | 3 | 4>(startService ? 1 : 0);
   const [serviceId, setServiceId] = useState<string | null>(startService ?? null);
   const [category, setCategory] = useState<ServiceCategory>(
@@ -96,7 +109,9 @@ export function Booker({ initialServices, initialStaff, initialSettings, initial
 
   const openDaysQuery = useCallback(
     (r: typeof repo) =>
-      serviceId ? r.getOpenDays({ serviceId, staffId, from: today, days: 21 }) : Promise.resolve([]),
+      serviceId
+        ? r.getOpenDays({ serviceId, staffId, from: today, days: 21 })
+        : Promise.resolve([]),
     [serviceId, staffId, today],
   );
   const { data: openDays } = useRepoQuery(openDaysQuery);
@@ -112,12 +127,11 @@ export function Booker({ initialServices, initialStaff, initialSettings, initial
 
   /* ---------- derived ---------- */
 
-  const stylists = useMemo(
-    () => (service ? eligibleStaff(staff, service) : []),
-    [staff, service],
-  );
+  const stylists = useMemo(() => (service ? eligibleStaff(staff, service) : []), [staff, service]);
   const chosenStaff = staff.find((s) => s.id === staffId);
-  const price = service ? priceForLevel(service, staffId === ANY_STAFF ? "senior" : chosenStaff?.level) : 0;
+  const price = service
+    ? priceForLevel(service, staffId === ANY_STAFF ? "senior" : chosenStaff?.level)
+    : 0;
   const categoryServices = services.filter((s) => s.category === category);
 
   /* ---------- actions ---------- */
@@ -217,7 +231,8 @@ export function Booker({ initialServices, initialStaff, initialSettings, initial
       <div className={styles.booker} id="booker" ref={rootRef}>
         <Heading className={styles.heading}>Booking paused</Heading>
         <p className={styles.hint}>
-          Online booking is paused right now. Call <a href={SITE.phoneHref}>{SITE.phone}</a> and Hillary will find you a time.
+          Online booking is paused right now. Call <a href={SITE.phoneHref}>{SITE.phone}</a> and
+          Hillary will find you a time.
         </p>
       </div>
     );
@@ -231,7 +246,9 @@ export function Booker({ initialServices, initialStaff, initialSettings, initial
   return (
     <div className={styles.booker} id="booker" ref={rootRef}>
       <p className="sr-only" role="status" aria-live="polite">
-        {step < 4 ? `Step ${step + 1} of 4: ${STEP_TITLES[step as 0 | 1 | 2 | 3]}` : "Booking confirmed"}
+        {step < 4
+          ? `Step ${step + 1} of 4: ${STEP_TITLES[step as 0 | 1 | 2 | 3]}`
+          : "Booking confirmed"}
       </p>
 
       {step < 4 && (
@@ -268,7 +285,13 @@ export function Booker({ initialServices, initialStaff, initialSettings, initial
           />
           <div className={styles.opts}>
             {categoryServices.map((s) => (
-              <button key={s.id} type="button" className={styles.opt} aria-pressed={serviceId === s.id} onClick={() => chooseService(s.id)}>
+              <button
+                key={s.id}
+                type="button"
+                className={styles.opt}
+                aria-pressed={serviceId === s.id}
+                onClick={() => chooseService(s.id)}
+              >
                 <span>
                   <b>{s.name}</b>
                   <small>
@@ -289,7 +312,12 @@ export function Booker({ initialServices, initialStaff, initialSettings, initial
           </Heading>
           <p className={styles.hint}>{service.name}</p>
           <div className={styles.opts}>
-            <button type="button" className={styles.opt} aria-pressed={staffId === ANY_STAFF} onClick={() => chooseStaff(ANY_STAFF)}>
+            <button
+              type="button"
+              className={styles.opt}
+              aria-pressed={staffId === ANY_STAFF}
+              onClick={() => chooseStaff(ANY_STAFF)}
+            >
               <span className={styles.who}>
                 <span className={styles.mini} aria-hidden="true">
                   Rx
@@ -301,7 +329,13 @@ export function Booker({ initialServices, initialStaff, initialSettings, initial
               </span>
             </button>
             {stylists.map((s) => (
-              <button key={s.id} type="button" className={styles.opt} aria-pressed={staffId === s.id} onClick={() => chooseStaff(s.id)}>
+              <button
+                key={s.id}
+                type="button"
+                className={styles.opt}
+                aria-pressed={staffId === s.id}
+                onClick={() => chooseStaff(s.id)}
+              >
                 <span className={styles.who}>
                   <span className={styles.mini} aria-hidden="true">
                     {initials(s.name)}
@@ -311,7 +345,9 @@ export function Booker({ initialServices, initialStaff, initialSettings, initial
                     <small>{s.role}</small>
                   </span>
                 </span>
-                <span className={styles.p}>{priceLabel(service, priceForLevel(service, s.level))}</span>
+                <span className={styles.p}>
+                  {priceLabel(service, priceForLevel(service, s.level))}
+                </span>
               </button>
             ))}
           </div>
@@ -346,14 +382,30 @@ export function Booker({ initialServices, initialStaff, initialSettings, initial
               </button>
             ))}
           </div>
-          <div className={styles.slots} role="group" aria-label={date ? `Times on ${formatDateKeyLong(date)}` : "Times"}>
+          <div
+            className={styles.slots}
+            role="group"
+            aria-label={date ? `Times on ${formatDateKeyLong(date)}` : "Times"}
+          >
             {slots && slots.length > 0
               ? slots.map((s) => (
-                  <button key={s.startsAt} type="button" className={styles.slot} aria-pressed={startsAt === s.startsAt} onClick={() => setStartsAt(s.startsAt)}>
+                  <button
+                    key={s.startsAt}
+                    type="button"
+                    className={styles.slot}
+                    aria-pressed={startsAt === s.startsAt}
+                    onClick={() => setStartsAt(s.startsAt)}
+                  >
                     {formatTime(s.startsAt)}
                   </button>
                 ))
-              : slotsReady && <p className={styles.hint}>{date ? "No openings that day." : "No openings in the next three weeks. Please call us."}</p>}
+              : slotsReady && (
+                  <p className={styles.hint}>
+                    {date
+                      ? "No openings that day."
+                      : "No openings in the next three weeks. Please call us."}
+                  </p>
+                )}
           </div>
         </>
       )}
@@ -377,7 +429,15 @@ export function Booker({ initialServices, initialStaff, initialSettings, initial
           <div className={styles.fg}>
             <div className={styles.fld}>
               <label htmlFor="bk-name">Name</label>
-              <input id="bk-name" autoComplete="name" value={form.name} onChange={(e) => setField("name", e.target.value)} aria-invalid={!!errors.name} aria-describedby={errors.name ? "bk-name-err" : undefined} required />
+              <input
+                id="bk-name"
+                autoComplete="name"
+                value={form.name}
+                onChange={(e) => setField("name", e.target.value)}
+                aria-invalid={!!errors.name}
+                aria-describedby={errors.name ? "bk-name-err" : undefined}
+                required
+              />
               {errors.name && (
                 <span id="bk-name-err" className={styles.err}>
                   {errors.name}
@@ -386,7 +446,17 @@ export function Booker({ initialServices, initialStaff, initialSettings, initial
             </div>
             <div className={styles.fld}>
               <label htmlFor="bk-phone">Mobile</label>
-              <input id="bk-phone" type="tel" inputMode="tel" autoComplete="tel" value={form.phone} onChange={(e) => setField("phone", e.target.value)} aria-invalid={!!errors.phone} aria-describedby={errors.phone ? "bk-phone-err" : undefined} required />
+              <input
+                id="bk-phone"
+                type="tel"
+                inputMode="tel"
+                autoComplete="tel"
+                value={form.phone}
+                onChange={(e) => setField("phone", e.target.value)}
+                aria-invalid={!!errors.phone}
+                aria-describedby={errors.phone ? "bk-phone-err" : undefined}
+                required
+              />
               {errors.phone && (
                 <span id="bk-phone-err" className={styles.err}>
                   {errors.phone}
@@ -395,7 +465,15 @@ export function Booker({ initialServices, initialStaff, initialSettings, initial
             </div>
             <div className={`${styles.fld} ${styles.full}`}>
               <label htmlFor="bk-email">Email (optional)</label>
-              <input id="bk-email" type="email" autoComplete="email" value={form.email} onChange={(e) => setField("email", e.target.value)} aria-invalid={!!errors.email} aria-describedby={errors.email ? "bk-email-err" : undefined} />
+              <input
+                id="bk-email"
+                type="email"
+                autoComplete="email"
+                value={form.email}
+                onChange={(e) => setField("email", e.target.value)}
+                aria-invalid={!!errors.email}
+                aria-describedby={errors.email ? "bk-email-err" : undefined}
+              />
               {errors.email && (
                 <span id="bk-email-err" className={styles.err}>
                   {errors.email}
@@ -404,7 +482,13 @@ export function Booker({ initialServices, initialStaff, initialSettings, initial
             </div>
             <div className={`${styles.fld} ${styles.full}`}>
               <label htmlFor="bk-note">Inspo, allergies, or your tea order</label>
-              <textarea id="bk-note" value={form.note} onChange={(e) => setField("note", e.target.value)} aria-invalid={!!errors.note} aria-describedby={errors.note ? "bk-note-err" : undefined} />
+              <textarea
+                id="bk-note"
+                value={form.note}
+                onChange={(e) => setField("note", e.target.value)}
+                aria-invalid={!!errors.note}
+                aria-describedby={errors.note ? "bk-note-err" : undefined}
+              />
               {errors.note && (
                 <span id="bk-note-err" className={styles.err}>
                   {errors.note}
@@ -418,15 +502,19 @@ export function Booker({ initialServices, initialStaff, initialSettings, initial
               {formatDayLong(startsAt)} at {formatTime(startsAt)} · {service.durationMin} min
             </span>
             <span>
-              {staffId === ANY_STAFF ? "First available stylist" : chosenStaff?.name} · {priceLabel(service, price)}
+              {staffId === ANY_STAFF ? "First available stylist" : chosenStaff?.name} ·{" "}
+              {priceLabel(service, price)}
             </span>
           </div>
           {settings.patchTestPrompt && service.category === "Colour" && (
-            <p className={styles.pol}>First colour with us? We&apos;ll set up a quick patch test 48 hours before.</p>
+            <p className={styles.pol}>
+              First colour with us? We&apos;ll set up a quick patch test 48 hours before.
+            </p>
           )}
           <p className={styles.pol}>
             24 hours&apos; notice to change or cancel, or a $50 rebooking charge applies.
-            {settings.depositRequired && ` A ${formatMoneyCompact(DEPOSIT_CENTS)} deposit holds the spot.`}
+            {settings.depositRequired &&
+              ` A ${formatMoneyCompact(DEPOSIT_CENTS)} deposit holds the spot.`}
           </p>
           <div className={styles.bnav}>
             <Button variant="line" onClick={() => setStep(2)}>
@@ -446,10 +534,14 @@ export function Booker({ initialServices, initialStaff, initialSettings, initial
             You&apos;re booked
           </Heading>
           <p className={styles.hint}>
-            {result.service.name} with {result.staff.name}, {formatDayLong(result.appointment.startsAt)} at {formatTime(result.appointment.startsAt)}
+            {result.service.name} with {result.staff.name},{" "}
+            {formatDayLong(result.appointment.startsAt)} at{" "}
+            {formatTime(result.appointment.startsAt)}
           </p>
           <p className={styles.hint}>
-            Confirmation sent{result.client.email || form.email ? ` to ${form.email || result.client.email}` : ""}. Tea&apos;s on us.
+            Confirmation sent
+            {result.client.email || form.email ? ` to ${form.email || result.client.email}` : ""}.
+            Tea&apos;s on us.
           </p>
           <div className={styles.doneActions}>
             <Button variant="line" size="sm" onClick={downloadIcs}>
@@ -458,12 +550,16 @@ export function Booker({ initialServices, initialStaff, initialSettings, initial
             <Button variant="line" size="sm" onClick={reset}>
               Book another
             </Button>
-            <ButtonLink size="sm" href={`/admin/calendar?date=${toDateKey(result.appointment.startsAt)}`}>
+            <ButtonLink
+              size="sm"
+              href={`/admin/calendar?date=${toDateKey(result.appointment.startsAt)}`}
+            >
               See it in the salon calendar
             </ButtonLink>
           </div>
           <p className={styles.pol}>
-            Demo: the salon calendar is the back office preview. <Link href="/admin">Open the staff demo</Link>.
+            Demo: the salon calendar is the back office preview.{" "}
+            <Link href="/admin">Open the staff demo</Link>.
           </p>
         </div>
       )}

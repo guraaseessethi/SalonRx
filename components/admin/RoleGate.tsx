@@ -13,7 +13,13 @@ import styles from "./RoleGate.module.css";
  * Demo gate: pick a role, no password. It previews the Phase 2 permission model.
  * Real staff login (invite-only, email + password, mandatory MFA) comes in the full build.
  */
-export function RoleGate({ onDone, initialStaff }: { onDone?: () => void; initialStaff?: Staff[] }) {
+export function RoleGate({
+  onDone,
+  initialStaff,
+}: {
+  onDone?: () => void;
+  initialStaff?: Staff[];
+}) {
   const repo = useRepository();
   const { data: staff } = useRepoQuery(queries.staff, initialStaff ?? ([] as Staff[]));
   const stylists = staff.filter((s) => s.bookable);
@@ -31,7 +37,8 @@ export function RoleGate({ onDone, initialStaff }: { onDone?: () => void; initia
         <h1>Staff back office</h1>
         <span className={styles.demo}>Demo</span>
         <p className={styles.lead} style={{ marginTop: 14 }}>
-          Demo. Real staff login comes in the full build. For now, pick who you want to be and see what that person would see.
+          Demo. Real staff login comes in the full build. For now, pick who you want to be and see
+          what that person would see.
         </p>
         <ul className={styles.roles}>
           {ROLES.map((role) => (
@@ -46,7 +53,11 @@ export function RoleGate({ onDone, initialStaff }: { onDone?: () => void; initia
               {role === "stylist" && (
                 <div className={styles.stylist}>
                   <label htmlFor="gate-stylist">Signed in as</label>
-                  <select id="gate-stylist" value={stylistId} onChange={(e) => setStylistId(e.target.value)}>
+                  <select
+                    id="gate-stylist"
+                    value={stylistId}
+                    onChange={(e) => setStylistId(e.target.value)}
+                  >
                     {stylists.map((s) => (
                       <option key={s.id} value={s.id}>
                         {s.name}

@@ -5,7 +5,13 @@ import { formatInTimeZone } from "date-fns-tz";
 import { ButtonLink } from "@/components/ui/Button";
 import { Table } from "@/components/ui/Table";
 import { formatMoneyCompact } from "@/lib/booking/pricing";
-import { formatDateKeyLong, formatMinutes, formatTime, toDateKey, weekdayOf } from "@/lib/booking/time";
+import {
+  formatDateKeyLong,
+  formatMinutes,
+  formatTime,
+  toDateKey,
+  weekdayOf,
+} from "@/lib/booking/time";
 import { TIMEZONE } from "@/lib/domain/constants";
 import { canAccess } from "@/lib/domain/permissions";
 import { useAdmin } from "../AdminContext";
@@ -15,7 +21,22 @@ import styles from "./Dashboard.module.css";
 const DAY_MS = 86_400_000;
 
 export function Dashboard() {
-  const { role, me, scopedStaffId, appointments, clients, products, sales, reservations, staff, services, settings, now, openDay, today } = useAdmin();
+  const {
+    role,
+    me,
+    scopedStaffId,
+    appointments,
+    clients,
+    products,
+    sales,
+    reservations,
+    staff,
+    services,
+    settings,
+    now,
+    openDay,
+    today,
+  } = useAdmin();
 
   const hour = Number(formatInTimeZone(now, TIMEZONE, "H"));
   const greeting = hour < 12 ? "morning" : hour < 17 ? "afternoon" : "evening";
@@ -23,21 +44,41 @@ export function Dashboard() {
   const isToday = openDay === today;
 
   const dayAppts = appointments
-    .filter((a) => toDateKey(a.startsAt) === openDay && a.status !== "cancelled" && (!scopedStaffId || a.staffId === scopedStaffId))
+    .filter(
+      (a) =>
+        toDateKey(a.startsAt) === openDay &&
+        a.status !== "cancelled" &&
+        (!scopedStaffId || a.staffId === scopedStaffId),
+    )
     .sort((a, b) => a.startsAt.localeCompare(b.startsAt));
-  const mySales = sales.filter((s) => toDateKey(s.at) === today && (!scopedStaffId || s.staffId === scopedStaffId));
+  const mySales = sales.filter(
+    (s) => toDateKey(s.at) === today && (!scopedStaffId || s.staffId === scopedStaffId),
+  );
 
   const booked = dayAppts.reduce((sum, a) => sum + a.priceCents, 0);
   const taken = mySales.reduce((sum, s) => sum + s.totalCents, 0);
   const retail = mySales.reduce((sum, s) => sum + s.retailCents, 0);
 
-  const newOnline = appointments.filter((a) => a.status === "new" && (!scopedStaffId || a.staffId === scopedStaffId)).length;
+  const newOnline = appointments.filter(
+    (a) => a.status === "new" && (!scopedStaffId || a.staffId === scopedStaffId),
+  ).length;
   const lowStock = products.filter((p) => p.stock <= p.par).length;
-  const visible = clients.filter((c) => !scopedStaffId || c.stylistId === scopedStaffId || appointments.some((a) => a.clientId === c.id && a.staffId === scopedStaffId));
-  const due = visible.filter((c) => c.lastVisitAt && now.getTime() - new Date(c.lastVisitAt).getTime() >= 42 * DAY_MS);
-  const patchExpired = visible.filter((c) => c.patchTestAt && now.getTime() - new Date(c.patchTestAt).getTime() > 180 * DAY_MS);
+  const visible = clients.filter(
+    (c) =>
+      !scopedStaffId ||
+      c.stylistId === scopedStaffId ||
+      appointments.some((a) => a.clientId === c.id && a.staffId === scopedStaffId),
+  );
+  const due = visible.filter(
+    (c) => c.lastVisitAt && now.getTime() - new Date(c.lastVisitAt).getTime() >= 42 * DAY_MS,
+  );
+  const patchExpired = visible.filter(
+    (c) => c.patchTestAt && now.getTime() - new Date(c.patchTestAt).getTime() > 180 * DAY_MS,
+  );
 
-  const teaClients = dayAppts.filter((a, i, arr) => arr.findIndex((x) => x.clientId === a.clientId) === i).slice(0, 6);
+  const teaClients = dayAppts
+    .filter((a, i, arr) => arr.findIndex((x) => x.clientId === a.clientId) === i)
+    .slice(0, 6);
   const clientById = (id: string) => clients.find((c) => c.id === id);
   const staffName = (id: string) => staff.find((s) => s.id === id)?.name.split(" ")[0] ?? "";
   const serviceName = (id: string) => services.find((s) => s.id === id)?.name ?? "";
@@ -67,7 +108,11 @@ export function Dashboard() {
         }
       />
       <div className={`${ui.g} ${ui.g4}`}>
-        <Kpi label="Booked" value={formatMoneyCompact(booked)} note={`${dayAppts.length} appointments`} />
+        <Kpi
+          label="Booked"
+          value={formatMoneyCompact(booked)}
+          note={`${dayAppts.length} appointments`}
+        />
         <Kpi label="Taken so far" value={formatMoneyCompact(taken)} note="incl. tips & HST" up />
         <Kpi label="Retail" value={formatMoneyCompact(retail)} note="goal $300" />
         <Kpi label="Rebooked" value="68%" note="+6% vs October (sample)" up />
@@ -162,7 +207,8 @@ export function Dashboard() {
               {reservations.length > 0 && canSee("inventory") && (
                 <li>
                   <span>
-                    {reservations.length} curbside pickup{reservations.length > 1 ? "s" : ""} reserved online
+                    {reservations.length} curbside pickup{reservations.length > 1 ? "s" : ""}{" "}
+                    reserved online
                   </span>
                   <Status tone="rx">Front desk</Status>
                 </li>
@@ -186,7 +232,9 @@ export function Dashboard() {
                           <small>{formatTime(a.startsAt)}</small>
                         </span>
                       </span>
-                      <span className={`script ${styles.tea}`}>{c.teaOrder || "ask at the door"}</span>
+                      <span className={`script ${styles.tea}`}>
+                        {c.teaOrder || "ask at the door"}
+                      </span>
                     </li>
                   );
                 })}
@@ -198,4 +246,3 @@ export function Dashboard() {
     </>
   );
 }
-

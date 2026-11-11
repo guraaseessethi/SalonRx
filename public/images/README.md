@@ -8,12 +8,12 @@ Photos are shown in **black and white** by the site's CSS, so colour originals a
 monochrome (strong contrast, soft backgrounds). Export as JPG, quality 80, under 400 KB. `next/image` makes the
 smaller AVIF/WebP versions automatically.
 
-| Slot | Where it appears | Size (px) | Ratio | Notes |
-|---|---|---|---|---|
-| `hero` | Home page, inside the gold starburst circle | 1600 × 1600 | 1:1 | Subject centred: it is cropped to a circle |
-| `philosophy` | Home page, under the "hairapist" quote | 1200 × 1500 | 4:5 | The tea, cookies or hand massage moment |
-| `weddings` | Weddings panel (dark side) | 1200 × 1500 | 4:5 | A finished bridal style, or the morning-of |
-| `visit` | `/visit` page | 1600 × 1067 | 3:2 | The floor, the front window, the chandelier |
+| Slot         | Where it appears                            | Size (px)   | Ratio | Notes                                       |
+| ------------ | ------------------------------------------- | ----------- | ----- | ------------------------------------------- |
+| `hero`       | Home page, inside the gold starburst circle | 1600 × 1600 | 1:1   | Subject centred: it is cropped to a circle  |
+| `philosophy` | Home page, under the "hairapist" quote      | 1200 × 1500 | 4:5   | The tea, cookies or hand massage moment     |
+| `weddings`   | Weddings panel (dark side)                  | 1200 × 1500 | 4:5   | A finished bridal style, or the morning-of  |
+| `visit`      | `/visit` page                               | 1600 × 1067 | 3:2   | The floor, the front window, the chandelier |
 
 ## Team portraits (not wired yet)
 

@@ -13,10 +13,12 @@ export function ReviewMode() {
       const param = new URLSearchParams(window.location.search).get("review");
       if (param === "1") window.sessionStorage.setItem("salonrx-review", "1");
       if (param === "0") window.sessionStorage.removeItem("salonrx-review");
-      if (window.sessionStorage.getItem("salonrx-review") === "1") document.documentElement.dataset.review = "1";
+      if (window.sessionStorage.getItem("salonrx-review") === "1")
+        document.documentElement.dataset.review = "1";
       else delete document.documentElement.dataset.review;
     } catch {
-      if (new URLSearchParams(window.location.search).get("review") === "1") document.documentElement.dataset.review = "1";
+      if (new URLSearchParams(window.location.search).get("review") === "1")
+        document.documentElement.dataset.review = "1";
     }
   }, []);
   return null;

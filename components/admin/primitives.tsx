@@ -4,7 +4,15 @@ import styles from "./primitives.module.css";
 
 export { styles as ui };
 
-export function PageHead({ title, sub, actions }: { title: ReactNode; sub?: ReactNode; actions?: ReactNode }) {
+export function PageHead({
+  title,
+  sub,
+  actions,
+}: {
+  title: ReactNode;
+  sub?: ReactNode;
+  actions?: ReactNode;
+}) {
   return (
     <div className={styles.head}>
       <div>
@@ -16,7 +24,19 @@ export function PageHead({ title, sub, actions }: { title: ReactNode; sub?: Reac
   );
 }
 
-export function Panel({ title, actions, children, className = "", headingLevel: H = "h2" }: { title?: ReactNode; actions?: ReactNode; children: ReactNode; className?: string; headingLevel?: "h2" | "h3" }) {
+export function Panel({
+  title,
+  actions,
+  children,
+  className = "",
+  headingLevel: H = "h2",
+}: {
+  title?: ReactNode;
+  actions?: ReactNode;
+  children: ReactNode;
+  className?: string;
+  headingLevel?: "h2" | "h3";
+}) {
   return (
     <section className={`${styles.panel} ${className}`}>
       {(title || actions) && (
@@ -30,7 +50,17 @@ export function Panel({ title, actions, children, className = "", headingLevel: 
   );
 }
 
-export function Kpi({ label, value, note, up }: { label: string; value: ReactNode; note?: ReactNode; up?: boolean }) {
+export function Kpi({
+  label,
+  value,
+  note,
+  up,
+}: {
+  label: string;
+  value: ReactNode;
+  note?: ReactNode;
+  up?: boolean;
+}) {
   return (
     <div className={`${styles.panel} ${styles.kpi}`}>
       <div className={styles.k}>{label}</div>
@@ -73,7 +103,17 @@ export function Avatar({ name }: { name: string }) {
   );
 }
 
-export function Field({ id, label, children, full }: { id: string; label: string; children: ReactNode; full?: boolean }) {
+export function Field({
+  id,
+  label,
+  children,
+  full,
+}: {
+  id: string;
+  label: string;
+  children: ReactNode;
+  full?: boolean;
+}) {
   return (
     <div className={`${styles.fld} ${full ? styles.full : ""}`}>
       <label htmlFor={id}>{label}</label>

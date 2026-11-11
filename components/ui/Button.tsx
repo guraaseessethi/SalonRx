@@ -12,7 +12,11 @@ interface Shared {
   children: ReactNode;
 }
 
-export function buttonClass({ variant = "solid", size = "md", className = "" }: Omit<Shared, "children">): string {
+export function buttonClass({
+  variant = "solid",
+  size = "md",
+  className = "",
+}: Omit<Shared, "children">): string {
   return [
     styles.btn,
     variant === "line" || variant === "danger" ? styles.line : "",

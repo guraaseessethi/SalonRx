@@ -8,12 +8,7 @@ import {
   type Slot,
 } from "@/lib/booking/availability";
 import { computeTotals, formatMoney, priceForLevel } from "@/lib/booking/pricing";
-import {
-  addMinutes,
-  formatDayShort,
-  formatTime,
-  toDateKey,
-} from "@/lib/booking/time";
+import { addMinutes, formatDayShort, formatTime, toDateKey } from "@/lib/booking/time";
 import {
   appointmentSchema,
   bookingInputSchema,
@@ -246,7 +241,10 @@ export class MockRepository implements DataRepository {
   async createAppointment(input: BookingInput): Promise<BookingResult> {
     const parsed = bookingInputSchema.safeParse(input);
     if (!parsed.success) {
-      throw new BookingError("validation", parsed.error.issues[0]?.message ?? "Please check your details.");
+      throw new BookingError(
+        "validation",
+        parsed.error.issues[0]?.message ?? "Please check your details.",
+      );
     }
     const data = parsed.data;
     const state = this.load();
@@ -261,16 +259,28 @@ export class MockRepository implements DataRepository {
       staffId: data.staffId,
       date: toDateKey(data.startsAt),
     });
-    const slot = slots.find((x) => new Date(x.startsAt).getTime() === new Date(data.startsAt).getTime());
-    if (!slot) throw new BookingError("unavailable", "Sorry, that time was just taken. Please choose another.");
+    const slot = slots.find(
+      (x) => new Date(x.startsAt).getTime() === new Date(data.startsAt).getTime(),
+    );
+    if (!slot)
+      throw new BookingError(
+        "unavailable",
+        "Sorry, that time was just taken. Please choose another.",
+      );
     const staffId = data.staffId === ANY_STAFF ? pickStaffForSlot(slot) : data.staffId;
     const staff = state.staff.find((x) => x.id === staffId);
-    if (!staff) throw new BookingError("unavailable", "Sorry, that time was just taken. Please choose another.");
+    if (!staff)
+      throw new BookingError(
+        "unavailable",
+        "Sorry, that time was just taken. Please choose another.",
+      );
 
     const now = this.clock();
     const phoneDigits = digits(data.phone);
     let client = state.clients.find(
-      (c) => (phoneDigits && digits(c.phone) === phoneDigits) || c.name.toLowerCase() === data.name.toLowerCase(),
+      (c) =>
+        (phoneDigits && digits(c.phone) === phoneDigits) ||
+        c.name.toLowerCase() === data.name.toLowerCase(),
     );
     let isNewClient = false;
     if (!client) {
@@ -343,7 +353,10 @@ export class MockRepository implements DataRepository {
     const start = new Date(data.startsAt);
     const end = addMinutes(start, service.durationMin);
     if (!isStaffFree(staff.id, start, end, state.appointments)) {
-      throw new BookingError("unavailable", `${staff.name.split(" ")[0]} already has something at that time.`);
+      throw new BookingError(
+        "unavailable",
+        `${staff.name.split(" ")[0]} already has something at that time.`,
+      );
     }
     const appointment: Appointment = {
       id: newId("appt"),
@@ -375,7 +388,10 @@ export class MockRepository implements DataRepository {
     const current = this.load().appointments.find((a) => a.id === id);
     if (!current) throw new Error("Appointment not found");
     const next = { ...current, status };
-    this.commit((s) => ({ ...s, appointments: s.appointments.map((a) => (a.id === id ? next : a)) }));
+    this.commit((s) => ({
+      ...s,
+      appointments: s.appointments.map((a) => (a.id === id ? next : a)),
+    }));
     return next;
   }
 
@@ -408,7 +424,10 @@ export class MockRepository implements DataRepository {
     return client;
   }
 
-  async updateClient(id: string, patch: Partial<Pick<Client, "formula" | "notes">>): Promise<Client> {
+  async updateClient(
+    id: string,
+    patch: Partial<Pick<Client, "formula" | "notes">>,
+  ): Promise<Client> {
     const current = this.load().clients.find((c) => c.id === id);
     if (!current) throw new Error("Client not found");
     const next = { ...current, ...patch };
@@ -451,7 +470,9 @@ export class MockRepository implements DataRepository {
   async receivePurchaseOrder(supplier: string): Promise<void> {
     this.commit((s) => ({
       ...s,
-      products: s.products.map((p) => (p.supplier === supplier && p.stock <= p.par ? { ...p, stock: p.par * 2 } : p)),
+      products: s.products.map((p) =>
+        p.supplier === supplier && p.stock <= p.par ? { ...p, stock: p.par * 2 } : p,
+      ),
     }));
   }
 
@@ -488,7 +509,9 @@ export class MockRepository implements DataRepository {
     const stockUse = new Map<string, number>();
     let staffId: string | null = null;
 
-    const appointment = data.appointmentId ? state.appointments.find((a) => a.id === data.appointmentId) : undefined;
+    const appointment = data.appointmentId
+      ? state.appointments.find((a) => a.id === data.appointmentId)
+      : undefined;
     if (appointment) staffId = appointment.staffId;
 
     for (const line of data.lines) {
@@ -506,9 +529,15 @@ export class MockRepository implements DataRepository {
         const product = state.products.find((p) => p.sku === line.sku);
         if (!product) throw new Error("Product not found");
         const used = (stockUse.get(product.sku) ?? 0) + 1;
-        if (used > product.stock) throw new Error(`Only ${product.stock} of ${product.name} on hand.`);
+        if (used > product.stock)
+          throw new Error(`Only ${product.stock} of ${product.name} on hand.`);
         stockUse.set(product.sku, used);
-        lines.push({ kind: "product", refId: product.sku, name: product.name, priceCents: product.priceCents });
+        lines.push({
+          kind: "product",
+          refId: product.sku,
+          name: product.name,
+          priceCents: product.priceCents,
+        });
       }
     }
 
@@ -531,14 +560,23 @@ export class MockRepository implements DataRepository {
     this.commit((s) => ({
       ...s,
       sales: [...s.sales, sale],
-      products: s.products.map((p) => (stockUse.has(p.sku) ? { ...p, stock: p.stock - (stockUse.get(p.sku) ?? 0) } : p)),
+      products: s.products.map((p) =>
+        stockUse.has(p.sku) ? { ...p, stock: p.stock - (stockUse.get(p.sku) ?? 0) } : p,
+      ),
       reservations: s.reservations.filter((r) => !stockUse.has(r.sku)),
       clients: s.clients.map((c) =>
         c.id === data.clientId
-          ? { ...c, spendCents: c.spendCents + totals.subtotalCents, visits: c.visits + 1, lastVisitAt: now }
+          ? {
+              ...c,
+              spendCents: c.spendCents + totals.subtotalCents,
+              visits: c.visits + 1,
+              lastVisitAt: now,
+            }
           : c,
       ),
-      appointments: s.appointments.map((a) => (a.id === data.appointmentId ? { ...a, status: "done" as const } : a)),
+      appointments: s.appointments.map((a) =>
+        a.id === data.appointmentId ? { ...a, status: "done" as const } : a,
+      ),
     }));
     return sale;
   }
